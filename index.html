@@ -134,6 +134,31 @@
       .hasil{text-align:center;padding:18px 6px 6px}
       .hasil .skor-besar{font-family:"Lora",serif;font-size:3.4rem;font-weight:700;color:var(--green-deep);line-height:1}
       .hasil p{color:var(--ink-soft);max-width:30rem;margin:12px auto 20px}
+      .filter-label{display:block;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+      .quiz-filters + .filter-label{margin-top:2px}
+      .q-badges{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+      .q-badges .q-topic{margin-bottom:0}
+      .lvl-badge{font-size:.75rem;font-weight:800;letter-spacing:.04em;padding:4px 11px;border-radius:999px}
+      .lvl-c2{background:var(--green-soft);color:var(--green-deep)}
+      .lvl-c3{background:var(--gold-soft);color:var(--gold)}
+      .lvl-c4{background:var(--terra-soft);color:var(--terra)}
+      .sup-badge{font-size:.75rem;font-weight:800;letter-spacing:.04em;padding:4px 11px;border-radius:999px;border:1.5px dashed var(--gold);color:var(--gold)}
+      .q-topik{font-weight:800;font-size:1rem;margin:0 0 6px;color:var(--green-deep)}
+      .q-text{margin-bottom:10px}
+      .q-src{font-size:.83rem;font-weight:700;color:var(--muted);margin:0 0 18px}
+      .bahas-src{display:block;margin-top:10px;font-size:.8rem;font-weight:700;opacity:.75}
+      .review-judul{font-family:"Plus Jakarta Sans",sans-serif;font-size:1.02rem;font-weight:800;margin:26px 0 4px;color:var(--green-deep)}
+      .review-list{display:grid;gap:8px}
+      .review-item{appearance:none;font:inherit;text-align:left;background:var(--bg);border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:12px;padding:11px 14px;cursor:pointer;display:flex;flex-wrap:wrap;gap:3px 12px;align-items:baseline;color:var(--ink);width:100%}
+      .review-item.ok{border-left-color:var(--ok)}
+      .review-item.no{border-left-color:var(--bad)}
+      .review-item .r-no{font-weight:800;flex:none}
+      .review-item .r-topik{font-weight:600;flex:1 1 10rem}
+      .review-item .r-status{font-weight:800;font-size:.85rem;flex:none}
+      .review-item.ok .r-status{color:var(--ok)}
+      .review-item.no .r-status{color:var(--bad)}
+      .review-item.kosong .r-status{color:var(--gold)}
+      .review-item .r-meta{font-size:.78rem;color:var(--muted);flex:1 1 100%}
 
       /* ---------- FLASHCARD ---------- */
       .flash-wrap{max-width:560px;margin:0 auto}
@@ -195,8 +220,8 @@
             <p class="lede">Ringkasan 7 pertemuan, latihan soal bergaya UTS dengan pembahasan, kartu kilat, dan daftar jebakan — semua disusun dari slide P1–P7 dan blueprint Soal Sumatif 1.</p>
             <div class="hero-stats">
               <div class="stat-chip"><b>7</b><span>pertemuan · 204 halaman</span></div>
-              <div class="stat-chip"><b>60</b><span>soal di blueprint UTS</span></div>
-              <div class="stat-chip"><b>24</b><span>soal latihan di sini</span></div>
+              <div class="stat-chip"><b>60</b><span>soal latihan lengkap 1–60</span></div>
+              <div class="stat-chip"><b>C2·C3·C4</b><span>22 · 20 · 18 soal per level</span></div>
               <div class="stat-chip"><b>12</b><span>kartu kilat hafalan</span></div>
             </div>
             <div class="hero-cta">
@@ -237,11 +262,14 @@
       <!-- ================= KUIS ================= -->
       <section id="panel-kuis" role="tabpanel" hidden>
         <div class="sec-head">
-          <h2>Latihan soal bergaya UTS</h2>
-          <p>24 soal disusun dari slide P1–P7 mengikuti peta blueprint (Soal 1–60). Pilih jawaban untuk langsung melihat pembahasannya. Saring per pertemuan kalau mau fokus.</p>
+          <h2>Latihan soal bergaya UTS — lengkap 60 soal</h2>
+          <p>60 soal, satu untuk tiap nomor blueprint 1–60, disusun dari slide P1–P7. Tiap soal mencantumkan halaman PPT sumbernya dan level kognitifnya (C2/C3/C4 sesuai blueprint). Pilih jawaban untuk langsung melihat pembahasannya, dan saring per pertemuan atau per level kalau mau fokus.</p>
         </div>
         <div class="quiz-shell">
+          <span class="filter-label">Pertemuan</span>
           <div class="quiz-filters" id="quizFilters" role="group" aria-label="Saring soal per pertemuan"></div>
+          <span class="filter-label">Level kognitif</span>
+          <div class="quiz-filters" id="quizLevelFilters" role="group" aria-label="Saring soal per level kognitif"></div>
           <div id="quizBody"></div>
         </div>
       </section>
@@ -307,7 +335,7 @@
     <script>
     /* ================= DATA MATERI ================= */
     var MATERI = [
-      { p:"P1", soal:"Soal 1–6", judul:"Pengantar Obat Herbal",
+      { p:"P1", soal:"Soal 1–6", hlm:"36 hlm", judul:"Pengantar Obat Herbal",
         ringkas:"Definisi WHO, 4 kelompok obat herbal, pola tanaman menjadi obat modern, perbandingan herbal vs konvensional, isu “alami belum tentu aman”, dan faktor mutu simplisia.",
         poin:[
           "<b>4 kelompok WHO:</b> (1) pribumi — dikenal komunitas lokal; (2) dalam sistem — terdokumentasi lama, punya teori sendiri, diakui negara (Ayurveda, Unani, Siddha); (3) termodifikasi — diubah bentuk/dosis/sediaan/cara/bahan/pembuatan/indikasi; (4) impor — harus terdaftar di negara asal.",
@@ -318,7 +346,7 @@
           "<b>EBM:</b> klaim empiris harus naik kelas lewat uji praklinik → klinik; pilar evaluasi WHO (1991): mutu, stabilitas, keamanan, khasiat."
         ],
         angka:["25% resep AS berisi senyawa tumbuhan","39% dari 520 obat baru (1983–1994) dari bahan alam","Echinacea palsu >50% (AS, 1980–1991)","Mikotoksin pada 18% dari 62 sampel"] },
-      { p:"P2", soal:"Soal 7–13", judul:"Perkembangan & Permasalahan",
+      { p:"P2", soal:"Soal 7–13", hlm:"35 hlm", judul:"Perkembangan & Permasalahan",
         ringkas:"Tren global dan faktor pendorongnya, masalah mutu eksternal vs internal, interaksi herbal–obat, BKO, regulasi dunia, dan hambatan hilirisasi di Indonesia.",
         poin:[
           "<b>Faktor pendorong:</b> preferensi “alami”, kekecewaan pada obat modern, swamedikasi, dan iklan/pemasaran.",
@@ -329,7 +357,7 @@
           "<b>Indonesia:</b> kategori Jamu / OHT / Fitofarmaka (PerBPOM 25/2023); hilirisasi tersendat — riset berhenti di publikasi, bahan baku masih banyak impor."
         ],
         angka:["BKO: 206 dari 11.654 sampel (BPOM)","Jamu >17.000 produk","OHT baru 78","Fitofarmaka baru 21"] },
-      { p:"P3", soal:"Soal 14–21", judul:"Persyaratan Obat Tradisional",
+      { p:"P3", soal:"Soal 14–21", hlm:"24 hlm", judul:"Persyaratan Obat Tradisional",
         ringkas:"Pelaku usaha (IOT, IEBA, UKOT, UMOT), larangan pembuatan, 5 kriteria izin edar, CPOTB, dan saintifikasi jamu. Hati-hati: regulasi di slide masih edisi lama.",
         poin:[
           "<b>Pelaku:</b> IOT (industri), IEBA (ekstrak sebagai produk akhir), UKOT (usaha kecil), UMOT (usaha mikro — hanya sediaan luar seperti param, tapel, pilis, cairan obat luar, dan rajangan). Jamu gendong & jamu racikan dikecualikan dari izin usaha.",
@@ -339,7 +367,7 @@
           "<b>CPOTB</b> = Cara Pembuatan Obat Tradisional yang Baik — jaminan mutu dari bahan awal sampai produk jadi. <b>Saintifikasi jamu</b> diatur Permenkes 003/2010 (penelitian berbasis pelayanan kesehatan)."
         ],
         angka:["Etanol cairan obat dalam maks 1%","Izin edar berlaku 5 tahun","Acuan terbaru: PerBPOM 25/2023 · 29/2023 · 10/2024 · PP 5/2021"] },
-      { p:"P4", soal:"Soal 22–31", judul:"Studi Empiris Tanaman (1)",
+      { p:"P4", soal:"Soal 22–31", hlm:"30 hlm", judul:"Studi Empiris Tanaman (1)",
         ringkas:"Alur pengembangan kandidat obat dari data empiris, komponen studi etnobotani, penelusuran literatur, dan cara membaca data bagian tanaman serta use report.",
         poin:[
           "<b>Alur 6 tahap:</b> Studi Empiris → Morfologi → Fitokimia → Farmakologi → Kimia Medisinal → Kandidat Obat Baru.",
@@ -350,7 +378,7 @@
           "<b>Kesahihan bukti:</b> studi etnobotani dengan ratusan informan + metode terstruktur jauh lebih sahih daripada testimoni media sosial."
         ],
         angka:["Use report tertinggi: Paris polyphylla 202","Daun 47% (Gebre 2021)","Informan studi: 100–260 orang","Rute oral dominan (±97% pada satu studi)"] },
-      { p:"P5", soal:"Soal 32–41", judul:"Metode & Indeks Etnobotani",
+      { p:"P5", soal:"Soal 32–41", hlm:"20 hlm", judul:"Metode & Indeks Etnobotani",
         ringkas:"Bagian paling hitungan: metode kualitatif vs kuantitatif dan indeks ICF, FL%, RPL, ROP, UV, FIV, CI — lengkap dengan rumus hafalannya.",
         poin:[
           "<b>Etnobotani itu multidisiplin:</b> botani, antropologi, farmakologi, ekonomi, arkeologi, linguistik.",
@@ -361,7 +389,7 @@
           "<b>Studi kasus:</b> Fabaceae suku Karen, Thailand (83 spesies; daun terbanyak 22%) dan Lamiaceae–Myrtaceae Al Baha, Arab Saudi (97 tanaman; gangguan GIT 49,5%; maserasi 24,7%)."
         ],
         angka:["ICF tertinggi: infeksi virus 0,93","ROP tertinggi: Curcuma longa = 100","FL 100% = satu kategori saja","ROP = RPL × FL"] },
-      { p:"P6", soal:"Soal 42–51", judul:"Senyawa Aktif (1): Apiaceae, Araliaceae, Asteraceae",
+      { p:"P6", soal:"Soal 42–51", hlm:"31 hlm", judul:"Senyawa Aktif (1): Apiaceae, Araliaceae, Asteraceae",
         ringkas:"Ciri suku, tanaman contoh, dan senyawa penandanya — pegagan, ginseng, dan krisan jadi bintang di pertemuan ini.",
         poin:[
           "<b>Apiaceae:</b> herba aromatik, batang berongga, bunga payung (<i>umbel</i>). Contoh pegagan (<i>Centella asiatica</i>), penanda <b>asiatikosida</b> (C₄₈H₇₈O₁₉) dan madekasosida; aglikonnya asam asiatat & asam madekasat.",
@@ -371,7 +399,7 @@
           "<b>Metode analisis yang muncul di slide:</b> KLT/TLC, HPLC-MS untuk senyawa non-volatil, GC-MS untuk minyak atsiri volatil."
         ],
         angka:["Asiatikosida C₄₈H₇₈O₁₉","Asteraceae >23.600 spesies","Krisan: 650–1.200 mdpl · 17–30 °C","Araliaceae ±70 marga / 700 spesies"] },
-      { p:"P7", soal:"Soal 52–60", judul:"Senyawa Aktif (2): Fabaceae, Lamiaceae, Myrtaceae",
+      { p:"P7", soal:"Soal 52–60", hlm:"28 hlm", judul:"Senyawa Aktif (2): Fabaceae, Lamiaceae, Myrtaceae",
         ringkas:"Kedawung dan Soxhlet, lavender dan teknik penyariannya, cengkeh dan eugenol — ditutup perbandingan metode destilasi modern.",
         poin:[
           "<b>Fabaceae:</b> polong-polongan, buah polong, bintil akar memfiksasi nitrogen. Contoh kedawung (<i>Parkia roxburghii</i>) — minyak bijinya diisolasi dengan <b>Soxhlet</b>; senyawa lupeol, campesterol, flavonoid.",
@@ -416,7 +444,7 @@
     /* ================= RENDER: MATERI / ANGKA / JEBAKAN ================= */
     document.getElementById("materiGrid").innerHTML = MATERI.map(function(m){
       return '<article class="mcard">' +
-        '<div class="mcard-top"><div class="p-badge">' + m.p + '</div><span class="soal-badge">' + m.soal + '</span></div>' +
+        '<div class="mcard-top"><div class="p-badge">' + m.p + '</div><span class="soal-badge">' + m.soal + ' · ' + m.hlm + '</span></div>' +
         '<h3>' + m.judul + '</h3>' +
         '<p class="ringkas">' + m.ringkas + '</p>' +
         '<div class="angka-strip">' + m.angka.map(function(a){ return '<span>' + a + '</span>'; }).join("") + '</div>' +
@@ -451,142 +479,1143 @@
     /* ================= DATA SOAL ================= */
     /* a = indeks jawaban benar (0=A) */
     var SOAL = [
-      /* ---------- P1 ---------- */
-      { p:"P1", topik:"Klasifikasi WHO · Soal 1 · C2",
-        q:"Suatu ramuan Ayurveda terdokumentasi lama, memiliki teori dan konsepnya sendiri, dan diakui oleh negara. Bentuk, dosis, dan indikasinya tidak diubah dari bentuk tradisionalnya.\n\nProduk tersebut termasuk kelompok WHO yang mana?",
-        o:["Obat herbal pribumi","Obat herbal dalam sistem","Obat herbal termodifikasi","Produk impor berbasis herbal","Obat herbal terstandar"], a:1,
-        b:"Kuncinya ada dua: <b>teori/konsep sendiri + pengakuan negara</b> — itu definisi kelompok <b>dalam sistem</b> (Ayurveda, Unani, Siddha). Bukan termodifikasi karena tidak ada satu pun dari 7 aspek yang diubah (bentuk, dosis, sediaan, cara pemberian, bahan, cara pembuatan, indikasi). Bukan pribumi karena sudah punya sistem teori formal, bukan sekadar dikenal komunitas lokal." },
-      { p:"P1", topik:"Pola perkembangan obat · Soal 2 · C2",
-        q:"Di slide: 25% resep obat di AS mengandung ≥1 senyawa asal tumbuhan, dan 39% dari 520 obat baru (1983–1994) adalah bahan alam atau turunannya. Contohnya aspirin dari kulit willow, kinin dari kulit kina, digoksin dari foxglove.\n\nUrutan pola perkembangan yang benar adalah:",
-        o:["Senyawa murni → bahan utuh → ekstrak pekat → sintetis","Bahan utuh → senyawa murni → ekstrak pekat → sintetis","Bahan utuh → ekstrak pekat → senyawa murni → sintetis/semisintetis","Ekstrak pekat → bahan utuh → sintetis → senyawa murni","Sintetis → senyawa murni → ekstrak pekat → bahan utuh"], a:2,
-        b:"Empat tahap persis di slide: <b>(1) bahan utuh</b> dipakai empiris → <b>(2) ekstrak pekat</b> agar kekuatan & keseragaman efek naik → <b>(3) senyawa murni</b> diisolasi sebagai prototipe → <b>(4) sintetis/semisintetis</b> dengan aktivitas lebih kuat. Contoh lain di slide: morfin–opium, reserpin–pule pandak, paklitaksel–Taxus." },
-      { p:"P1", topik:"Herbal vs konvensional · Soal 3 · C2",
-        q:"Berdasarkan tabel perbandingan 6 aspek di slide P1, pernyataan yang paling tepat adalah:",
-        o:["Semua produk herbal terbukti bekerja sinergis dan meredam toksisitas","Herbal bekerja multitarget dengan komposisi kompleks dan keseragaman antar-batch yang bervariasi, sedangkan konvensional umumnya satu senyawa tunggal dengan target spesifik dan keseragaman tinggi — namun bukti sinergi & buffering baru ditunjukkan pada sebagian sediaan","Herbal dan konvensional sama dalam komposisi, cara kerja, dan keseragaman","Herbal selalu berisi satu senyawa tunggal, konvensional multi-komponen","Herbal tidak bervariasi antar-batch, konvensional yang bervariasi"], a:1,
-        b:"Ini jebakan yang hanya ketahuan kalau membaca catatan kaki slide: bukti sinergi & <i>buffering</i> <b>baru ditunjukkan pada sebagian sediaan — belum dapat digeneralisasi</b> ke semua produk herbal. Jadi pilihan yang menggeneralisasi (“semua terbukti sinergis”) salah, dan sisanya terbalik atau menyamakan keduanya." },
-      { p:"P1", topik:"“Alami belum tentu aman” · Soal 4 · C4",
-        q:"Herba X secara tradisional dipakai jangka pendek untuk gejala akut. Kini dikonsumsi setiap hari selama berbulan-bulan untuk pencegahan dan pelangsingan, tanpa pengawasan tenaga kesehatan.\n\nFaktor yang paling meningkatkan risiko keamanannya adalah:",
-        o:["Perubahan nama produk","Pola pakai berubah — durasi menjadi jangka panjang dan indikasi bergeser ke pencegahan/pelangsingan","Penyimpanan di tempat yang sejuk","Penggunaan hanya pada pagi hari","Perubahan bentuk sediaan saja, tanpa perubahan durasi atau dosis"], a:1,
-        b:"Data keamanan tradisional hanya berlaku pada konteks asalnya. Begitu durasi jadi kronis dan indikasi bergeser, paparan kumulatif naik dan toksisitas lambat (hati, ginjal) bisa muncul. Contoh persis di slide: <b>efedra untuk penurun berat badan</b>. Enam isu keamanan di slide: logam berat, BKO tak tercantum, salah identifikasi (Aristolochia; >50% “Echinacea” AS 1980–1991 ternyata Parthenium), mikotoksin (Aspergillus flavus pada 18% dari 62 sampel), interaksi herbal–obat, dan pola pakai berubah." },
-      { p:"P1", topik:"Mutu simplisia · Soal 5 · C3",
-        q:"Dua batch simplisia dari lokasi tumbuh, waktu panen, dan cara pengeringan yang berbeda ternyata kadarnya berbeda jauh.\n\nLangkah pengendalian mutu yang paling tepat menurut slide adalah:",
-        o:["Campur saja kedua batch tanpa pengujian","Terima batch yang warnanya lebih cerah","Gunakan nama ilmiah (Latin), lakukan autentikasi organoleptik & mikroskopik, standardisasi dengan senyawa penanda, dan terapkan cara pembuatan yang baik","Naikkan dosis batch berkadar rendah 2 kali lipat tanpa standardisasi","Ganti nama Latinnya agar lolos"], a:2,
-        b:"Empat faktor penentu mutu di slide: <b>lokasi tumbuh, kondisi tumbuh, waktu panen, dan pengolahan</b>. Pengendaliannya: autentikasi identitas (nama Latin, organoleptik, mikroskopik, sidik jari kromatografi), tetapkan spesifikasi bahan baku, standardisasi kadar senyawa penanda, dan jalankan GACP/CPOTB. Jebakan: pengeringan <b>bukan</b> faktor utama tersendiri — ia sub-butir faktor Pengolahan." },
-
-      /* ---------- P2 ---------- */
-      { p:"P2", topik:"Masalah eksternal vs internal · Soal 8 · C2",
-        q:"Suatu produk jamu kemasan ditemukan mengandung timbal melebihi batas dan dicampur obat sintetis tanpa dicantumkan pada label.\n\nKedua temuan tersebut tergolong masalah:",
-        o:["Internal, karena berasal dari kompleksitas fitokimia bahan","Eksternal, yaitu kontaminasi dan adulterasi","Internal, yaitu ketidakseragaman kandungan antar-batch","Regulasi, karena menyangkut izin edar","Klinis, karena menyangkut interaksi herbal–obat"], a:1,
-        b:"Pembagian di slide P2 tegas: <b>eksternal</b> = kontaminasi (logam berat, pestisida, mikroba), adulterasi (penambahan bahan asing/obat sintetis), dan salah identifikasi. <b>Internal</b> = kompleksitas fitokimia dan ketidakseragaman kandungan yang memang bawaan bahan alam. Timbal = kontaminasi, campuran obat sintetis = adulterasi." },
-      { p:"P2", topik:"Variabilitas senyawa penanda · Soal 9 · C3",
-        q:"Kadar hiperisin pada produk St John’s wort komersial ditemukan berkisar 22–140% dari klaim label.\n\nLangkah yang paling tepat untuk menjamin keseragaman produk adalah:",
-        o:["Menjual produk apa adanya karena bahan alam memang bervariasi","Pencampuran batch, pembuatan ekstrak terstandar, dan verifikasi dengan sidik jari kromatografi","Menaikkan klaim label agar selalu terpenuhi","Mengganti senyawa penanda setiap batch","Menghentikan pengujian kadar penanda"], a:1,
-        b:"Rentang 22–140% menunjukkan kadar penanda tidak bisa dibiarkan mengikuti bahan baku mentah. Tiga solusi di slide: <b>pencampuran batch</b> untuk meratakan kadar, <b>ekstrak terstandar</b> dengan kadar penanda yang ditetapkan, dan <b>sidik jari kromatografi</b> untuk memverifikasi profil keseluruhan — bukan satu senyawa saja." },
-      { p:"P2", topik:"Interaksi herbal–obat · Soal 10 · C4",
-        q:"Pasien pasca-transplantasi yang minum siklosporin mulai mengonsumsi St John’s wort. Beberapa minggu kemudian kadar siklosporin dalam darahnya turun.\n\nMekanisme yang paling menjelaskan kejadian ini adalah:",
-        o:["St John’s wort menghambat CYP3A4 sehingga siklosporin menumpuk","St John’s wort menginduksi CYP3A4 dan P-glikoprotein sehingga eliminasi siklosporin meningkat","St John’s wort mengikat siklosporin di lambung secara permanen","Siklosporin menginduksi metabolisme St John’s wort","Tidak ada hubungan, keduanya bekerja di target berbeda"], a:1,
-        b:"St John’s wort adalah <b>induktor</b> CYP3A4/CYP2C9 dan P-gp: enzim dan transporter naik → obat yang jadi substratnya (siklosporin, kontrasepsi oral, warfarin) tereliminasi lebih cepat → kadar dan efeknya <b>turun</b>. Arahnya kebalikan dari penghambatan. Pasangan risiko perdarahan yang juga wajib dihafal: ginkgo + bawang putih bersama aspirin/warfarin." },
-      { p:"P2", topik:"BKO & regulasi dunia · Soal 11–12 · C2/C3",
-        q:"Pernyataan yang benar menurut slide P2 adalah:",
-        o:["Di AS, obat herbal wajib lulus uji khasiat sebelum dipasarkan seperti obat resep","Data BPOM: 206 dari 11.654 sampel obat bahan alam mengandung BKO, dan produk yang “bekerja sangat cepat” (pegal linu, pelangsing, stamina pria) adalah yang paling patut dicurigai","Di Uni Eropa tidak ada jalur registrasi untuk produk herbal tradisional","Kampo di Jepang tidak diakui sistem kesehatan mana pun","BKO hanya ditemukan pada produk impor"], a:1,
-        b:"Angka BPOM-nya persis: <b>206 dari 11.654 sampel</b>. Klaim “bekerja sangat cepat” adalah tanda bahaya klasik BKO. Pilihan lain terbalik: AS lewat <b>DSHEA</b> memperlakukan herbal sebagai suplemen (tanpa uji khasiat pra-pasar), UE justru punya <i>traditional use registration</i>, dan Kampo terintegrasi dalam sistem kesehatan Jepang." },
-
-      /* ---------- P3 ---------- */
-      { p:"P3", topik:"Kategori obat bahan alam · Soal 14 · C3",
-        q:"Tiga produk: (1) ramuan turun-temurun tanpa uji ilmiah; (2) ekstrak terstandar yang lolos uji praklinik; (3) ekstrak terstandar yang lolos uji praklinik dan uji klinik.\n\nKetiganya berturut-turut adalah:",
-        o:["OHT, Jamu, Fitofarmaka","Jamu, Fitofarmaka, OHT","Jamu, OHT, Fitofarmaka","Fitofarmaka, OHT, Jamu","OHT, Fitofarmaka, Jamu"], a:2,
-        b:"Tingkatan pembuktiannya naik berurutan: <b>Jamu</b> = bukti empiris/turun-temurun; <b>OHT</b> (Obat Herbal Terstandar) = bahan baku terstandarisasi + bukti uji praklinik; <b>Fitofarmaka</b> = terstandarisasi + uji praklinik <b>dan</b> uji klinik. Di Indonesia jumlahnya sangat timpang: Jamu >17.000, OHT 78, Fitofarmaka 21." },
-      { p:"P3", topik:"Industri & usaha OT · Soal 15 · C3",
-        q:"Pernyataan yang benar tentang pelaku usaha obat tradisional menurut slide P3 adalah:",
-        o:["UMOT boleh membuat semua bentuk sediaan termasuk tablet","UKOT yang memproduksi kapsul dan/atau cairan obat dalam wajib memiliki Apoteker penanggung jawab penuh waktu","Jamu gendong wajib memiliki izin industri","Izin UMOT diterbitkan oleh Dirjen","IEBA adalah usaha yang menjual jamu racikan siap minum"], a:1,
-        b:"Poin yang eksplisit di slide: <b>UKOT pembuat kapsul/cairan obat dalam wajib punya Apoteker penanggung jawab penuh waktu</b>. Sisanya salah: UMOT hanya boleh sediaan luar (param, tapel, pilis, cairan obat luar) dan rajangan; UKOT pun tidak boleh tablet & efervesen; jamu gendong dan jamu racikan <b>dikecualikan</b> dari izin; izin UMOT dari Dinkes Kab/Kota (IOT/IEBA yang ke Dirjen); IEBA = industri ekstrak bahan alam." },
-      { p:"P3", topik:"Larangan & kriteria izin edar · Soal 16–17 · C2/C3",
-        q:"Sebuah produk cairan obat dalam mengandung etanol 3% dan pengajuan izin edarnya ditolak.\n\nAlasan penolakan yang paling tepat adalah:",
-        o:["Etanol dalam jumlah berapa pun selalu dilarang pada semua sediaan","Cairan obat dalam dilarang mengandung etanol lebih dari 1%","Produk cairan obat dalam memang dilarang seluruhnya","Penolakan hanya soal penandaan yang kurang lengkap","Etanol 3% hanya boleh untuk produk impor"], a:1,
-        b:"Batasnya tegas di dua peraturan pada slide: cairan obat dalam beretanol <b>>1% dilarang</b> (pengecualian: tingtur dengan pengenceran). Larangan lain yang satu paket: BKO hasil isolasi/sintetik, bentuk intravaginal/tetes mata/parenteral/supositoria (kecuali wasir), serta narkotika/psikotropika. Lima kriteria izin edar: bahan aman & bermutu, CPOTB, memenuhi FHI, khasiat terbukti (empiris/turun-temurun/ilmiah), penandaan objektif-lengkap-tidak menyesatkan." },
-
-      /* ---------- P4 ---------- */
-      { p:"P4", topik:"Alur pengembangan kandidat obat · Soal 22 · C2",
-        q:"Urutan alur pengembangan kandidat obat bahan alam yang benar menurut diagram di slide P4 adalah:",
-        o:["Fitokimia → Empiris → Morfologi → Farmakologi → Kimia Medisinal","Empiris → Morfologi → Fitokimia → Farmakologi → Kimia Medisinal → Kandidat Obat Baru","Morfologi → Empiris → Farmakologi → Fitokimia → Kimia Medisinal","Empiris → Farmakologi → Morfologi → Kimia Medisinal → Fitokimia","Kimia Medisinal → Fitokimia → Farmakologi → Morfologi → Empiris"], a:1,
-        b:"Diagram panahnya: <b>Studi Empiris → Studi Morfologi → Studi Fitokimia → Studi Farmakologi → Studi Kimia Medisinal → Kandidat Obat Baru</b>. Logikanya: mulai dari pengetahuan tradisional, kenali tanamannya, skrining kandungan, uji efek, lalu optimalkan struktur. Empat komponen yang dicatat pada studi empiris: habitat tumbuh, bagian yang digunakan, cara penggunaan, khasiat." },
-      { p:"P4", topik:"Data bagian tanaman & kelestarian · Soal 26 · C4",
-        q:"Pada studi Gebre (2021), bagian tanaman yang paling banyak digunakan adalah daun (47%), sedangkan akar dan kulit batang masing-masing hanya sekitar 5%.\n\nInterpretasi yang paling tepat adalah:",
-        o:["Daun pasti paling berkhasiat di antara semua bagian tanaman","Dominasi daun menguntungkan kelestarian karena panen daun umumnya tidak mematikan tanaman, berbeda dengan akar dan kulit batang","Akar dan kulit batang harus dilarang total dari penelitian","Persentase bagian tanaman menunjukkan dosis yang harus dipakai","Data bagian tanaman tidak berguna untuk prioritas riset"], a:1,
-        b:"Ini soal analisis (C4): angka di slide harus diterjemahkan. Panen <b>daun</b> bersifat terbarukan — tanaman tetap hidup; panen <b>akar/kulit batang</b> cenderung mematikan tanaman, apalagi bila spesiesnya liar. Jadi dominasi daun = pola pakai yang relatif lestari. Persentase bukan bukti khasiat tertinggi dan bukan dosis." },
-      { p:"P4", topik:"Use report · Soal 29 · C2",
-        q:"Pada survei Addi et al. (2024), spesies dengan use report tertinggi adalah Paris polyphylla (202), disusul Taxillus sutchuenensis (183) dan Artemisia indica (149).\n\nMakna temuan ini untuk penelitian lanjutan adalah:",
-        o:["Paris polyphylla terbukti berkhasiat secara klinis","Paris polyphylla adalah prioritas utama untuk diteliti lebih lanjut karena paling banyak dilaporkan penggunaannya oleh informan","Use report menunjukkan kadar senyawa aktif tertinggi","Spesies dengan use report rendah harus dihapus dari daftar obat","Ketiga spesies itu termasuk suku Araliaceae"], a:1,
-        b:"<b>Use report</b> = jumlah laporan penggunaan dari informan. Nilai tertinggi berarti spesies itu paling menonjol dalam praktik empiris masyarakat → <b>prioritas penelusuran lanjutan</b>, bukan bukti khasiat klinis. Jebakan terakhir: ketiga spesies itu hasil survei umum, <b>bukan</b> contoh Araliaceae — jangan tertukar dengan konteks slidenya." },
-
-      /* ---------- P5 ---------- */
-      { p:"P5", topik:"Hitung ICF · Soal 35 · C3",
-        q:"Suatu kategori penyakit memiliki Nur = 50 use report dan Nt = 5 takson yang digunakan.\n\nNilai ICF kategori tersebut adalah: (rumus ICF = (Nur − Nt) / (Nur − 1))",
-        o:["0,75","0,82","0,90","0,92","1,00"], a:3,
-        b:"Hitung: (50 − 5) / (50 − 1) = 45 / 49 = <b>0,92</b>. Nilai mendekati 1 berarti informan sangat sepakat — banyak laporan menumpuk pada sedikit takson. Di studi Al Baha, ICF tertinggi adalah kategori infeksi virus (0,93). Ingat: rumus ini <b>tidak tercetak di slide</b>, tapi terverifikasi dari tabelnya." },
-      { p:"P5", topik:"Hitung ROP · Soal 38 · C3",
-        q:"Suatu spesies memiliki RPL = 0,8 dan Fidelity Level (FL) = 75.\n\nNilai Rank Order Priority (ROP) spesies tersebut adalah:",
-        o:["15","60","75","80","155"], a:1,
-        b:"Satu-satunya rumus yang tercetak eksplisit di slide P5: <b>ROP = RPL × FL</b> = 0,8 × 75 = <b>60</b>. RPL berskala 0–1 (1 = populer), FL dalam persen. Sebagai pembanding, ROP tertinggi di tabel slide adalah Curcuma longa = 100 — kandidat utama skrining senyawa bioaktif." },
-      { p:"P5", topik:"Fidelity Level · Soal 37 · C3",
-        q:"Suatu spesies memiliki Fidelity Level (FL) sebesar 100%.\n\nInterpretasi yang tepat adalah:",
-        o:["Spesies itu disebut oleh 100 informan","Seluruh informan yang menyebut spesies itu menggunakannya hanya untuk satu kategori kegunaan yang sama","Spesies itu adalah yang paling populer di wilayah studi","Kadar senyawa aktifnya mencapai 100% dari standar","Spesies itu aman untuk semua indikasi"], a:1,
-        b:"FL mengukur kesetiaan penggunaan: proporsi informan untuk <b>kegunaan utama</b> dibanding semua kegunaan. FL 100% = spesies hanya dipakai untuk <b>satu kategori</b> — sangat spesifik, kandidat kuat untuk ditelusuri senyawa bioaktifnya. FL bukan jumlah informan (itu ranah RPL/use report) dan bukan kadar." },
-      { p:"P5", topik:"Metode kualitatif vs kuantitatif · Soal 33–34 · C2/C3",
-        q:"Peneliti ingin menggali alasan budaya di balik pemilihan tanaman oleh dukun dan tetua adat melalui diskusi kelompok dan pengelompokan kartu oleh informan.\n\nPendekatan yang paling sesuai adalah:",
-        o:["Kuantitatif, dengan menghitung ICF dan ROP","Kualitatif, misalnya FGD dan pile sorting","Kuantitatif, dengan menghitung UV dan FIV","Survei tertutup berskala besar tanpa wawancara","Uji laboratorium fitokimia langsung"], a:1,
-        b:"Pertanyaannya tentang <b>alasan dan makna</b> — itu wilayah kualitatif: PRA, <b>pile sorting</b>, <b>FGD</b>, wawancara semi-terstruktur. Kelebihannya: dalam, fleksibel, data kaya. Kekurangannya: subjektif dan sulit digeneralisasi. Indeks seperti ICF/ROP/UV/FIV adalah alat kuantitatif untuk data yang sudah terkumpul dan terstruktur." },
-
-      /* ---------- P6 ---------- */
-      { p:"P6", topik:"Apiaceae & pegagan · Soal 42–45 · C2",
-        q:"Pernyataan yang benar tentang suku Apiaceae dan contohnya di slide P6 adalah:",
-        o:["Perbungaannya kapitulum dan contohnya krisan","Herba aromatik berbatang berongga dengan bunga payung (umbel); contohnya pegagan dengan senyawa penanda asiatikosida","Buahnya polong dan contohnya kedawung","Didominasi pohon jambu-jambuan; contohnya cengkeh","Penandanya ginsenosida tipe dammaran"], a:1,
-        b:"Ciri Apiaceae: <b>herba aromatik, daun majemuk, batang berongga, bunga payung (umbel)</b>. Contoh utamanya pegagan (<i>Centella asiatica</i>) dengan penanda <b>asiatikosida</b> (C₄₈H₇₈O₁₉), madekasosida, asam asiatat, dan asam madekasat. Kapitulum itu Asteraceae, polong itu Fabaceae, ginsenosida itu Araliaceae." },
-      { p:"P6", topik:"Asteraceae · Soal 42 · C2",
-        q:"Di slide P6 tertulis perbungaan Asteraceae adalah “Umbelliferae”.\n\nSikap yang benar saat menghadapi soal UTS tentang hal ini adalah:",
-        o:["Ikuti slide persis — Asteraceae memang Umbelliferae","Itu kesalahan slide: Umbelliferae (bunga payung) adalah ciri Apiaceae, sedangkan perbungaan Asteraceae adalah kapitulum","Keduanya benar karena kapitulum sama dengan umbel","Asteraceae tidak memiliki perbungaan khas","Umbelliferae adalah ciri Fabaceae"], a:1,
-        b:"Ini kesalahan slide yang sudah terkonfirmasi saat studi bahan: <b>kapitulum</b> (bunga majemuk cawan) = Asteraceae — suku terbesar di P6 dengan 1.620 marga dan >23.600 spesies, contohnya krisan dengan senyawa asam klorogenat. <b>Umbel</b> = Apiaceae. Di lembar jawaban, pakai definisi baku." },
-      { p:"P6", topik:"Araliaceae & ginseng · Soal 47–48 · C2",
-        q:"Pernyataan yang benar tentang ginseng (Panax ginseng, Araliaceae) menurut slide P6 adalah:",
-        o:["Senyawa penandanya asiatikosida dari pegagan","Ginsenosidanya terbagi menjadi tipe dammaran (mis. Rb₁, Rg₁, Re) dan tipe oleanan, dan sebagian ginsenosida terbukti menghambat CYP3A","Semua ginsenosida menghambat CYP3A dengan kekuatan sama","Ginseng termasuk suku Asteraceae","Ginsenosida adalah golongan fenilpropanoid"], a:1,
-        b:"Ginsenosida dibagi dua kerangka: <b>dammaran</b> — kelompok protopanaksadiol (Rb₁, Rb₂, Rc, Compound-K) dan protopanaksatriol (Re, Rg₁, Rg₂) — serta <b>oleanan</b>. Data slide menunjukkan hanya sebagian yang menghambat CYP3A secara kompetitif (mis. Rg₂ Ki 86,4 µM; 20(S)-protopanaksatriol Ki 3,2 µM), sedangkan Rb₁, Rb₂, Rc, Re, Rg₁ tidak menghambat. Ini contoh nyata interaksi herbal–obat di level enzim." },
-
-      /* ---------- P7 ---------- */
-      { p:"P7", topik:"Fabaceae & kedawung · Soal 52 · C2",
-        q:"Pernyataan yang benar tentang Fabaceae dan contohnya di slide P7 adalah:",
-        o:["Buahnya kapitulum dan tidak berinteraksi dengan tanah","Polong-polongan berbuah polong dengan bintil akar pemfiksasi nitrogen; minyak biji kedawung diisolasi dengan Soxhlet dan mengandung lupeol serta campesterol","Contohnya lavender dengan penanda linalool","Minyak biji kedawung diperoleh dengan destilasi uap langsung","Kedawung termasuk suku Myrtaceae"], a:1,
-        b:"Ciri Fabaceae: <b>buah polong + bintil akar yang memfiksasi N₂</b>; fitokimianya alkaloid, flavonoid, saponin, tanin, steroid. Contoh di slide: kedawung (<i>Parkia roxburghii</i>) — minyak bijinya diekstraksi dengan <b>Soxhlet</b>, mengandung lupeol dan campesterol. Lavender = Lamiaceae, cengkeh = Myrtaceae." },
-      { p:"P7", topik:"Lamiaceae & lavender · Soal 54 · C3",
-        q:"Sebuah lab ingin memperoleh minyak lavender dengan pelarut yang mudah dipisahkan dan tidak meninggalkan residu beracun, untuk produk aromaterapi premium.\n\nTeknik penyarian yang paling sesuai dari yang dibahas di slide P7 adalah:",
-        o:["Maserasi dengan etanol teknis","Gas superkritis (CO₂ superkritis)","Dekoksi dengan air mendidih lama","Perkolasi dengan pelarut klorinasi","Enfleurage dengan lemak hewani"], a:1,
-        b:"Empat teknik yang dibahas slide untuk lavender: destilasi uap, destilasi vakum, maserasi, dan <b>gas superkritis (CO₂)</b>. CO₂ superkritis unggul untuk produk premium: selektif, suhu rendah, dan CO₂ kembali menjadi gas saat tekanan diturunkan sehingga <b>tidak menyisakan residu pelarut</b>. Catatan: slide menulisnya “Hypercritical” — ejaan bakunya <i>Supercritical</i>. Kandungan lavender: linalool ±33,6% dan linalyl acetate ±39,6%." },
-      { p:"P7", topik:"Myrtaceae, cengkeh & eugenol · Soal 55–56 · C3",
-        q:"Pernyataan yang benar tentang penyarian cengkeh dan eugenol menurut slide P7 adalah:",
-        o:["Metode tercepat adalah hidrodestilasi biasa (HD) tanpa bantuan apa pun","Kondisi optimum U-MHD: ultrasonik 40 °C selama 45 menit, microwave 400 W, rasio cengkeh : air 1 : 20; eugenol adalah fenilpropanoid dan isolasinya memakai prinsip asam–basa (KOH lalu HCl)","Eugenol adalah seskuiterpen yang diisolasi dengan kromatografi kolom saja","Rasio bahan : air optimum adalah 1 : 2","Microwave selalu menurunkan kadar eugenol"], a:1,
-        b:"Tiga fakta satu paket dari slide: (1) kondisi optimum persis <b>40 °C · 45 menit · 400 W · 1 : 20</b>; (2) metode gabungan ultrasonik + microwave (U-MHD) menaikkan eugenol dari ±72% (HD) ke ±79%; (3) <b>eugenol = fenilpropanoid</b> bergugus fenol — dengan KOH ia menjadi fenoksida yang larut air, lalu HCl mengasamkannya kembali menjadi eugenol murni. Itulah prinsip isolasi asam–basanya." }
-    ];
+ {
+  "no": 1,
+  "p": "P1",
+  "topik": "Klasifikasi WHO",
+  "lvl": "C2",
+  "src": "P1 hlm. 18",
+  "sup": false,
+  "q": "Suatu ramuan Ayurveda terdokumentasi lama, memiliki teori dan konsepnya sendiri, dan diakui oleh negara. Bentuk, dosis, dan indikasinya tidak diubah dari bentuk tradisionalnya.\n\nProduk tersebut termasuk kelompok WHO yang mana?",
+  "o": [
+   "Obat herbal pribumi",
+   "Obat herbal dalam sistem",
+   "Obat herbal termodifikasi",
+   "Produk impor berbasis herbal",
+   "Obat herbal terstandar"
+  ],
+  "a": 1,
+  "b": "Kuncinya ada dua: <b>teori/konsep sendiri + pengakuan negara</b> — itu definisi kelompok <b>dalam sistem</b> (Ayurveda, Unani, Siddha). Bukan termodifikasi karena tidak ada satu pun dari 7 aspek yang diubah (bentuk, dosis, sediaan, cara pemberian, bahan, cara pembuatan, indikasi). Bukan pribumi karena sudah punya sistem teori formal, bukan sekadar dikenal komunitas lokal."
+ },
+ {
+  "no": 2,
+  "p": "P1",
+  "topik": "Pola perkembangan obat",
+  "lvl": "C2",
+  "src": "P1 hlm. 21–22",
+  "sup": false,
+  "q": "Di slide: 25% resep obat di AS mengandung ≥1 senyawa asal tumbuhan, dan 39% dari 520 obat baru (1983–1994) adalah bahan alam atau turunannya. Contohnya aspirin dari kulit willow, kinin dari kulit kina, digoksin dari foxglove.\n\nUrutan pola perkembangan yang benar adalah:",
+  "o": [
+   "Senyawa murni → bahan utuh → ekstrak pekat → sintetis",
+   "Bahan utuh → senyawa murni → ekstrak pekat → sintetis",
+   "Bahan utuh → ekstrak pekat → senyawa murni → sintetis/semisintetis",
+   "Ekstrak pekat → bahan utuh → sintetis → senyawa murni",
+   "Sintetis → senyawa murni → ekstrak pekat → bahan utuh"
+  ],
+  "a": 2,
+  "b": "Empat tahap persis di slide: <b>(1) bahan utuh</b> dipakai empiris → <b>(2) ekstrak pekat</b> agar kekuatan & keseragaman efek naik → <b>(3) senyawa murni</b> diisolasi sebagai prototipe → <b>(4) sintetis/semisintetis</b> dengan aktivitas lebih kuat. Contoh lain di slide: morfin–opium, reserpin–pule pandak, paklitaksel–Taxus."
+ },
+ {
+  "no": 3,
+  "p": "P1",
+  "topik": "Herbal vs konvensional",
+  "lvl": "C2",
+  "src": "P1 hlm. 25",
+  "sup": false,
+  "q": "Berdasarkan tabel perbandingan 6 aspek di slide P1, pernyataan yang paling tepat adalah:",
+  "o": [
+   "Semua produk herbal terbukti bekerja sinergis dan meredam toksisitas",
+   "Herbal bekerja multitarget dengan komposisi kompleks dan keseragaman antar-batch yang bervariasi, sedangkan konvensional umumnya satu senyawa tunggal dengan target spesifik dan keseragaman tinggi — namun bukti sinergi & buffering baru ditunjukkan pada sebagian sediaan",
+   "Herbal dan konvensional sama dalam komposisi, cara kerja, dan keseragaman",
+   "Herbal selalu berisi satu senyawa tunggal, konvensional multi-komponen",
+   "Herbal tidak bervariasi antar-batch, konvensional yang bervariasi"
+  ],
+  "a": 1,
+  "b": "Ini jebakan yang hanya ketahuan kalau membaca catatan kaki slide: bukti sinergi & <i>buffering</i> <b>baru ditunjukkan pada sebagian sediaan — belum dapat digeneralisasi</b> ke semua produk herbal. Jadi pilihan yang menggeneralisasi (“semua terbukti sinergis”) salah, dan sisanya terbalik atau menyamakan keduanya."
+ },
+ {
+  "no": 4,
+  "p": "P1",
+  "topik": "“Alami belum tentu aman”",
+  "lvl": "C4",
+  "src": "P1 hlm. 27",
+  "sup": false,
+  "q": "Herba X secara tradisional dipakai jangka pendek untuk gejala akut. Kini dikonsumsi setiap hari selama berbulan-bulan untuk pencegahan dan pelangsingan, tanpa pengawasan tenaga kesehatan.\n\nFaktor yang paling meningkatkan risiko keamanannya adalah:",
+  "o": [
+   "Perubahan nama produk",
+   "Pola pakai berubah — durasi menjadi jangka panjang dan indikasi bergeser ke pencegahan/pelangsingan",
+   "Penyimpanan di tempat yang sejuk",
+   "Penggunaan hanya pada pagi hari",
+   "Perubahan bentuk sediaan saja, tanpa perubahan durasi atau dosis"
+  ],
+  "a": 1,
+  "b": "Data keamanan tradisional hanya berlaku pada konteks asalnya. Begitu durasi jadi kronis dan indikasi bergeser, paparan kumulatif naik dan toksisitas lambat (hati, ginjal) bisa muncul. Contoh persis di slide: <b>efedra untuk penurun berat badan</b>. Enam isu keamanan di slide: logam berat, BKO tak tercantum, salah identifikasi (Aristolochia; >50% “Echinacea” AS 1980–1991 ternyata Parthenium), mikotoksin (Aspergillus flavus pada 18% dari 62 sampel), interaksi herbal–obat, dan pola pakai berubah."
+ },
+ {
+  "no": 5,
+  "p": "P1",
+  "topik": "Mutu simplisia",
+  "lvl": "C3",
+  "src": "P1 hlm. 28",
+  "sup": false,
+  "q": "Dua batch simplisia dari lokasi tumbuh, waktu panen, dan cara pengeringan yang berbeda ternyata kadarnya berbeda jauh.\n\nLangkah pengendalian mutu yang paling tepat menurut slide adalah:",
+  "o": [
+   "Campur saja kedua batch tanpa pengujian",
+   "Terima batch yang warnanya lebih cerah",
+   "Gunakan nama ilmiah (Latin), lakukan autentikasi organoleptik & mikroskopik, standardisasi dengan senyawa penanda, dan terapkan cara pembuatan yang baik",
+   "Naikkan dosis batch berkadar rendah 2 kali lipat tanpa standardisasi",
+   "Ganti nama Latinnya agar lolos"
+  ],
+  "a": 2,
+  "b": "Empat faktor penentu mutu di slide: <b>lokasi tumbuh, kondisi tumbuh, waktu panen, dan pengolahan</b>. Pengendaliannya: autentikasi identitas (nama Latin, organoleptik, mikroskopik, sidik jari kromatografi), tetapkan spesifikasi bahan baku, standardisasi kadar senyawa penanda, dan jalankan GACP/CPOTB. Jebakan: pengeringan <b>bukan</b> faktor utama tersendiri — ia sub-butir faktor Pengolahan."
+ },
+ {
+  "no": 6,
+  "p": "P1",
+  "topik": "Dari klaim empiris ke bukti ilmiah / EBM",
+  "lvl": "C4",
+  "src": "P1 hlm. 30–31",
+  "sup": false,
+  "q": "Sebuah produk goldenseal diklaim berkhasiat karena senyawa aktifnya, berberin dan hidrastin, menunjukkan aktivitas kuat pada uji in vitro. Namun, menurut slide, berberin dan hidrastin dari goldenseal hampir tidak terabsorpsi per oral. Produsen tetap memasarkan produk itu dengan mengandalkan testimoni pengguna yang merasa membaik.\n\nMenurut prinsip Evidence-Based Medicine (EBM), kelemahan utama klaim tersebut dan jenis bukti yang diperlukan adalah:",
+  "o": [
+   "Klaim sudah cukup karena aktivitas in vitro membuktikan khasiat oral; tidak perlu bukti lain",
+   "Klaim lemah karena aktivitas in vitro tidak menjamin khasiat oral bila senyawa hampir tidak terabsorpsi; bukti yang diperlukan adalah uji klinis terkontrol, setelah produk memenuhi cara pembuatan yang baik dan uji praklinik",
+   "Klaim lemah karena testimoni pengguna terlalu banyak; bukti yang diperlukan adalah testimoni yang lebih sedikit",
+   "Klaim sudah cukup karena EBM hanya memerlukan keahlian klinis, tanpa bukti riset",
+   "Klaim lemah karena produk belum diuji pada hewan; bukti yang diperlukan hanyalah uji toksisitas akut"
+  ],
+  "a": 1,
+  "b": "EBM adalah irisan tiga komponen: bukti riset terbaik, keahlian klinis, serta nilai & preferensi pasien (P1 hlm. 30, diagram Venn). Anekdot/pengalaman empiris berguna sebagai petunjuk, tetapi tidak menggantikan uji klinis. Uji klinis terkontrol adalah metode pilihan untuk membuktikan khasiat & keamanan, dengan prinsip yang sama seperti obat senyawa tunggal. Contoh persis di slide: berberin & hidrastin dari goldenseal hampir tidak terabsorpsi per oral — jadi aktivitas in vitro tidak otomatis berarti khasiat oral, karena rantai yang putus adalah bioavailabilitas (absorpsi), bukan aktivitas senyawanya. Syarat awal sebelum uji pada manusia: produk harus memenuhi cara pembuatan yang baik dan uji praklinik. Konteks biaya/waktu bukti (P1 hlm. 31): penemuan obat baru rata-rata >10 tahun, biaya >US$800 jt, dan hanya 1 : 5.000 senyawa lead yang lolos hingga disetujui. <b>Catatan:</b> Di luar slide — suplemen, nama Latin goldenseal, angka persen absorpsi berberin/hidrastin, dan penjelasan desain uji klinis (randomisasi, kontrol, blinding) tidak ada di slide."
+ },
+ {
+  "no": 7,
+  "p": "P2",
+  "topik": "Tren & faktor pendorong penggunaan obat herbal",
+  "lvl": "C2",
+  "src": "P2 hlm. 6–8",
+  "sup": false,
+  "q": "Seorang konsumen memilih obat herbal karena yakin produk \"alami\" pasti lebih aman, kecewa pada obat modern karena hasilnya kurang memuaskan dan harganya mahal, sering melakukan swamedikasi karena kurang waktu ke dokter dan \"berhasil untuk teman saya\", serta terpengaruh iklan di media massa yang memberi kesan kredibel.\n\nFaktor pendorong yang dominan dalam perilaku konsumen tersebut adalah:",
+  "o": [
+   "Preferensi \"alami\", kekecewaan pada obat modern, swamedikasi, serta iklan & pemasaran",
+   "Kewajiban resep dokter, harga obat herbal yang selalu lebih mahal, dan larangan penggunaan obat modern",
+   "Integrasi herbal ke layanan medis formal, kurikulum kedokteran, dan asuransi kesehatan",
+   "Ketersediaan data uji klinis untuk semua produk herbal dan pengawasan farmakovigilans yang kuat",
+   "Penurunan pasar herbal global dan berkurangnya minat masyarakat pada pengobatan tradisional"
+  ],
+  "a": 0,
+  "b": "Empat faktor pendorong menurut P2 hlm. 8: (1) preferensi \"alami\" — keyakinan (keliru) bahwa produk alami lebih unggul & aman; (2) kecewa pada obat modern — hasil kurang memuaskan, efek samping, dan harga obat yang tinggi; (3) swamedikasi — kurang waktu ke dokter, takut salah diagnosis, \"berhasil untuk teman saya\"; (4) iklan & pemasaran — media massa memberi kesan kredibel, menyasar anak, remaja, hingga lansia. Angka tren di slide: ≥80% penduduk dunia memanfaatkan obat herbal untuk sebagian layanan kesehatan primer; penjualan produk herbal global US$60 → 83 M pada 2000 → 2008, tumbuh 3–12% per tahun; orang dewasa AS menggunakan CAM 34% → 42% (1990 → 1997) dengan belanja herbal ± US$5,1 miliar; prevalensi pengobatan komplementer di Eropa ± 50% (P2 hlm. 6). Penggunaan per negara (P2 hlm. 7, data WHO 2002): Prancis 75%, Kanada 70%, Australia 48%, AS 42%, Belgia 38%."
+ },
+ {
+  "no": 8,
+  "p": "P2",
+  "topik": "Masalah mutu eksternal vs internal",
+  "lvl": "C2",
+  "src": "P2 hlm. 12, 14–18",
+  "sup": false,
+  "q": "Dalam pengawasan produk herbal ditemukan empat temuan berikut: (1) 26,0% sampel tongkat ali di Malaysia melebihi batas merkuri (Hg); (2) 23,7% dari 2.609 sampel obat tradisional Tiongkok di Taiwan mengandung ≥1 obat sintetis; (3) <i>Stephania tetrandra</i> (\"Fangji\") tertukar <i>Aristolochia fangchi</i> sehingga menimbulkan nefropati asam aristolokat pada >100 perempuan pengguna produk pelangsing; (4) kadar alkaloid <i>Atropa belladonna</i> 1,3% pada tanaman yang tumbuh di Kaukasus, tetapi hanya 0,3% pada tanaman yang tumbuh di Swedia.\n\nPasangan pengelompokan yang benar untuk keempat temuan tersebut adalah:",
+  "o": [
+   "(1), (2), (3) masalah eksternal; (4) masalah internal",
+   "(1), (2) masalah internal; (3), (4) masalah eksternal",
+   "Keempatnya masalah internal karena semuanya terkait kandungan tanaman",
+   "Keempatnya masalah eksternal karena semuanya terjadi di luar tanaman",
+   "(1), (4) masalah eksternal; (2), (3) masalah internal"
+  ],
+  "a": 0,
+  "b": "Masalah eksternal (P2 hlm. 14–17): kontaminasi — contoh logam berat, tongkat ali Malaysia (Hg) 26,0%, simplisia Tiongkok 24,0%, <i>Eugenia dyeriana</i> Malaysia (Pb) 22,0%, Ayurveda di toko Boston 20,0%; adulterasi — \"selalu bersifat curang, menambahkan bahan yang tidak semestinya\", 23,7% dari 2.609 sampel di Taiwan mengandung ≥1 obat sintetis (tersering: kafein, asetaminofen, indometasin, hidroklorotiazid, prednisolon); salah identifikasi — terjadi tanpa sengaja, sering karena nama umum yang membingungkan, contoh \"Fangji\" tertukar <i>Aristolochia fangchi</i> → nefropati asam aristolokat pada >100 perempuan. Masalah internal (P2 hlm. 12 & 18): kompleksitas fitokimia (satu ekstrak dapat mengandung ratusan senyawa; >28 ginsenosida telah diisolasi dari <i>P. ginseng</i>) dan ketidakseragaman kandungan karena faktor intrinsik (spesies & genetik, organ tanaman, variasi harian & musiman) dan ekstrinsik (tanah, cahaya, air, suhu, panen, penyimpanan) — contoh kadar alkaloid <i>Atropa belladonna</i> 1,3% (Kaukasus) vs 0,3% (Swedia), dan minyak atsiri <i>Mentha × piperita</i> 1,43% (cahaya normal) vs 1,09% (ternaungi). <b>Catatan:</b> Di luar slide — suplemen, nilai batas cemaran (batas Hg/Pb/As, batas residu pestisida, batas mikroba USP) tidak disebut di slide, hanya persentase sampel yang melebihi batas."
+ },
+ {
+  "no": 9,
+  "p": "P2",
+  "topik": "Variabilitas kadar senyawa penanda produk komersial",
+  "lvl": "C3",
+  "src": "P2 hlm. 13, 23",
+  "sup": false,
+  "q": "Hasil pengujian produk komersial di Amerika Utara menunjukkan kadar hiperisin St John's wort 22–140% dari klaim label (spektrofotometri) dan 47–165% (HPLC), silimarin milk thistle 58–116%, disolusi silimarin 1 jam pada 9 produk 0–100%, serta kadar ginsenosida pada 232 produk <i>Panax ginseng</i> 0–13,5% dengan ±26% produk tidak memenuhi klaim label.\n\nUntuk mengatasi variabilitas sebesar itu, langkah yang paling tepat menurut slide adalah:",
+  "o": [
+   "Menerima semua batch tanpa pengujian karena variasi kadar adalah hal yang wajar pada produk herbal",
+   "Mencampur beberapa batch untuk menyeimbangkan kadar, memakai ekstrak terstandar senyawa penanda (mis. St John's wort WS 5570: 3–6% hiperforin, 0,12–0,28% hiperisin), serta sidik jari kromatografi untuk formula multiherba, dalam rantai GACP–GMP/CPOTB–GSP–farmakovigilans",
+   "Menurunkan klaim label hingga 0% agar tidak ada produk yang gagal memenuhi klaim",
+   "Mengganti semua senyawa penanda dengan pewarna agar kadarnya tampak seragam",
+   "Hanya menguji disolusi silimarin dan mengabaikan kadar senyawa penanda lainnya"
+  ],
+  "a": 1,
+  "b": "Data variabilitas ada di P2 hlm. 13: hiperisin (spektrofotometri) 22–140%, hiperisin (HPLC) 47–165%, silimarin 58–116%, disolusi silimarin 1 jam 0–100%, ginsenosida 0–13,5% pada 232 produk <i>Panax ginseng</i>, ±26% produk ginseng tidak memenuhi klaim label, dan variasi kadar ginsenosida & eleuterosida 15–200× pada 25 produk ginseng. Solusi di P2 hlm. 23 (rantai jaminan mutu hulu ke hilir): GACP (Good Agricultural & Collection Practices, WHO 2003), GMP/CPOTB (cara pembuatan yang baik, WHO 2006), GSP (Good Supply Practices), dan pascapasar (farmakovigilans & surveilans mutu). Untuk masalah internal: mencampur beberapa batch untuk menyeimbangkan kadar, ekstrak terstandar senyawa penanda — contoh St John's wort WS 5570: 3–6% hiperforin, 0,12–0,28% hiperisin — dan sidik jari kromatografi untuk formula multiherba. <b>Catatan:</b> Di luar slide — suplemen, rentang toleransi kadar penanda yang diizinkan (berapa % deviasi dari klaim yang masih diterima) dan prinsip/cara kerja sidik jari kromatografi tidak ada di slide; hanya satu contoh ekstrak terstandar (WS 5570) yang disebutkan."
+ },
+ {
+  "no": 10,
+  "p": "P2",
+  "topik": "Interaksi herbal–obat",
+  "lvl": "C4",
+  "src": "P2 hlm. 20–21",
+  "sup": false,
+  "q": "Seorang pasien transplantasi ginjal rutin minum siklosporin. Ia juga mengonsumsi St John's wort setiap hari karena merasa cemas. Beberapa minggu kemudian kadar siklosporinnya turun drastis dan muncul tanda-tanda rejeksi transplan. Pasien lain, seorang lansia yang minum warfarin, mengonsumsi ginkgo dan bawang putih bersama aspirin.\n\nMekanisme interaksi dan akibat klinis yang paling tepat untuk kedua kasus tersebut adalah:",
+  "o": [
+   "St John's wort menghambat CYP3A4 sehingga kadar siklosporin naik dan menyebabkan toksisitas; ginkgo dan bawang putih menurunkan risiko perdarahan",
+   "St John's wort menginduksi CYP3A4, CYP2C9, dan P-glikoprotein sehingga paparan obat lain turun hingga ±70%; akibatnya kadar siklosporin/takrolimus turun dan berisiko rejeksi transplan, sedangkan ginkgo dan bawang putih bersama aspirin/warfarin meningkatkan risiko perdarahan, terutama pada lansia",
+   "St John's wort tidak berinteraksi dengan obat apa pun; penurunan kadar siklosporin pasti karena pasien lupa minum obat",
+   "Ginkgo dan bawang putih aman dikombinasikan dengan warfarin karena keduanya adalah bahan pangan",
+   "St John's wort hanya berinteraksi dengan vitamin, bukan dengan siklosporin, warfarin, atau kontrasepsi oral"
+  ],
+  "a": 1,
+  "b": "Menurut P2 hlm. 20, St John's wort menginduksi CYP3A4, CYP2C9, dan P-glikoprotein → paparan obat lain turun hingga ±70% dan berpotensi berinteraksi dengan ±50% obat konvensional. Contoh yang disebut: siklosporin & takrolimus (kadar turun, rejeksi transplan), warfarin, kontrasepsi oral, digoksin, teofilin, antiretroviral (indinavir, nevirapin), serta imatinib & taksan (kemoterapi); juga ↑ efek MAOI/SSRI dan ↑ fotosensitivitas. Ginkgo, bawang putih + aspirin/warfarin meningkatkan risiko perdarahan, terutama pada lansia. Konteks lansia: ±45% lansia minum 2–4 obat dan 97% memakai 1–4 ramuan herbal (\"polifarmasi + poliherbasi\"). Konteks komunikasi (P2 hlm. 21): hanya 34% pasien yang mengungkapkan penggunaan herbal kepada tenaga kesehatan, dan 20–77% pasien kanker tidak mengungkapkan penggunaan CAM, terutama karena tidak ditanya — implikasi bagi farmasis: tanyakan penggunaan herbal secara aktif dan tanpa menghakimi pada setiap penelusuran riwayat obat. <b>Catatan:</b> Di luar slide — suplemen, mekanisme induksi CYP/P-gp (mis. reseptor/jalur induksinya) hanya disebut, tidak dijelaskan di slide; mekanisme risiko perdarahan ginkgo/bawang putih juga tidak disebut (hanya \"meningkatkan risiko perdarahan\"); tidak ada contoh dosis, onset, atau durasi interaksi di slide."
+ },
+ {
+  "no": 11,
+  "p": "P2",
+  "topik": "Bahan kimia obat (BKO) dalam obat bahan alam",
+  "lvl": "C3",
+  "src": "P2 hlm. 29",
+  "sup": false,
+  "q": "Seorang konsumen membeli produk pelangsing yang diiklankan \"bekerja sangat cepat\". Menurut hasil pengawasan BPOM sepanjang 2025, 206 produk terbukti mengandung BKO dari 11.654 sampel obat bahan alam & suplemen kesehatan yang diuji, dan mayoritas tanpa izin edar atau mencantumkan nomor izin edar fiktif.\n\nBKO yang paling mungkin ditambahkan secara ilegal pada produk pelangsing tersebut adalah:",
+  "o": [
+   "Sildenafil, tadalafil, dan vardenafil — BKO untuk klaim stamina pria",
+   "Parasetamol, deksametason, natrium diklofenak, dan ibuprofen — BKO untuk klaim pegal linu",
+   "Sibutramin dan bisakodil — BKO untuk klaim pelangsing",
+   "Glibenklamid — BKO untuk klaim \"kencing manis\"",
+   "Siproheptadin dan deksametason — BKO untuk klaim penggemuk"
+  ],
+  "a": 2,
+  "b": "Daftar BKO per klaim di P2 hlm. 29 (BPOM, 2025): stamina pria — sildenafil, tadalafil, vardenafil, yohimbin, parasetamol, kafein; pegal linu — parasetamol, deksametason, natrium diklofenak, ibuprofen; pelangsing — sibutramin, bisakodil; penggemuk — siproheptadin, deksametason; \"kencing manis\" — glibenklamid. Data pengawasan: 206 produk terbukti mengandung BKO dari 11.654 sampel obat bahan alam & suplemen kesehatan yang diuji sepanjang 2025, mayoritas tanpa izin edar atau mencantumkan nomor izin edar fiktif. Latar adulterasi (P2 hlm. 16): 23,7% dari 2.609 sampel obat tradisional Tiongkok di Taiwan mengandung ≥1 obat sintetis, tersering kafein, asetaminofen, indometasin, hidroklorotiazid, dan prednisolon. <b>Catatan:</b> Di luar slide — suplemen, cara mendeteksi BKO (uji lab/metode), sanksi/regulasi penindakan BKO, tren tahunan BKO, dan jumlah produk per kategori klaim tidak ada di slide (hanya total 206 produk)."
+ },
+ {
+  "no": 12,
+  "p": "P2",
+  "topik": "Regulasi obat herbal di berbagai negara",
+  "lvl": "C2",
+  "src": "P2 hlm. 22",
+  "sup": false,
+  "q": "Suatu produk herbal di Amerika Serikat dipasarkan sebagai suplemen makanan tanpa persetujuan pra-pasar, dan FDA-lah yang harus membuktikan bahwa produk tersebut tidak aman. Di sisi lain, suatu produk herbal di Uni Eropa didaftarkan melalui jalur registrasi penggunaan tradisional berdasarkan Direktif 2004/24/EC, sedangkan di Jepang formula Kampo teregistrasi sebagai obat dan ditanggung asuransi kesehatan nasional.\n\nPernyataan yang paling tepat mengenai status produk herbal di ketiga negara tersebut adalah:",
+  "o": [
+   "Di AS produk herbal selalu diperlakukan sama seperti obat dan wajib persetujuan pra-pasar; di Uni Eropa tidak ada jalur registrasi penggunaan tradisional; di Jepang Kampo hanya dijual sebagai pangan",
+   "Di AS produk herbal dipasarkan sebagai suplemen makanan menurut DSHEA 1994 tanpa persetujuan pra-pasar; di Uni Eropa ada jalur registrasi penggunaan tradisional (Direktif 2004/24/EC); di Jepang formula Kampo teregistrasi sebagai obat",
+   "Di AS, Uni Eropa, dan Jepang, semua produk herbal diperlakukan sama persis sebagai obat dengan persyaratan yang identik",
+   "Di AS produk herbal dilarang beredar; di Uni Eropa hanya ada izin edar penuh tanpa jalur tradisional; di Jepang tidak ada regulasi Kampo",
+   "Di AS produk herbal wajib memiliki Natural Product Number 8 digit; di Uni Eropa produk herbal diatur DSHEA 1994; di Jepang Kampo tidak ditanggung asuransi"
+  ],
+  "a": 1,
+  "b": "Menurut P2 hlm. 22: Amerika Serikat — DSHEA 1994, suplemen makanan, tanpa persetujuan pra-pasar, FDA yang harus membuktikan produk tidak aman; Uni Eropa — Direktif 2004/24/EC, ada izin edar penuh, \"well-established use\", atau registrasi penggunaan tradisional; Jepang — formula Kampo teregistrasi sebagai obat, sisanya sebagai pangan dengan klaim kesehatan. Negara lain di slide yang sama: Kanada — Natural Health Products Regulations 2004, setiap produk memiliki Natural Product Number 8 digit; Australia — Listed / Registered / Exempt, wajib GMP dan label kadar konstituen terstandar; Tiongkok — registrasi TCM, jalur sederhana untuk formula dengan riwayat penggunaan kuat. Prinsip slide: \"Tanaman yang sama dapat menjadi pangan, pangan fungsional, suplemen, atau obat — tergantung negaranya.\" <b>Catatan:</b> Di luar slide — suplemen, kepanjangan DSHEA, syarat durasi penggunaan tradisional Uni Eropa, isi/prosedur Natural Health Products Regulations Kanada selain NPN 8 digit, dan perbedaan Listed vs Registered vs Exempt di Australia tidak ada di slide (deskripsi per negara hanya 1–2 baris)."
+ },
+ {
+  "no": 13,
+  "p": "P2",
+  "topik": "Hambatan hilirisasi & peta jalan obat herbal Indonesia",
+  "lvl": "C4",
+  "src": "P2 hlm. 27–28, 30",
+  "sup": false,
+  "q": "Sebuah tim peneliti berhasil mengisolasi senyawa aktif dari tanaman obat Indonesia dan mempublikasikannya di jurnal internasional, tetapi riset itu berhenti di publikasi dan tidak pernah menjadi produk Obat Herbal Terstandar (OHT) atau fitofarmaka. Saat ini Indonesia baru memiliki 78 produk OHT dan 21 produk fitofarmaka, padahal jamu tercatat >17.000 produk dan 94% bahan baku obat modern di Indonesia masih impor.\n\nAnalisis hambatan hilirisasi dan langkah strategis yang paling tepat menurut peta jalan di slide adalah:",
+  "o": [
+   "Hambatan utamanya adalah kurangnya publikasi; langkah strategisnya adalah berhenti meneliti dan hanya mengimpor produk jadi",
+   "Hambatan meliputi pengembangan produk yang lambat, mutu bahan baku yang tidak konsisten, data praklinik & klinik yang sering tidak memenuhi ketentuan (sebagian ditolak karena tidak kredibel), dan riset yang berhenti di publikasi; langkah strategisnya mengikuti peta jalan hulu–tengah–hilir: budidaya sesuai GACP dan bahan baku/ekstrak terstandar di hulu, riset praklinik & klinik yang kredibel serta CPOTB dan standardisasi di tengah, lalu registrasi OHT & fitofarmaka dan pemanfaatan dalam layanan formal/JKN di hilir",
+   "Tidak ada hambatan hilirisasi di Indonesia; 78 OHT dan 21 fitofarmaka sudah cukup dan tidak perlu ditambah",
+   "Hambatan utamanya adalah terlalu banyaknya jamu (>17.000 produk); langkah strategisnya adalah menghapus semua produk jamu",
+   "Hambatan utamanya adalah 94% bahan baku obat modern masih impor, sehingga solusinya adalah menghentikan seluruh impor tanpa membangun budidaya dan standardisasi"
+  ],
+  "a": 1,
+  "b": "Kendala fitofarmaka menurut BPOM (P2 hlm. 28): pengembangan produk lambat (dari riset ke produk butuh waktu & biaya besar), mutu tidak konsisten (bahan baku terstandar masih terbatas), data praklinik & klinik sering tidak memenuhi ketentuan dan sebagian ditolak karena data tidak kredibel, serta riset berhenti di publikasi (belum menembus standar OHT/fitofarmaka). Fakta pendukung: 94% bahan baku obat modern di Indonesia masih impor, padahal potensi hayati melimpah; tantangan struktural lain: tenaga medis belum banyak dibekali fitoterapi, penerimaan dalam layanan formal & JKN masih terbatas, dan budidaya berstandar GACP belum merata. Peta jalan (P2 hlm. 30): HULU — budidaya sesuai GACP, bahan baku & ekstrak terstandar, konservasi tanaman obat; TENGAH — riset praklinik & klinik yang kredibel, CPOTB & standardisasi, sinergi akademisi–industri–pemerintah; HILIR — registrasi OHT & fitofarmaka, pemanfaatan dalam layanan formal/JKN, farmakovigilans & edukasi publik. Jumlah produk terdaftar (P2 hlm. 27, PerBPOM No. 25/2023): jamu >17.000 produk (bukti empiris turun-temurun), OHT 78 produk (uji praklinik, bahan baku terstandar), fitofarmaka 21 produk (uji praklinik + uji klinik, bahan baku & produk jadi terstandar). <b>Catatan:</b> Di luar slide — suplemen, target angka/tahun/anggaran untuk tiap tahap peta jalan dan data jumlah riset/produk yang gagal naik kelas tidak ada di slide; tidak ada contoh produk fitofarmaka Indonesia yang berhasil sebagai studi kasus."
+ },
+ {
+  "no": 14,
+  "p": "P3",
+  "topik": "Kategori Jamu, OHT, dan Fitofarmaka",
+  "lvl": "C3",
+  "src": "P3 hlm. 16",
+  "sup": false,
+  "q": "Sebuah produk obat bahan alam dibuat dari simplisia yang telah dipakai turun-temurun di Indonesia. Keamanan dan khasiatnya telah dibuktikan secara ilmiah melalui uji praklinik, dan bahan bakunya telah distandarisasi, tetapi belum pernah diuji secara klinik pada manusia.\n\nProduk tersebut termasuk kategori yang mana?",
+  "o": [
+   "Jamu, karena bahan bakunya berasal dari pengetahuan tradisional Indonesia",
+   "Obat Herbal Terstandar (OHT), karena sudah ada bukti ilmiah uji praklinik dan bahan baku terstandarisasi, tetapi belum ada uji klinik",
+   "Fitofarmaka, karena khasiatnya sudah dibuktikan secara ilmiah",
+   "Obat tradisional impor, karena belum diuji klinik di Indonesia",
+   "Suplemen kesehatan, karena belum ada uji klinik"
+  ],
+  "a": 1,
+  "b": "Definisi menurut PerKa BPOM 2005 HK.00.05.41.1384 Bab I (P3 hlm. 16): Jamu adalah obat tradisional Indonesia (pembuktiannya empiris/turun-temurun); OHT adalah sediaan obat bahan alam yang telah dibuktikan keamanan dan khasiatnya secara ilmiah dengan uji praklinik dan bahan bakunya telah distandarisasi; Fitofarmaka adalah sediaan obat bahan alam yang telah dibuktikan keamanan dan khasiatnya secara ilmiah dengan uji praklinik DAN uji klinik, serta bahan baku dan produk jadinya telah distandarisasi. Jadi pembeda OHT vs fitofarmaka adalah ada/tidaknya uji klinik dan standardisasi produk jadi. Produk di soal sudah praklinik + bahan baku terstandarisasi, tetapi belum uji klinik, maka OHT — bukan fitofarmaka (C salah) dan bukan jamu (A salah, karena sudah ada pembuktian ilmiah praklinik). <b>Catatan:</b> Daftar klaim penandaan yang diperbolehkan per kategori tidak ada di slide P3 — tingkat pembuktian di atas hanya bisa disimpulkan dari definisi. Di luar slide — suplemen: klaim khasiat obat bahan alam kini diatur rinci dalam PerBPOM 30/2023 tentang Pedoman Klaim Khasiat Obat Bahan Alam, tidak ada di slide P3."
+ },
+ {
+  "no": 15,
+  "p": "P3",
+  "topik": "Industri dan usaha obat tradisional",
+  "lvl": "C3",
+  "src": "P3 hlm. 3–4, 10",
+  "sup": false,
+  "q": "Sebuah usaha kecil obat tradisional (UKOT) berencana memproduksi jamu dalam bentuk kapsul dan cairan obat dalam. Pemilik usaha bertanya jenis sarana yang tepat dan kewajiban apa yang melekat pada rencana tersebut.\n\nManakah pernyataan yang paling tepat?",
+  "o": [
+   "Usaha tersebut harus menjadi UMOT, dan tidak wajib memiliki apoteker penanggung jawab",
+   "Usaha tersebut dapat dijalankan sebagai UKOT, tetapi tidak boleh memproduksi kapsul karena kapsul hanya boleh dibuat IOT",
+   "Usaha tersebut dapat dijalankan sebagai UKOT, dan karena memproduksi kapsul dan/atau cairan obat dalam, wajib memiliki Apoteker sebagai penanggung jawab yang bekerja penuh",
+   "Usaha tersebut harus menjadi IEBA, karena IEBA khusus membuat sediaan kapsul sebagai produk akhir",
+   "Usaha tersebut dapat dijalankan sebagai UKOT tanpa apoteker, karena apoteker hanya wajib bagi IOT"
+  ],
+  "a": 2,
+  "b": "Definisi (P3 hlm. 3–4, Permenkes 006/2012): UKOT adalah usaha yang membuat semua bentuk sediaan obat tradisional, kecuali tablet dan efervesen — jadi kapsul dan cairan obat dalam BOLEH dibuat UKOT. UMOT (A salah) hanya boleh membuat param, tapel, pilis, cairan obat luar, dan rajangan, sehingga tidak boleh membuat kapsul. IEBA (D salah) adalah industri yang khusus membuat sediaan dalam bentuk ekstrak sebagai produk akhir, bukan kapsul. Kewajiban apoteker (P3 hlm. 10): UKOT yang memproduksi bentuk sediaan kapsul dan/atau cairan obat dalam wajib memiliki Apoteker sebagai penanggung jawab yang bekerja penuh. Izin UKOT diajukan kepada Kepala Dinas Kesehatan Provinsi (P3 hlm. 8). <b>Catatan:</b> Di luar slide — suplemen: PerBPOM 31/2022 memperbarui definisi UKOT menjadi tidak boleh membuat tablet, efervesen, suppositoria, dan kapsul lunak (di slide P3, berdasarkan Permenkes 006/2012, pengecualiannya hanya tablet dan efervesen). Untuk jawaban soal ini, patokan yang dipakai adalah isi slide."
+ },
+ {
+  "no": 16,
+  "p": "P3",
+  "topik": "Larangan dalam pembuatan obat tradisional",
+  "lvl": "C3",
+  "src": "P3 hlm. 10, 12",
+  "sup": false,
+  "q": "Seorang produsen merancang produk obat tradisional berupa cairan obat dalam dengan kandungan etanol 5%, dan menambahkan deksametason agar efek pegal linunya terasa cepat, tanpa mencantumkannya pada label.\n\nPelanggaran ketentuan apa yang terjadi pada rancangan produk tersebut?",
+  "o": [
+   "Tidak ada pelanggaran, karena etanol 5% masih aman dan deksametason boleh ditambahkan asalkan berkhasiat",
+   "Hanya pelanggaran penandaan, karena etanol dan deksametason sebenarnya boleh terkandung dalam obat tradisional",
+   "Pelanggaran larangan pembuatan: cairan obat dalam mengandung etanol lebih dari 1% dan mengandung bahan kimia hasil isolasi/sintetik yang berkhasiat obat (BKO) yang tidak dicantumkan pada label",
+   "Pelanggaran karena bentuk sediaan cairan obat dalam dilarang seluruhnya untuk obat tradisional",
+   "Pelanggaran karena produk jamu tidak boleh diklaim untuk pegal linu"
+  ],
+  "a": 2,
+  "b": "Larangan Permenkes 006/2012 (P3 hlm. 10): dilarang membuat obat tradisional yang mengandung bahan kimia hasil isolasi atau sintetik yang berkhasiat obat (BKO); dilarang membuat obat tradisional dalam bentuk intravaginal, tetes mata, sediaan parenteral, dan supositoria kecuali untuk wasir; serta dilarang membuat cairan obat dalam yang mengandung etanol lebih dari 1%. Larangan kandungan Permenkes 007/2012 (P3 hlm. 12) menegaskan hal yang sama: etil alkohol lebih dari 1% (kecuali bentuk tingtur yang pemakaiannya dengan pengenceran), BKO hasil isolasi/sintetik, narkotika atau psikotropika, dan bahan lain yang membahayakan kesehatan. Jadi etanol 5% pada cairan obat dalam SUDAH melanggar (batasnya 1%), dan deksametason adalah BKO. Pilihan D salah karena cairan obat dalam tidak dilarang — yang dilarang adalah kadar etanolnya di atas 1%."
+ },
+ {
+  "no": 17,
+  "p": "P3",
+  "topik": "Kriteria izin edar obat tradisional",
+  "lvl": "C2",
+  "src": "P3 hlm. 11",
+  "sup": false,
+  "q": "Sebuah produk obat tradisional diajukan untuk registrasi. Profilnya: bahan yang digunakan memenuhi persyaratan keamanan dan mutu; khasiatnya terbukti secara empiris dan turun-temurun; penandaannya berisi informasi yang objektif, lengkap, dan tidak menyesatkan; tetapi produk tersebut dibuat di sarana yang tidak menerapkan CPOTB.\n\nKriteria izin edar manakah yang belum dipenuhi produk tersebut?",
+  "o": [
+   "Bahan yang memenuhi persyaratan keamanan dan mutu",
+   "Dibuat dengan menerapkan CPOTB",
+   "Khasiat yang dibuktikan secara empiris, turun-temurun, dan/atau ilmiah",
+   "Penandaan berisi informasi yang objektif, lengkap, dan tidak menyesatkan",
+   "Memenuhi persyaratan Farmakope Herbal Indonesia (FHI)"
+  ],
+  "a": 1,
+  "b": "Kriteria produk yang dapat diberi izin edar menurut Permenkes 007/2012 (P3 hlm. 11) ada 5: (a) menggunakan bahan yang memenuhi persyaratan keamanan dan mutu; (b) dibuat dengan menerapkan CPOTB; (c) memenuhi persyaratan Farmakope Herbal Indonesia (FHI) atau persyaratan lain yang diakui; (d) berkhasiat yang dibuktikan secara empiris, turun-temurun, dan/atau secara ilmiah; (e) penandaan berisi informasi yang objektif, lengkap, dan tidak menyesatkan. Pada soal, kriteria (a), (d), dan (e) sudah terpenuhi, sedangkan pembuatan tanpa CPOTB melanggar kriteria (b). Kriteria Pasal 4 PerKa BPOM 2005 (P3 hlm. 18) juga menegaskan produk harus dibuat sesuai ketentuan CPOTB/CPOB yang berlaku. Izin edar berlaku 5 tahun dan dapat diperpanjang selama memenuhi persyaratan (P3 hlm. 11)."
+ },
+ {
+  "no": 18,
+  "p": "P3",
+  "topik": "Saintifikasi jamu",
+  "lvl": "C2",
+  "src": "P3 hlm. 7, 21 (sampul Permenkes 003/2010)",
+  "sup": false,
+  "q": "Seorang dokter di puskesmas, bersama dokter gigi dan tenaga kesehatan lainnya, melakukan penelitian terhadap ramuan jamu antihipertensi yang selama ini dipakai pasien secara turun-temurun. Penelitian dilakukan di fasilitas pelayanan kesehatan, setelah pasien memberikan persetujuan tindakan (informed consent), untuk menguji keamanan dan khasiat jamu tersebut secara ilmiah.\n\nKegiatan tersebut merupakan contoh dari apa, dan apa tujuannya?",
+  "o": [
+   "Uji praklinik fitofarmaka, dengan tujuan mendaftarkan produk sebagai fitofarmaka",
+   "Saintifikasi jamu, dengan tujuan memberikan landasan ilmiah (evidence based) atas penggunaan jamu secara empiris melalui penelitian berbasis pelayanan kesehatan",
+   "Sertifikasi CPOTB, dengan tujuan menjamin mutu pembuatan jamu di industri",
+   "Registrasi obat tradisional, dengan tujuan memperoleh izin edar 5 tahun",
+   "Pengawasan mutu jamu gendong, dengan tujuan melarang peredaran jamu racikan"
+  ],
+  "a": 1,
+  "b": "Saintifikasi jamu adalah pembuktian ilmiah jamu melalui penelitian berbasis pelayanan kesehatan (Permenkes 003/MENKES/PER/I/2010). Tujuannya: (1) memberikan landasan ilmiah (evidence based) penggunaan jamu secara empiris melalui penelitian berbasis pelayanan kesehatan; (2) mendorong terbentuknya jejaring dokter atau dokter gigi dan tenaga kesehatan lainnya sebagai peneliti dalam rangka upaya preventif, promotif, rehabilitatif, dan paliatif melalui penggunaan jamu; (3) meningkatkan kegiatan penelitian kualitatif terhadap pasien dengan penggunaan jamu; dan (4) meningkatkan penyediaan jamu yang aman, memiliki khasiat nyata yang teruji secara ilmiah, dan dimanfaatkan secara luas baik untuk pengobatan sendiri maupun dalam fasilitas pelayanan kesehatan. Jamu yang lolos program ini disebut Jamu Saintifik, yaitu ramuan jamu yang dinyatakan aman dan berkhasiat setara dengan obat standar berdasarkan hasil uji klinik. <b>Catatan:</b> Di luar slide — suplemen, regulasi terbaru: definisi, tujuan, dan prinsip saintifikasi jamu di atas berasal dari teks Permenkes 003/2010 itu sendiri; di slide P3 hanya ada nama dan nomor peraturan (hlm. 7) serta foto sampul peraturan (hlm. 21), tanpa satu pun isi, tujuan, atau prinsipnya."
+ },
+ {
+  "no": 19,
+  "p": "P3",
+  "topik": "Aspek CPOTB menurut PerBPOM 25/2021",
+  "lvl": "C4",
+  "src": "Di luar slide — suplemen PerBPOM 25/2021 (CPOTB)",
+  "sup": true,
+  "q": "Sebuah Industri Obat Tradisional (IOT) diaudit oleh Badan POM. Ditemukan: tidak ada prosedur produksi tertulis dan tidak ada pencatatan per bets (tidak ada dokumentasi), tidak ada bagian yang melakukan pengawasan mutu terhadap bahan dan produk jadi, serta tidak ada prosedur penanganan keluhan dan penarikan produk dari peredaran.\n\nMenurut PerBPOM 25/2021 tentang Penerapan CPOTB, analisis manakah yang paling tepat atas temuan tersebut?",
+  "o": [
+   "Tidak ada pelanggaran, karena CPOTB bersifat sukarela bagi IOT dan hanya wajib bagi UMOT",
+   "IOT dan IEBA wajib menerapkan CPOTB; temuan tersebut melanggar aspek dokumentasi, pengawasan mutu, serta keluhan dan penarikan produk — tiga dari 16 aspek CPOTB",
+   "IOT hanya wajib menerapkan 3 aspek CPOTB, yaitu personalia, bangunan, dan peralatan, sehingga temuan di atas bukan pelanggaran",
+   "CPOTB hanya berlaku bagi UKOT dan UMOT secara bertahap, sehingga IOT tidak terikat aturan ini",
+   "Temuan tersebut hanya melanggar aspek sanitasi dan higiene, dan cukup diperbaiki dengan membersihkan ruang produksi"
+  ],
+  "a": 1,
+  "b": "PerBPOM 25/2021 Pasal 2–3: penerapan CPOTB berlaku untuk IOT dan IEBA, dan IOT serta IEBA dalam pembuatan obat tradisional wajib menerapkan CPOTB. CPOTB meliputi 16 aspek: (a) sistem mutu Industri Obat Tradisional; (b) personalia; (c) bangunan-fasilitas; (d) peralatan; (e) produksi; (f) cara penyimpanan dan pengiriman obat tradisional yang baik; (g) pengawasan mutu; (h) inspeksi diri, audit mutu, dan audit persetujuan pemasok; (i) keluhan dan penarikan produk; (j) dokumentasi; (k) kegiatan alih daya; (l) kualifikasi dan validasi; (m) sistem komputerisasi; (n) cara pembuatan bahan aktif obat tradisional yang baik; (o) sampel pembanding dan sampel pertinggal; dan (p) manajemen risiko mutu. Tidak adanya dokumentasi per bets melanggar aspek dokumentasi, tidak adanya pengawasan mutu melanggar aspek pengawasan mutu, dan tidak adanya prosedur keluhan/penarikan melanggar aspek keluhan dan penarikan produk. Pilihan A dan D salah karena CPOTB wajib bagi IOT/IEBA (UKOT/UMOT justru menerapkan aspek CPOTB secara bertahap menurut PerBPOM 31/2022, bukan CPOTB penuh). <b>Catatan:</b> Di luar slide — suplemen, regulasi terbaru: PerBPOM 25/2021 tidak ada di slide P3; acuan CPOTB di slide masih PerKa BPOM HK.00.05.4.1380 dengan definisi CPOTB edisi 1991/2005/2011 dan tabel bab CPOTB 1991 (A–J), 2005 (1–12), 2011 (1–11 + glosarium) (P3 hlm. 13–15). PerBPOM 25/2021 mencabut PerKa BPOM HK.03.1.23.06.11.5629 Tahun 2011 tentang Persyaratan Teknis CPOTB."
+ },
+ {
+  "no": 20,
+  "p": "P3",
+  "topik": "Perkembangan regulasi obat bahan alam",
+  "lvl": "C3",
+  "src": "Di luar slide — suplemen PerBPOM 25/2023",
+  "sup": true,
+  "q": "Sebuah perusahaan ingin mendaftarkan produk obat bahan alam baru (jamu) untuk memperoleh izin edar. Staf regulasinya masih berpegangan pada PerKa BPOM HK.00.05.41.1384 Tahun 2005 tentang Kriteria dan Tata Laksana Pendaftaran Obat Tradisional, Obat Herbal Terstandar dan Fitofarmaka.\n\nRegulasi acuan yang berlaku saat ini untuk kriteria dan tata laksana registrasi obat bahan alam adalah:",
+  "o": [
+   "PerKa BPOM HK.00.05.41.1384 Tahun 2005, karena peraturan itu masih menjadi acuan utama pendaftaran",
+   "Permenkes 007/2012 tentang Registrasi Obat Tradisional, karena peraturan menteri kedudukannya lebih tinggi dari peraturan BPOM",
+   "PerBPOM 25/2023 tentang Kriteria dan Tata Laksana Registrasi Obat Bahan Alam, yang menggantikan PerKa BPOM HK.00.05.41.1384 Tahun 2005",
+   "PerBPOM 29/2023 tentang Persyaratan Keamanan dan Mutu Obat Bahan Alam, karena peraturan inilah yang mengatur tata laksana registrasi",
+   "PerBPOM 10/2024 tentang Penandaan Obat Bahan Alam, Obat Kuasi, dan Suplemen Kesehatan, karena penandaan adalah syarat utama registrasi"
+  ],
+  "a": 2,
+  "b": "PerBPOM 25/2023 tentang Kriteria dan Tata Laksana Registrasi Obat Bahan Alam (diundangkan 13 Oktober 2023) merupakan revisi/pengganti PerKa BPOM HK.00.05.41.1384 Tahun 2005, karena ketentuan lama sudah tidak sesuai dengan kebutuhan hukum serta perkembangan ilmu pengetahuan dan teknologi. PerBPOM ini menyesuaikan dengan UU 17/2023 tentang Kesehatan, memakai istilah Obat Bahan Alam (OBA) dengan 4 golongan (Jamu, OHT, Fitofarmaka, OBA Lainnya). Pembeda dengan distraktor: PerBPOM 29/2023 (D) mengatur persyaratan keamanan dan mutu OBA, bukan tata laksana registrasi; PerBPOM 10/2024 (E) mengatur penandaan OBA, obat kuasi, dan suplemen kesehatan (diundangkan 3 Juni 2024, penyesuaian penandaan bagi produk berizin edar lama paling lama 24 bulan); sedangkan PP 5/2021 mengatur penyelenggaraan perizinan berusaha berbasis risiko secara umum. Staf yang masih memakai PerKa 1384/2005 (A) memakai regulasi yang sudah dicabut/diganti. <b>Catatan:</b> Di luar slide — suplemen, regulasi terbaru: PerBPOM 25/2023, PerBPOM 29/2023, PerBPOM 10/2024, dan PP 5/2021 tidak ada di slide P3; seluruh regulasi di slide P3 bertahun 2005–2017 (Permenkes 006/2012, 007/2012, PerKa BPOM HK.00.05.4.1380, PerKa BPOM 2005 HK.00.05.41.1384, Permenkes 003/2010 — P3 hlm. 7)."
+ },
+ {
+  "no": 21,
+  "p": "P3",
+  "topik": "Penerapan CPOTB bertahap bagi UKOT/UMOT",
+  "lvl": "C4",
+  "src": "Di luar slide — suplemen PerBPOM 31/2022 (CPOTB bertahap)",
+  "sup": true,
+  "q": "Sebuah Usaha Mikro Obat Tradisional (UMOT) yang baru berdiri hanya membuat rajangan dan param, dengan sumber daya dan tenaga yang sangat terbatas, sehingga belum mampu menerapkan seluruh aspek CPOTB sekaligus. Pemiliknya bertanya aspek mana yang harus dipenuhi terlebih dahulu.\n\nBerdasarkan penahapan penerapan aspek CPOTB secara bertahap, prioritas yang paling tepat adalah:",
+  "o": [
+   "Langsung menerapkan manajemen risiko mutu dan sistem komputerisasi, karena keduanya merupakan aspek CPOTB yang paling modern",
+   "Tahap I: sanitasi dan higiene terlebih dahulu; tahap II: dokumentasi beserta verifikasi penerapan tahap I",
+   "Tahap I: personalia, bangunan, fasilitas, dan peralatan; dokumentasi dan sanitasi dapat menyusul belakangan",
+   "Menerapkan seluruh 16 aspek CPOTB penuh sekaligus seperti IOT, karena UMOT tidak mengenal penahapan",
+   "Tahap I: kualifikasi dan validasi peralatan; tahap II: kegiatan alih daya dan audit persetujuan pemasok"
+  ],
+  "a": 1,
+  "b": "PerBPOM 31/2022 tentang Petunjuk Teknis Pelaksanaan Penerapan Aspek CPOTB secara Bertahap (pelaksana Pasal 26 ayat (3) PerBPOM 14/2021 tentang Sertifikasi CPOTB) berlaku untuk UKOT dan UMOT (Pasal 2–3). Penahapannya: untuk UMOT terdiri atas tahap I meliputi sanitasi dan higiene, dan tahap II meliputi dokumentasi serta verifikasi penerapan tahap I. Untuk UKOT ada 3 tahap: tahap I meliputi sanitasi dan higiene serta dokumentasi; tahap II meliputi manajemen mutu, produksi, pengawasan mutu, cara penyimpanan dan pengiriman, serta verifikasi penerapan tahap I; tahap III meliputi personalia, bangunan, fasilitas dan peralatan, penanganan keluhan terhadap produk, penarikan kembali dan produk kembalian, inspeksi diri, serta verifikasi penerapan tahap I dan tahap II. Penerapan ini dibuktikan dengan Sertifikat Pemenuhan Aspek CPOTB secara Bertahap yang diterbitkan oleh Kepala Badan. Jadi bagi UMOT yang baru berdiri, prioritas pertama adalah sanitasi dan higiene — bukan manajemen risiko mutu, sistem komputerisasi, kualifikasi-validasi, atau alih daya (A, D, dan E salah karena itu aspek CPOTB penuh bagi IOT/IEBA menurut PerBPOM 25/2021), dan bukan personalia/bangunan di tahap awal (C salah). <b>Catatan:</b> Di luar slide — suplemen: konsep \"penerapan bertahap\" tidak ada di slide P3 — kata \"bertahap\" tidak muncul di seluruh P3. Penahapan di atas berasal dari PerBPOM 31/2022, tidak ada di slide P3."
+ },
+ {
+  "no": 22,
+  "p": "P4",
+  "topik": "Alur pengembangan kandidat obat bahan alam",
+  "lvl": "C2",
+  "src": "P4 hlm. 2",
+  "sup": false,
+  "q": "Seorang peneliti telah menyelesaikan studi fitokimia (screening) terhadap suatu tanaman obat. Menurut alur pengembangan kandidat obat bahan alam di slide, tahap berikutnya yang harus dilakukan adalah:",
+  "o": [
+   "Studi empiris",
+   "Studi morfologi",
+   "Studi farmakologi",
+   "Studi kimia medisinal",
+   "Langsung menjadi kandidat obat baru"
+  ],
+  "a": 2,
+  "b": "Alur lengkap di P4 hlm. 2: Studi Empiris → Studi Morfologi → Studi Fitokimia (tulisan tangan di slide: \"screening\") → Studi Farmakologi → Studi Kimia Medisinal → Kandidat Obat Baru. Jadi setelah fitokimia, tahap berikutnya adalah farmakologi, bukan langsung kimia medisinal atau kandidat obat baru. Isi tiap tahap tidak dijelaskan di slide, hanya nama tahap dan urutannya."
+ },
+ {
+  "no": 23,
+  "p": "P4",
+  "topik": "Komponen informasi studi empiris",
+  "lvl": "C2",
+  "src": "P4 hlm. 3",
+  "sup": false,
+  "q": "Dalam wawancara dengan seorang penyehat tradisional, tercatat informasi berikut: tanaman tumbuh di tepi sungai dataran rendah; yang dipakai adalah daunnya; daun direbus lalu airnya diminum; khasiatnya untuk menurunkan demam. Informasi tersebut mencakup komponen studi empiris yang mana?",
+  "o": [
+   "Hanya habitat tumbuh dan khasiat",
+   "Habitat tumbuh, bagian yang digunakan, cara penggunaan, dan khasiat",
+   "Hanya bagian yang digunakan dan cara penggunaan",
+   "Habitat tumbuh, dosis, dan harga jual",
+   "Cara penggunaan, khasiat, dan kandungan kimia"
+  ],
+  "a": 1,
+  "b": "Menurut Manzano et al. (2020) di P4 hlm. 3, studi empiris tanaman memuat 4 komponen informasi yang bermuara ke Studi Etnobotanikal: habitat tumbuh, bagian yang digunakan, cara penggunaan, dan khasiat yang digunakan. Catatan wawancara di soal memuat keempatnya: habitat (tepi sungai dataran rendah), bagian yang digunakan (daun), cara penggunaan (direbus, airnya diminum), dan khasiat (menurunkan demam). Dosis, harga jual, dan kandungan kimia bukan komponen dalam daftar tersebut."
+ },
+ {
+  "no": 24,
+  "p": "P4",
+  "topik": "Penelusuran literatur etnobotani",
+  "lvl": "C3",
+  "src": "P4 hlm. 4",
+  "sup": false,
+  "q": "Seorang mahasiswa akan menelusuri literatur review tentang etnobotani suku Apiaceae. Basis data dan kombinasi kata kunci yang paling tepat menurut slide adalah:",
+  "o": [
+   "Google Scholar dan PubMed, dengan kata kunci \"Review, ethnobotany, Apiaceae\"",
+   "Hanya Wikipedia, dengan kata kunci \"tanaman obat\"",
+   "Google Scholar saja, dengan kata kunci \"harga tanaman obat\"",
+   "PubMed dan NCBI, dengan kata kunci \"Review, ethnobotany, family/species plant\"",
+   "Taylor & Francis saja, dengan kata kunci \"dosis tanaman obat\""
+  ],
+  "a": 0,
+  "b": "Basis data di P4 hlm. 4: (1) Google Scholar, (2) PubMed, (3) Elsevier/Science Direct, (4) NCBI, (5) Taylor & Francis. Kata kuncinya: Review, ethnobotany, family/species plant. Pilihan A paling tepat karena memakai dua basis data dari daftar tersebut dan kata kunci yang menggabungkan \"Review\" + \"ethnobotany\" + nama famili (Apiaceae) sebagai pengganti \"family/species plant\". Pilihan D memakai kata kunci persis tetapi \"family/species plant\" adalah pola kata kunci umum, bukan nama famili yang dicari; pilihan B, C, dan E memakai sumber atau kata kunci yang tidak ada di slide."
+ },
+ {
+  "no": 25,
+  "p": "P4",
+  "topik": "Tahapan studi etnobotani",
+  "lvl": "C3",
+  "src": "P4 hlm. 5",
+  "sup": false,
+  "q": "Seorang peneliti merancang studi etnobotani di suatu wilayah. Urutan tahapan yang benar menurut slide adalah:",
+  "o": [
+   "Pemetaan data empiris → studi demografi → spesies yang digunakan → penggalian khasiat dan bagian tanaman",
+   "Studi demografi → spesies tanaman obat yang digunakan → penggalian informasi khasiat dan bagian tanaman yang digunakan dalam pengobatan → pemetaan data empiris tanaman berdasarkan informasi yang diperoleh",
+   "Spesies yang digunakan → studi demografi → pemetaan data empiris → penggalian khasiat",
+   "Penggalian khasiat → studi demografi → spesies yang digunakan → pemetaan data empiris",
+   "Studi demografi → pemetaan data empiris → spesies yang digunakan → penggalian khasiat"
+  ],
+  "a": 1,
+  "b": "Empat tahapan studi etnobotani di P4 hlm. 5: (1) Studi Demografi, (2) Spesies Tanaman Obat yang Digunakan, (3) Penggalian Informasi Khasiat dan Bagian Tanaman yang Digunakan dalam Pengobatan, (4) Pemetaan Data Empiris Tanaman Berdasarkan Informasi yang Diperoleh. Metode tiap tahap (mis. wawancara semi-terstruktur) tidak dijelaskan di slide ini — wawancara semi-terstruktur dan focus group baru muncul sebagai contoh metode di studi kasus Chaachouay et al. (2022) hlm. 6 dan Gebre et al. (2021) hlm. 7."
+ },
+ {
+  "no": 26,
+  "p": "P4",
+  "topik": "Interpretasi data bagian tanaman & implikasi kelestarian",
+  "lvl": "C4",
+  "src": "P4 hlm. 8, 12, 20",
+  "sup": false,
+  "q": "Data survei Gebre et al. (2021) di Aleta-Chuko, Ethiopia Selatan (100 responden, 53 tanaman obat): daun 47%, bagian aerial 16%, biji 8%, batang 8%, akar 5%, bunga 5%, kulit batang 5%, umbi 3%, buah 3%. Studi Leto et al. (2013) di India juga menemukan daun paling banyak dipakai, 56 (37%). Sebagian besar tanaman Apiaceae di studi Abdelkader et al. (2022) berstatus budidaya (Cultivated), hanya <i>Ammi visnaga</i> dan <i>Anethum graveolens</i> yang spontan (liar). Analisis yang paling tepat terhadap kelestarian sumber daya dari data tersebut adalah:",
+  "o": [
+   "Pemanenan daun yang dominan paling mengancam kelestarian karena daun adalah bagian terbesar tanaman",
+   "Pemanfaatan yang didominasi daun dan tanaman budidaya relatif lebih lestari, karena panen daun umumnya tidak mematikan tanaman, sedangkan panen akar, kulit batang, dan umbi — serta pemanenan tanaman liar — lebih berisiko merusak atau mematikan tanaman",
+   "Persentase bagian tanaman tidak ada hubungannya dengan kelestarian, yang penting hanya jumlah responden survei",
+   "Tanaman liar lebih lestari dimanfaatkan daripada tanaman budidaya karena tumbuh sendiri tanpa perawatan",
+   "Panen akar 5% lebih berbahaya daripada panen kulit batang 5% karena akar selalu lebih besar dari kulit batang"
+  ],
+  "a": 1,
+  "b": "Data bagian tanaman dari P4 hlm. 8 (Gebre et al., 2021: daun 47% dominan, akar hanya 5%, kulit batang 5%, umbi 3%) dan hlm. 20 (Leto et al., 2013: daun 56 atau 37% paling banyak) menunjukkan pola pemanfaatan yang didominasi daun. Panen daun umumnya tidak mematikan tanaman, sedangkan panen akar, kulit batang, dan umbi merusak atau mematikan tanaman, sehingga dominasi daun relatif lebih lestari. Status budidaya (Cultivated) pada sebagian besar Apiaceae di P4 hlm. 12 juga mengurangi tekanan terhadap populasi liar, berbeda dengan <i>Ammi visnaga</i> dan <i>Anethum graveolens</i> yang spontan (liar). <b>Catatan:</b> Di luar slide — analisis kelestarian (daun vs akar/kulit batang, liar vs budidaya) tidak dibahas di slide; slide hanya menyajikan data persentase dan status tanaman. Analisis di atas adalah penalaran dari data tersebut. Hati-hati: P4 hlm. 16 yang berjudul \"Data Bagian Tanaman\" Araliaceae sebenarnya menampilkan grafik spesies yang sama dengan hlm. 15, bukan data bagian tanaman."
+ },
+ {
+  "no": 27,
+  "p": "P4",
+  "topik": "Cara preparasi dan rute pemberian empiris",
+  "lvl": "C3",
+  "src": "P4 hlm. 12, 20–22",
+  "sup": false,
+  "q": "Menurut tabel Apiaceae di P4 hlm. 12 (Abdelkader et al., 2022), biji <i>Pimpinella anisum</i> (adas manis) untuk gangguan pencernaan disiapkan dengan infusa dan diminum secara oral; akar <i>Carum carvi</i> disiapkan antara lain dengan dekokta. Seorang penyehat tradisional memakai akar tanaman yang keras untuk gangguan pencernaan, diminum secara oral. Cara preparasi yang paling sesuai dengan pola pada tabel tersebut adalah:",
+  "o": [
+   "Infusa",
+   "Dekokta",
+   "Poultice",
+   "Fumigasi",
+   "Lotion"
+  ],
+  "a": 1,
+  "b": "Cara preparasi yang muncul di tabel-tabel P4 antara lain dekokta (decoction), infusa (infusion), maserasi (maceration), serbuk (powder), segar (fresh), fumigasi, lotion, dan poultice, dengan rute pemberian yang dominan oral — misalnya Leto et al. (2013) hlm. 20: oral 98 (57%), dan Lin et al. (2021) hlm. 21–22: dekokta 170 (94,48%) dan oral 177 (97,97%). Pada tabel Apiaceae hlm. 12, bagian tanaman yang keras seperti akar (<i>Carum carvi</i>: biji dan akar, disiapkan dengan serbuk, dekokta, maserasi) diolah dengan dekokta, sedangkan biji <i>Pimpinella anisum</i> untuk pencernaan disiapkan dengan infusa. Poultice adalah cara pemberian luar (tempel), bukan untuk diminum secara oral — misalnya <i>Apium graveolens</i> dan <i>Ammi visnaga</i> di tabel yang sama memakai poultice. <b>Catatan:</b> Di luar slide — suplemen, definisi infusa, dekokta, maserasi, dan poultice tidak ada di slide. Secara umum: infusa adalah penyarian dengan air panas untuk simplisia lunak (daun, bunga, biji); dekokta adalah perebusan/pendidihan untuk bagian yang keras (akar, kulit batang, biji keras); maserasi adalah perendaman dengan pelarut pada suhu kamar; poultice adalah tapal, yaitu bahan yang dilumatkan lalu ditempelkan pada kulit."
+ },
+ {
+  "no": 28,
+  "p": "P4",
+  "topik": "Kerasionalan kombinasi tanaman dalam ramuan empiris",
+  "lvl": "C4",
+  "src": "Di luar slide — suplemen (tidak dibahas di P4)",
+  "sup": true,
+  "q": "Suatu ramuan tradisional multiherba terdiri dari tiga tanaman. Tanaman A berkhasiat untuk keluhan utama, tanaman B diketahui memperkuat efek tanaman A pada target yang sama, dan tanaman C diketahui mengurangi efek samping tanaman A, tanpa ada laporan interaksi merugikan di antara ketiganya. Penilaian yang paling tepat terhadap kerasionalan kombinasi tersebut adalah:",
+  "o": [
+   "Kombinasi tidak rasional karena obat herbal harus selalu tanaman tunggal",
+   "Kombinasi rasional, karena ada potensi sinergi (tanaman B memperkuat efek A) dan peredaman toksisitas (tanaman C mengurangi efek samping A), dengan syarat tidak ada interaksi herba–herba yang merugikan",
+   "Kombinasi rasional hanya karena jumlah tanamannya tiga, berapapun khasiat masing-masing",
+   "Kombinasi tidak rasional karena tanaman B dan A bekerja pada target yang sama sehingga pasti saling meniadakan",
+   "Kombinasi rasional hanya bila ketiga tanaman berasal dari suku yang sama"
+  ],
+  "a": 1,
+  "b": "Kombinasi multiherba dinilai rasional bila komponennya saling melengkapi: ada potensi sinergi (dua tanaman memperkuat efek pada target yang sama atau pada jalur yang saling mendukung) dan/atau peredaman toksisitas (satu tanaman mengurangi efek samping tanaman lain), serta tidak ada interaksi herba–herba yang merugikan, seperti penambahan toksisitas yang sama atau antagonisme. Sebaliknya, kombinasi menjadi tidak rasional bila komponennya memiliki toksisitas yang tumpang tindih, saling meniadakan efek, atau interaksinya tidak diketahui dan berisiko. <b>Catatan:</b> Di luar slide — suplemen, soal ini tidak ada satu slide pun di P4 yang membahas ramuan multiherba, sinergi antar-tanaman, peredaman toksisitas, atau interaksi herba–herba. Semua tabel P4 adalah tanaman tunggal per baris. Jawaban di atas adalah penilaian ilmiah umum, bukan isi slide."
+ },
+ {
+  "no": 29,
+  "p": "P4",
+  "topik": "Interpretasi data use report",
+  "lvl": "C2",
+  "src": "P4 hlm. 14",
+  "sup": false,
+  "q": "Dalam studi Addi et al. (2024) di P4 hlm. 14, tercatat 125 tanaman obat dari wawancara terhadap 193 partisipan. Spesies dengan use report di atas 100 adalah <i>Paris polyphylla</i> (202 use report), <i>Taxillus sutchuenensis</i> (183), <i>Artemisia indica</i> (149), dan <i>Papaver somniferum</i> (113). Spesies yang paling banyak dimanfaatkan dan paling layak diprioritaskan untuk penelitian lanjutan adalah:",
+  "o": [
+   "<i>Papaver somniferum</i> (113 use report)",
+   "<i>Artemisia indica</i> (149 use report)",
+   "<i>Taxillus sutchuenensis</i> (183 use report)",
+   "<i>Paris polyphylla</i> (202 use report)",
+   "Keempatnya sama prioritas karena semuanya di atas 100 use report"
+  ],
+  "a": 3,
+  "b": "Use report tertinggi menunjukkan spesies yang paling banyak dimanfaatkan oleh informan, sehingga menjadi prioritas penelitian lanjutan. Pada studi Addi et al. (2024), P4 hlm. 14, urutannya adalah <i>Paris polyphylla</i> 202, <i>Taxillus sutchuenensis</i> 183, <i>Artemisia indica</i> 149, dan <i>Papaver somniferum</i> 113 use report — jadi yang tertinggi adalah <i>Paris polyphylla</i> (202). Data pendukung lain di P4: frekuensi tertinggi Apiaceae adalah <i>Foeniculum vulgare</i> ≈15,7% (Abdelkader et al., 2022, hlm. 11), dan jumlah uses tertinggi Araliaceae adalah <i>C. spicata</i> ≈50 uses (Maroyi, 2022, hlm. 15). Definisi \"use report\" dan rumus indeksnya tidak ada di P4 (itu materi P5). Perlu diingat: keempat spesies di studi Addi ini bukan dari suku Araliaceae — itu data survei umum yang diletakkan slide di bawah judul Araliaceae."
+ },
+ {
+  "no": 30,
+  "p": "P4",
+  "topik": "Kesahihan bukti empiris",
+  "lvl": "C4",
+  "src": "P4 hlm. 6–7, 10, 14",
+  "sup": false,
+  "q": "Untuk tanaman yang sama, terdapat dua sumber klaim khasiat: (1) testimoni satu orang di media sosial yang mengaku sembuh setelah memakainya, dan (2) studi etnobotani yang mewawancarai 260 orang (Abdelkader et al., 2022), 193 partisipan (Addi et al., 2024), atau 100 responden (Gebre et al., 2021) dengan kuesioner semi-terstruktur, wawancara tatap muka, dan focus group (Chaachouay et al., 2022). Analisis tingkat kesahihan yang paling tepat adalah:",
+  "o": [
+   "Keduanya sama sahihnya karena sama-sama berdasarkan pengalaman pengguna",
+   "Testimoni media sosial lebih sahih karena lebih baru dan langsung dari pengguna",
+   "Studi etnobotani lebih sahih sebagai dasar pembuktian empiris, karena datanya berasal dari banyak informan dengan metode yang sistematis dan dapat diverifikasi, sedangkan testimoni tunggal tidak dapat diverifikasi, rentan bias, dan tidak mewakili kesepakatan informan",
+   "Studi etnobotani tidak sahih karena jumlah informannya terlalu banyak sehingga hasilnya pasti bias",
+   "Keduanya tidak sahih karena bukti empiris tidak pernah dapat dipakai sebagai dasar pembuktian"
+  ],
+  "a": 2,
+  "b": "Studi etnobotani di P4 memakai banyak informan — 260 orang (Abdelkader et al., 2022, hlm. 10), 193 partisipan (Addi et al., 2024, hlm. 14), 100 responden (Gebre et al., 2021, hlm. 7) — dengan metode kuesioner semi-terstruktur, wawancara tatap muka, dan focus group (Chaachouay et al., 2022, hlm. 6). Jumlah informan yang besar dan metode yang sistematis membuat kesepakatan antar-informan dapat dinilai dan hasilnya dapat diverifikasi. Testimoni tunggal di media sosial tidak melalui proses tersebut: tidak diketahui identitas dan kondisi penggunanya, tidak dapat diverifikasi, dan tidak menunjukkan apakah khasiat itu disepakati banyak pengguna. <b>Catatan:</b> Di luar slide — suplemen, perbandingan testimoni media sosial dengan studi etnobotani dan hierarki kesahihan bukti tidak dibahas di slide; slide hanya menyajikan jumlah informan dan metode studi. Penilaian di atas dibuat dari jumlah dan metode informan tersebut."
+ },
+ {
+  "no": 31,
+  "p": "P4",
+  "topik": "Konsep penggunaan empiris dalam regulasi",
+  "lvl": "C2",
+  "src": "P3 hlm. 11, 16",
+  "sup": false,
+  "q": "Sebuah produk jamu mencantumkan klaim pada penandaannya: \"secara tradisional digunakan untuk membantu memelihara kesehatan\". Hubungan antara bukti empiris turun-temurun dengan klaim tersebut menurut regulasi adalah:",
+  "o": [
+   "Klaim tersebut tidak boleh dicantumkan karena jamu harus dibuktikan secara klinis seperti fitofarmaka",
+   "Klaim tersebut boleh dicantumkan karena khasiat jamu dapat dibuktikan secara empiris dan turun-temurun, dan penandaan harus berisi informasi yang objektif, lengkap, dan tidak menyesatkan",
+   "Klaim tersebut hanya boleh dicantumkan bila bahan bakunya sudah terstandarisasi dan diuji praklinik seperti obat herbal terstandar",
+   "Klaim tersebut boleh dicantumkan tanpa syarat apapun, termasuk tanpa izin edar",
+   "Klaim tersebut hanya berlaku untuk obat tradisional impor, bukan jamu"
+  ],
+  "a": 1,
+  "b": "Jamu adalah obat tradisional Indonesia (P3 hlm. 16, PerKa BPOM 2005). Menurut kriteria izin edar di P3 hlm. 11 (Permenkes 007/2012), khasiat obat tradisional dapat dibuktikan secara empiris, turun-temurun, dan/atau secara ilmiah, dan penandaan harus berisi informasi yang objektif, lengkap, dan tidak menyesatkan. Karena itu klaim \"secara tradisional digunakan untuk ...\" sesuai dengan tingkat pembuktian empiris/turun-temurun jamu. Berbeda dengan obat herbal terstandar (OHT) yang keamanan dan khasiatnya dibuktikan secara ilmiah dengan uji praklinik dan bahan baku terstandarisasi, serta fitofarmaka yang dibuktikan dengan uji praklinik dan uji klinik dengan bahan baku dan produk jadi terstandarisasi (P3 hlm. 16). Obat tradisional yang diedarkan tetap wajib memiliki izin edar, yang berlaku 5 tahun (P3 hlm. 11). <b>Catatan:</b> Di luar slide — soal ini tidak ada di P4; jawabannya diambil dari P3 (definisi Jamu/OHT/Fitofarmaka hlm. 16 dan kriteria izin edar hlm. 11)."
+ },
+ {
+  "no": 32,
+  "p": "P5",
+  "topik": "Sifat multidisiplin etnobotani",
+  "lvl": "C2",
+  "src": "P5 hlm. 2",
+  "sup": false,
+  "q": "Seorang peneliti etnobotani ingin menelusuri asal-usul nama lokal suatu tanaman obat dan makna istilah pengobatannya dalam bahasa masyarakat setempat. Disiplin ilmu yang paling berperan menjawab pertanyaan penelitian tersebut adalah:",
+  "o": [
+   "Economics",
+   "Chemistry",
+   "Pharmacology",
+   "Linguistics",
+   "Statistics"
+  ],
+  "a": 3,
+  "b": "Etnobotani bersifat multidisiplin (P5 hlm. 2, Gaikwad et al., 2011). Teks slide menyebut botany, anthropology, pharmacology, economics, archaeology, dan linguistics; diagramnya menambah 12 disiplin, antara lain Chemistry, Pharmacology, Genetics, Microbiology, Statistics, Indigenous law, Economics, Linguistics, Anthropology, Geography, Environmental science, dan Ecology. Penelusuran nama lokal dan makna istilah bahasa = Linguistics. Economics untuk nilai ekonomi/perdagangan, Chemistry untuk kandungan kimia, Pharmacology untuk aktivitas biologis, Statistics untuk analisis data kuantitatif."
+ },
+ {
+  "no": 33,
+  "p": "P5",
+  "topik": "Metode riset kualitatif etnobotani",
+  "lvl": "C3",
+  "src": "P5 hlm. 4",
+  "sup": false,
+  "q": "Sebuah penelitian etnobotani bertujuan menggali pengetahuan lokal secara mendalam tentang cara pakai tanaman obat, dengan diskusi kelompok agar detail perspektif budaya dan personal terungkap, dan tekniknya dapat beradaptasi mengikuti tema baru yang muncul di lapangan. Metode kualitatif yang paling sesuai adalah:",
+  "o": [
+   "Relative Frequency of Citation (RFC)",
+   "Participatory Rapid Appraisal (PRA)",
+   "Focus Group Discussions (FGD)",
+   "Direct Matrix Ranking (DMR)",
+   "Simple Preference Ranking (SPR)"
+  ],
+  "a": 2,
+  "b": "Empat metode kualitatif di slide (P5 hlm. 4, Sourav, 2024): Participatory Rapid Appraisal (PRA), pile sorting, Focus Group Discussions (FGD), dan wawancara semi-terstruktur. Kelebihan kualitatif menurut slide: Depth of Insight, Flexibility, dan Rich Data — FGD dan pile sorting dapat mengungkap detail rumit tentang perspektif budaya dan personal. Skenario di soal menekankan diskusi kelompok tentang budaya pakai tanaman, jadi jawabannya FGD. RFC, DMR, dan SPR adalah indeks/metode kuantitatif (hlm. 5), bukan kualitatif. Studi kasus suku Karen di slide memakai wawancara semi-terstruktur (hlm. 7), yaitu wawancara per informan, bukan diskusi kelompok."
+ },
+ {
+  "no": 34,
+  "p": "P5",
+  "topik": "Kelebihan dan kekurangan kualitatif vs kuantitatif",
+  "lvl": "C2",
+  "src": "P5 hlm. 4–5",
+  "sup": false,
+  "q": "Pernyataan berikut yang menggambarkan metode kualitatif dalam studi etnobotani menurut slide adalah:",
+  "o": [
+   "Terstruktur, objektif, dan tidak dapat dipengaruhi bias peneliti atau partisipan",
+   "Memberi pemahaman mendalam tentang pengetahuan dan praktik lokal, fleksibel mengikuti tema baru, dan menghasilkan data yang kaya, tetapi dapat dipengaruhi subjektivitas, temuannya spesifik konteks dan sulit digeneralisasi, serta memakan waktu dan membutuhkan fasilitator terampil",
+   "Membutuhkan waktu lebih lama untuk menginterpretasikan data dan rawan salah rumus sehingga memengaruhi interpretasi",
+   "Menawarkan cara terstruktur untuk menganalisis pentingnya taksa tanaman dalam budaya yang berbeda",
+   "Menghindari inkonsistensi data karena tidak dapat dipengaruhi bias peneliti atau partisipan"
+  ],
+  "a": 1,
+  "b": "Kelebihan kualitatif (P5 hlm. 4): Depth of Insight, Flexibility, Rich Data. Kekurangannya: Subjectivity (bias peneliti/partisipan), Generalizability (temuan spesifik konteks, sulit digeneralisasi), dan Resource Intensive (memakan waktu, butuh fasilitator terampil). Sebaliknya, kelebihan kuantitatif (hlm. 5) adalah RELIABLE dan OBJECTIVE, sedangkan kekurangannya COMPLICATED (butuh waktu lebih lama menginterpretasikan data) dan HUMAN/SYSTEM ERROR (rumus yang salah memengaruhi interpretasi) — itulah isi pilihan A, C, D, dan E, jadi semuanya menggambarkan kuantitatif, bukan kualitatif."
+ },
+ {
+  "no": 35,
+  "p": "P5",
+  "topik": "Perhitungan Informant Consensus Factor (ICF)",
+  "lvl": "C3",
+  "src": "P5 hlm. 16",
+  "sup": false,
+  "q": "Disajikan data kategori infeksi virus pada studi Al Baha (P5 hlm. 16, Tabel 3): jumlah use report (Nur) = 16 dan jumlah takson (Nt) = 2. Dengan rumus ICF = (Nur − Nt) / (Nur − 1), nilai ICF kategori tersebut adalah:",
+  "o": [
+   "0,00",
+   "0,50",
+   "0,65",
+   "0,88",
+   "0,93"
+  ],
+  "a": 4,
+  "b": "ICF = (16 − 2) / (16 − 1) = 14 / 15 = 0,93 (P5 hlm. 16, Tabel 3: infeksi virus Nt 2, Nur 16, ICF 0,93). Pilihan D (0,88) adalah hasil bila penyebutnya keliru memakai Nur (14/16 = 0,875). Pilihan C (0,65) adalah ICF infeksi bakteri (Nt 9, Nur 24). ICF mendekati 1 berarti kesepakatan informan tinggi. <b>Catatan:</b> Rumus ini tidak tercetak di slide, diverifikasi dari tabel di slide."
+ },
+ {
+  "no": 36,
+  "p": "P5",
+  "topik": "Interpretasi nilai ICF antarkategori penyakit",
+  "lvl": "C4",
+  "src": "P5 hlm. 16",
+  "sup": false,
+  "q": "Berdasarkan Tabel 3 (P5 hlm. 16) studi Al Baha, kategori penyakit yang paling layak diprioritaskan untuk penelusuran senyawa bioaktif berdasarkan tingkat kesepakatan informan adalah:",
+  "o": [
+   "Gangguan ginjal (ICF 0,00)",
+   "Gangguan saluran cerna (ICF 0,37)",
+   "Infeksi bakteri (ICF 0,65)",
+   "Infeksi virus (ICF 0,93)",
+   "Gangguan kulit (ICF 0,04)"
+  ],
+  "a": 3,
+  "b": "ICF mendekati 1 = kesepakatan informan tinggi, banyak informan sepakat memakai sedikit spesies yang sama untuk satu kategori penyakit, sehingga kategori itu prioritas penelusuran senyawa bioaktif (P5 hlm. 16). Nilai tertinggi di Tabel 3: infeksi virus 0,93 (Nt 2, Nur 16), diikuti infeksi parasit 0,89, infeksi jamur 0,81, dan infeksi bakteri 0,65. Sebaliknya ICF 0,00 berarti tidak ada kesepakatan (setiap use report memakai takson berbeda, atau Nur = Nt), misalnya gangguan ginjal, endokrin, onkologi/imunologi, rematik, dan ortopedi. Jebakan: teks hlm. 16 menulis rentang ICF \"0,00–0,48\", padahal Tabel 3 di halaman yang sama menunjukkan nilai sampai 0,93 — rentang 0,00–0,48 hanya cocok untuk kategori gangguan sistemik (A) saja."
+ },
+ {
+  "no": 37,
+  "p": "P5",
+  "topik": "Perhitungan Fidelity Level (FL%)",
+  "lvl": "C3",
+  "src": "P5 hlm. 10, 17",
+  "sup": false,
+  "q": "Pada studi Al Baha (P5 hlm. 17, Tabel 4), <i>Curcuma longa</i> L. disebut oleh 4 informan (INAUR = 4), dan keempatnya menyebut kegunaan utamanya yang sama, yaitu meningkatkan imunitas (NISE = 4). Nilai FL% spesies tersebut dan artinya adalah:",
+  "o": [
+   "25,0% — spesies dipakai untuk banyak kategori kegunaan",
+   "50,0% — hanya separuh informan sepakat pada satu kegunaan",
+   "66,7% — kesepakatan informan sedang pada kegunaan utama",
+   "75,0% — kesepakatan informan tinggi tetapi tidak penuh",
+   "100,0% — spesies hanya dipakai untuk satu kategori kegunaan"
+  ],
+  "a": 4,
+  "b": "FL% = (jumlah informan yang menyebut kegunaan utama / jumlah informan yang menyebut spesies itu untuk kegunaan apa pun) × 100% = 4/4 × 100% = 100,0% (P5 hlm. 17, Tabel 4: <i>Curcuma longa</i>, INAUR 4, NISE 4, FL% 100,0). Definisi di slide (hlm. 10): nilai fidelity tertinggi yang dapat diperoleh adalah 100; FL 100% berarti spesies itu dipakai hanya dalam satu kategori. Contoh lain FL 100% di slide: <i>Vigna mungo</i>, <i>Vigna umbellata</i>, dan <i>Vigna unguiculata</i> (pangan), serta <i>Azadirachta indica</i> (penyakit kulit) dan <i>Cuminum cyminum</i> (GIT/kram perut). <b>Catatan:</b> Rumus ini tidak tercetak di slide, diverifikasi dari tabel di slide."
+ },
+ {
+  "no": 38,
+  "p": "P5",
+  "topik": "Relative Popularity Level (RPL) dan Rank Order Priority (ROP)",
+  "lvl": "C3",
+  "src": "P5 hlm. 17",
+  "sup": false,
+  "q": "Pada studi Al Baha (P5 hlm. 17, Tabel 4), <i>Azadirachta indica</i> A.Juss. memiliki FL% = 100,0 dan RPL = 0,75. Dengan rumus ROP = RPL × FL, nilai ROP dan kelompok spesies tersebut adalah:",
+  "o": [
+   "ROP 25 — tidak populer",
+   "ROP 50 — tidak populer",
+   "ROP 75 — tidak populer",
+   "ROP 100 — populer",
+   "ROP 133 — populer"
+  ],
+  "a": 2,
+  "b": "ROP = RPL × FL = 0,75 × 100,0 = 75 (P5 hlm. 17, Tabel 4: <i>Azadirachta indica</i>, FL% 100,0, RPL 0,75, ROP 75). Rumus ROP = RPL × FL adalah satu-satunya rumus yang tercetak eksplisit di seluruh P5 (hlm. 17). RPL berkisar 0–1; RPL = 1 berarti populer, RPL < 1 berarti tidak populer (hlm. 17). Karena RPL <i>Azadirachta indica</i> 0,75 (< 1), spesies ini masuk kelompok tidak populer, meskipun FL-nya 100%. Pilihan D (ROP 100, populer) adalah nilai <i>Curcuma longa</i> (RPL 1 × FL 100)."
+ },
+ {
+  "no": 39,
+  "p": "P5",
+  "topik": "Seleksi spesies potensial berdasarkan indeks kuantitatif",
+  "lvl": "C4",
+  "src": "P5 hlm. 17",
+  "sup": false,
+  "q": "Berdasarkan Tabel 4 (P5 hlm. 17) studi Al Baha, spesies yang paling potensial untuk skrining agen bioaktif — karena ROP-nya tertinggi — adalah:",
+  "o": [
+   "<i>Foeniculum vulgare</i> Mill. (ROP 50)",
+   "<i>Allium cepa</i> L. (ROP 60)",
+   "<i>Boswellia serrata</i> Roxb. (ROP 67)",
+   "<i>Azadirachta indica</i> A.Juss. (ROP 75)",
+   "<i>Curcuma longa</i> L. (ROP 100)"
+  ],
+  "a": 4,
+  "b": "ROP tinggi menunjukkan potensi tinggi suatu tanaman dan berguna untuk skrining tanaman yang mengandung agen bioaktif (P5 hlm. 17). Urutan ROP di Tabel 4: <i>Curcuma longa</i> 100 (RPL 1 × FL 100,0; kegunaan utama meningkatkan imunitas) > <i>Azadirachta indica</i>, <i>Commiphora gileadensis</i>, <i>Cuminum cyminum</i>, dan <i>Elettaria cardamomum</i> (masing-masing 75) > <i>Boswellia serrata</i> 67 > <i>Allium cepa</i>, <i>Commiphora myrrha</i>, dan <i>Ficus palmata</i> (masing-masing 60) > sisanya 50. Jadi spesies paling potensial adalah <i>Curcuma longa</i> dengan ROP 100, satu-satunya yang mencapai nilai tertinggi di tabel."
+ },
+ {
+  "no": 40,
+  "p": "P5",
+  "topik": "Use Value (UV) dan Family Importance Value (FIV)",
+  "lvl": "C2",
+  "src": "P5 hlm. 14–15",
+  "sup": false,
+  "q": "Pada studi Al Baha (P5 hlm. 14–15), pernyataan berikut yang paling tepat tentang UV dan FIV adalah:",
+  "o": [
+   "UV mengukur tingkat pengetahuan masyarakat terhadap suatu suku tanaman, sedangkan FIV mengukur kepentingan relatif suatu spesies",
+   "<i>Ocimum basilicum</i>, <i>Salvia officinalis</i>, dan <i>Syzygium aromaticum</i> memiliki UV tertinggi (0,062), sedangkan suku Lamiaceae memiliki FIV tertinggi (sekitar 0,36), yang menunjukkan masyarakat sangat mengenal dan memakai suku tersebut",
+   "Spesies dengan UV 0,012 lebih penting daripada spesies dengan UV 0,062",
+   "Suku dengan FIV terendah adalah suku yang paling dikenal masyarakat",
+   "UV dan FIV hanya dapat dibandingkan antarbangsa, bukan dalam satu wilayah studi"
+  ],
+  "a": 1,
+  "b": "UV menunjukkan kepentingan relatif pemakaian tanaman obat di suatu wilayah; makin tinggi UV, makin penting spesies itu dibandingkan UV yang lebih rendah dalam satu wilayah (P5 hlm. 14). UV tertinggi di Tabel 2 adalah 0,062 — <i>Ocimum basilicum</i> L., <i>Salvia officinalis</i> L., dan <i>Syzygium aromaticum</i> (L.) Merr. and L.M.Perry; terendah 0,012, misalnya <i>Otostegia fruticosa</i>, <i>Plectranthus asirensis</i>, <i>Eucalyptus</i> sp., <i>Myrtus communis</i>, dan <i>Psidium guajava</i>. FIV tinggi menunjukkan kesadaran yang besar terhadap suatu suku tanaman, FIV rendah menunjukkan kesadaran yang lemah (hlm. 15); FIV tertinggi adalah Lamiaceae (sekitar 0,36), diikuti Apiaceae (sekitar 0,34). Jadi FIV mengukur tingkat suku, sedangkan UV mengukur tingkat spesies — jangan tertukar. Nilai FIV di atas adalah perkiraan pembacaan grafik batang Figure 2 (hlm. 15), bukan angka pasti yang tercetak di slide."
+ },
+ {
+  "no": 41,
+  "p": "P5",
+  "topik": "Cultural Importance Index (CI) dan Fidelity Level",
+  "lvl": "C4",
+  "src": "P5 hlm. 10",
+  "sup": false,
+  "q": "Pada studi suku Karen, Thailand (P5 hlm. 10), <i>Vigna radiata</i> memiliki CI 0,96 (tertinggi di tabel) dengan FL% pangan 93%, aditif pangan 5%, dan sosial 2%. Berdasarkan nilai CI dan FL% tersebut, spesies ini lebih berpotensi sebagai:",
+  "o": [
+   "Kandidat obat utama, karena CI-nya tertinggi",
+   "Bahan pangan, karena FL% terkonsentrasi pada kategori pangan (93%)",
+   "Bahan material, karena FL% materialnya paling besar",
+   "Tanaman racun, karena dipakai dalam banyak kategori",
+   "Kandidat obat, karena FL% obatnya mencapai 57%"
+  ],
+  "a": 1,
+  "b": "CI menilai spesies menurut nilainya bagi masyarakat; nilainya tinggi bila spesies sering disebut informan dan dapat dipakai dalam berbagai kategori kegunaan (P5 hlm. 10). <i>Vigna radiata</i> memang memiliki CI tertinggi (0,96), tetapi FL%-nya terkonsentrasi pada pangan (93%), dengan aditif pangan 5% dan sosial 2% — jadi spesies ini penting secara budaya terutama sebagai pangan, bukan sebagai kandidat obat utama. Bandingkan dengan <i>Xylia xylocarpa</i> (CI 0,83; FL% obat 57%, material 31%, pangan 12%) yang justru condong ke obat, dan <i>Vigna mungo</i> (CI 0,67; FL% pangan 100%) yang murni pangan. Pilihan E menggambarkan <i>Xylia xylocarpa</i>, bukan <i>Vigna radiata</i>. Catatan: CI (Cultural Importance Index, hlm. 10) berbeda dengan CSI (Cultural Significance Index, hlm. 5) — jangan disamakan."
+ },
+ {
+  "no": 42,
+  "p": "P6",
+  "topik": "Klasifikasi golongan metabolit sekunder",
+  "lvl": "C2",
+  "src": "P6 hlm. 9, 24",
+  "sup": false,
+  "q": "Disajikan senyawa-senyawa dari tanaman suku Asteraceae: apigenin, kaempferol, luteolin, dan kuersetin. Keempat senyawa tersebut termasuk golongan metabolit sekunder yang sama, yaitu:",
+  "o": [
+   "Terpenoid",
+   "Fenilpropanoid",
+   "Kumarin",
+   "Flavonoid",
+   "Poliasetilen"
+  ],
+  "a": 3,
+  "b": "Golongan metabolit sekunder Asteraceae menurut slide (P6 hlm. 24, Kostic et al. 2020): flavonoid — apigenin, kaempferol, luteolin, dan kuersetin (derivatnya); asam fenolat — asam kikorat, asam 5-O-kaffeoilkuinat, asam 5-p-kumaroilkuinat; asam organik — asam oksalat, asam malat, asam shikimat; serta α- dan β-tokoferol. Lima golongan metabolit sekunder Apiaceae (P6 hlm. 9) adalah terpenoid, fenilpropanoid, kumarin, ftalida, dan poliasetilen — ketiganya (A, C, E) adalah golongan Apiaceae, bukan jawaban untuk senyawa di soal. Fenilpropanoid (B) juga golongan Apiaceae, dan bukan golongan apigenin dkk."
+ },
+ {
+  "no": 43,
+  "p": "P6",
+  "topik": "Senyawa penanda vs senyawa aktif",
+  "lvl": "C2",
+  "src": "P6 hlm. 11, 18",
+  "sup": false,
+  "q": "Suatu ekstrak pegagan (<i>Centella asiatica</i>) distandardisasi berdasarkan kadar asiatikosida. Pernyataan yang paling tepat tentang peran asiatikosida dalam konteks ini adalah:",
+  "o": [
+   "Asiatikosida pasti merupakan satu-satunya senyawa yang bertanggung jawab atas seluruh efek farmakologi ekstrak pegagan",
+   "Asiatikosida dipakai sebagai senyawa penanda untuk standardisasi dan pengendalian mutu ekstrak, meskipun senyawa penanda tidak harus sama dengan senyawa aktifnya",
+   "Senyawa penanda hanya dipakai untuk memberi warna dan aroma pada ekstrak, bukan untuk standardisasi",
+   "Penetapan senyawa penanda menggantikan uji keamanan dan uji khasiat ekstrak",
+   "Senyawa aktif dan senyawa penanda adalah dua istilah yang selalu merujuk pada senyawa yang sama"
+  ],
+  "a": 1,
+  "b": "Senyawa penanda (marker) adalah senyawa khas suatu tanaman yang stabil, terukur, dan dipakai untuk identifikasi, standardisasi, dan pengendalian mutu (QC) suatu ekstrak atau sediaan — sedangkan senyawa aktif adalah senyawa yang bertanggung jawab atas efek farmakologi. Keduanya bisa sama, tetapi tidak harus sama: suatu senyawa dapat dipilih sebagai penanda karena khas dan mudah diukur, walaupun efeknya berasal dari senyawa lain atau dari keseluruhan campuran. Di slide, keempat penanda pegagan (asiatikosida, madekasosida, asam asiatat, asam madekasat) ditampilkan pada P6 hlm. 11, dan istilah \"multiple chemical markers\" dipakai untuk identifikasi spesies <i>Panax</i> (P6 hlm. 18). <b>Catatan:</b> Di luar slide — suplemen, definisi dan fungsi senyawa penanda vs senyawa aktif hampir tidak dijelaskan di slide; yang ada hanya judul \"Senyawa Penanda (Sun et al., 2020)\" dan 4 struktur pada P6 hlm. 11 serta frasa \"multiple chemical markers\" pada P6 hlm. 18."
+ },
+ {
+  "no": 44,
+  "p": "P6",
+  "topik": "Senyawa penanda *Centella asiatica*",
+  "lvl": "C3",
+  "src": "P6 hlm. 11",
+  "sup": false,
+  "q": "Seorang analis menetapkan kadar senyawa penanda ekstrak pegagan (<i>Centella asiatica</i>). Pasangan senyawa dan rumus molekul yang benar menurut slide adalah:",
+  "o": [
+   "Madekasosida — C30H48O6 = 504,70",
+   "Asiatikosida — C48H78O19 = 959,12",
+   "Asam asiatat — C48H78O20 = 975,13",
+   "Asam madekasat — C48H78O19 = 959,12",
+   "Madekasosida — C30H48O5 = 488,7"
+  ],
+  "a": 1,
+  "b": "Empat senyawa penanda pegagan menurut slide (P6 hlm. 11, Sun et al. 2020): madekasosida C48H78O20 = 975,13; asiatikosida C48H78O19 = 959,12; asam madekasat C30H48O6 = 504,70; asam asiatat C30H48O5 = 488,7. Glikosidanya adalah madekasosida dan asiatikosida, sedangkan aglikonnya adalah asam madekasat dan asam asiatat. Keempatnya adalah triterpen tipe ursan/oleanan beserta glikosidanya. Pilihan A, C, D, dan E menukar rumus glikosida (C48) dengan aglikon (C30) atau menukar pasangan senyawanya. Kandungan pegagan menurut P6 hlm. 8 (Kunjumon et al. 2022) antara lain triterpen tipe ursan (11), triterpen tipe oleanan (5), glikosida triterpen tipe ursan (30), glikosida triterpen tipe oleanan (14), flavonoid (18), dan asam fenolat (13)."
+ },
+ {
+  "no": 45,
+  "p": "P6",
+  "topik": "Teknik pemisahan dan pemilihan pelarut maserasi pegagan",
+  "lvl": "C3",
+  "src": "P6 hlm. 10",
+  "sup": false,
+  "q": "Simplisia pegagan dimaserasi untuk menarik glikosida triterpen (asiatikosida dan madekasosida) yang bersifat semi-polar karena memiliki rantai gula. Berdasarkan prinsip kepolaran, pelarut yang paling sesuai di antara pilihan berikut adalah:",
+  "o": [
+   "Heksana",
+   "Kloroform",
+   "Etanol mutlak",
+   "Etanol 50%",
+   "Air saja tanpa etanol"
+  ],
+  "a": 3,
+  "b": "Prinsip \"like dissolves like\": glikosida triterpen memiliki aglikon triterpen yang relatif non-polar dan rantai gula yang polar, sehingga paling baik ditarik oleh pelarut hidroalkohol berkepolaran menengah seperti etanol 50% — cukup polar untuk melarutkan bagian gula, cukup non-polar untuk bagian aglikonnya. Etanol mutlak (C) terlalu non-polar untuk glikosida, air saja (E) terlalu polar dan menarik banyak pengotor polar lain, sedangkan heksana (A) dan kloroform (B) terlalu non-polar untuk glikosida. Alur di slide (P6 hlm. 10, Azmin et al. 2020) adalah: simplisia dicuci → dikeringkan dalam oven → digiling jadi serbuk → maserasi dengan 3 pelarut: etanol, etanol 50%, dan air → disaring → dikeringkan dengan rotary evaporator → ekstrak kasar (crude extract). <b>Catatan:</b> Di luar slide — suplemen, slide hanya menampilkan alur dan ketiga pelarut tersebut tanpa penjelasan kepolaran, tanpa suhu, waktu, dan rasio maserasi, serta tanpa data rendemen atau perbandingan kadar asiatikosida per pelarut."
+ },
+ {
+  "no": 46,
+  "p": "P6",
+  "topik": "Hubungan struktur–aktivitas antioksidan flavonoid, kriteria Bors",
+  "lvl": "C4",
+  "src": "P6 hlm. 13",
+  "sup": false,
+  "q": "Disajikan empat flavonoid: (1) aglikon dengan gugus katekol (3',4'-diOH) di cincin B, ikatan rangkap C2–C3, serta gugus 3-OH dan 5-OH; (2) flavonoid yang sama tetapi gugus 3-OH-nya diglikosilasi; (3) flavonoid tanpa gugus katekol di cincin B dan tanpa ikatan rangkap C2–C3; (4) flavonoid yang gugus 3-OH-nya dihilangkan. Berdasarkan kriteria Bors, urutan aktivitas penangkapan radikal dari yang tertinggi adalah:",
+  "o": [
+   "(2) > (1) > (3) > (4)",
+   "(1) > (2) > (3) > (4)",
+   "(3) > (1) > (2) > (4)",
+   "(4) > (3) > (2) > (1)",
+   "(1) > (3) > (4) > (2)"
+  ],
+  "a": 1,
+  "b": "Kriteria Bors (P6 hlm. 13): (a) struktur <i>o</i>-dihidroksi (3',4'-diOH, yaitu katekol) di cincin B memberi stabilitas tinggi pada radikal fenoksil melalui ikatan hidrogen atau delokalisasi elektron; (b) ikatan rangkap C2–C3 yang terkonjugasi dengan gugus 4-okso menentukan koplanaritas cincin dan stabilisasi radikal melalui delokalisasi ke seluruh tiga sistem cincin; (c) keberadaan gugus 3-OH dan 5-OH diperlukan untuk kapasitas penangkapan radikal maksimal. Kriteria tambahan: bila tidak ada katekol di cincin B, substituen hidroksil berkatekol di cincin A dapat mengompensasi. Glikosilasi flavonoid umumnya menurunkan aktivitas antioksidan, dan memblokir gugus hidroksi pada posisi C-3 atau menghilangkan gugus 3-OH menurunkan sifat antioksidatif. Jadi flavonoid (1) yang memenuhi semua kriteria paling aktif, diikuti (2) yang ter-glikosilasi, lalu (3) yang kehilangan katekol dan ikatan rangkap, dan (4) yang kehilangan 3-OH paling rendah."
+ },
+ {
+  "no": 47,
+  "p": "P6",
+  "topik": "Golongan ginsenosida *Panax ginseng*",
+  "lvl": "C2",
+  "src": "P6 hlm. 17, 20",
+  "sup": false,
+  "q": "Ginsenosida Rb1, Rb2, Rc, dan Compound-K (C-K) termasuk tipe ginsenosida yang mana?",
+  "o": [
+   "20(S)-protopanaksatriol",
+   "Oleanan",
+   "20(S)-protopanaksadiol",
+   "Oktillol",
+   "Gintonin"
+  ],
+  "a": 2,
+  "b": "Golongan komponen kimia ginseng (P6 hlm. 17): ginsenosida/saponin → oleanan (5 cincin karbon); oktillol; dammaran (4 cincin karbon) → protopanaksadiol dan protopanaksatriol; rantai samping C17 bervariasi; serta miscellaneous (sapogenin). Tabel substitusi (P6 hlm. 20): tipe 20(S)-protopanaksadiol adalah Rb1, Rb2, Rc, dan C-K/Compound-K; tipe 20(S)-protopanaksatriol adalah Re, Rg1, Rg2, dan 20(S)-protopanaksatriol (Ppt). Oleanan (B) adalah tipe ginsenosida yang berbeda (5 cincin karbon), oktillol (D) adalah golongan tersendiri, dan gintonin (E) adalah komponen non-saponin (bersama GLP151, lisofosfatidat, dll.), bukan ginsenosida."
+ },
+ {
+  "no": 48,
+  "p": "P6",
+  "topik": "Struktur ginsenosida dan potensi interaksi obat melalui CYP3A",
+  "lvl": "C4",
+  "src": "P6 hlm. 20",
+  "sup": false,
+  "q": "Seorang pasien mengonsumsi produk ginseng bersama obat yang dimetabolisme oleh CYP3A. Uji aktivitas CYP3A di slide memakai probe hidroksilasi 6β-testosteron pada mikrosom hati tikus. Ginsenosida yang menimbulkan risiko interaksi obat paling besar karena penghambatan CYP3A terkuat adalah:",
+  "o": [
+   "Rb1",
+   "Re",
+   "Rg1",
+   "20(S)-panaxatriol",
+   "Compound-K"
+  ],
+  "a": 3,
+  "b": "Menurut slide (P6 hlm. 20), ginsenosida yang TIDAK menghambat CYP3A adalah Rb1, Rb2, Rc, Compound-K, Re, dan Rg1. Yang menghambat CYP3A secara kompetitif adalah Rg2 (Ki 86,4 ± 0,8 μM), 20(S)-panaxatriol (Ki 1,7 ± 0,1 μM), dan 20(S)-protopanaxatriol (Ki 3,2 ± 0,2 μM). Nilai Ki yang paling kecil berarti penghambatan paling kuat (diperlukan konsentrasi paling rendah untuk menghambat), sehingga 20(S)-panaxatriol (Ki 1,7 ± 0,1 μM) adalah penghambat terkuat, diikuti 20(S)-protopanaxatriol (Ki 3,2 ± 0,2 μM), lalu Rg2 (Ki 86,4 ± 0,8 μM). Kesimpulan slide: perbedaan struktur kimia memengaruhi efek ginsenosida pada aktivitas CYP3A, dan produk turunan ginseng berpotensi menimbulkan interaksi ginseng–obat yang signifikan. Metabolit bakteri usus dari ginsenosida disebut bertanggung jawab atas aktivitas farmakologi utama ginseng."
+ },
+ {
+  "no": 49,
+  "p": "P6",
+  "topik": "Metode analisis senyawa aktif/penanda",
+  "lvl": "C3",
+  "src": "P6 hlm. 18, 25",
+  "sup": false,
+  "q": "Seorang analis ingin menganalisis komponen volatil minyak atsiri suatu tanaman, sedangkan rekan lainnya ingin menganalisis ekstrak non-volatil yang sama. Pasangan metode yang paling tepat untuk kedua tujuan tersebut secara berurutan adalah:",
+  "o": [
+   "GC-MS untuk komponen volatil; HPLC-MS untuk ekstrak non-volatil",
+   "HPLC-MS untuk komponen volatil; GC-MS untuk ekstrak non-volatil",
+   "Spektrofotometri untuk komponen volatil; KLT untuk ekstrak non-volatil",
+   "KLT untuk komponen volatil; spektrofotometri untuk ekstrak non-volatil",
+   "Maserasi untuk komponen volatil; Soxhlet untuk ekstrak non-volatil"
+  ],
+  "a": 0,
+  "b": "Metode analisis yang muncul di slide P6: untuk <i>Helichrysum italicum</i> (P6 hlm. 25), ekstraksi pelarut menghasilkan ekstrak non-volatil yang dianalisis dengan HPLC-MS, sedangkan teknik distilasi menghasilkan minyak atsiri volatil yang dianalisis dengan GC-MS (di slide tertulis \"GS-MS\"). Untuk saponin <i>Panax</i>, identifikasi memakai LC-(±)ESI-MSⁿ + analisis kemometrik — 87 saponin teridentifikasi untuk identifikasi spesies <i>Panax</i> dalam 60 batch sediaan majemuk TCM (P6 hlm. 18). KLT muncul pada alur <i>Senna auriculata</i> (P6 hlm. 25): bunga dikeringkan di tempat teduh → digiling → ekstraksi Soxhlet → plat TLC → purifikasi berbasis kromatografi → identifikasi kuersetin dengan GC-MS. Maserasi dan Soxhlet (E) adalah teknik penyarian, bukan metode analisis. <b>Catatan:</b> Di luar slide — suplemen, slide hanya menyebut metode-metode tersebut sebagai label pada gambar, tanpa uraian prinsip, fase gerak/diam, deteksi, atau contoh penetapan kadar penanda pegagan; spektrofotometri tidak disebut sama sekali di seluruh P6, dan KLT untuk penanda pegagan tidak ada di slide."
+ },
+ {
+  "no": 50,
+  "p": "P6",
+  "topik": "Studi morfologi untuk identifikasi suku",
+  "lvl": "C2",
+  "src": "P6 hlm. 22–24, 26",
+  "sup": false,
+  "q": "Suatu tanaman obat memiliki perbungaan berupa bongkol yang tampak seperti satu bunga besar — banyak bunga kecil (floret cakram dan floret pita) berkumpul dalam satu bongkol, seperti pada bunga matahari dan krisan. Tanaman tersebut termasuk suku:",
+  "o": [
+   "Apiaceae",
+   "Araliaceae",
+   "Asteraceae",
+   "Fabaceae",
+   "Lamiaceae"
+  ],
+  "a": 2,
+  "b": "Perbungaan khas Asteraceae adalah kapitulum (bongkol): banyak bunga kecil berkumpul dalam satu bongkol yang tampak seperti satu bunga, seperti pada bunga matahari dan krisan (P6 hlm. 22, 24, 26). Ciri pembeda suku lain menurut slide: Apiaceae — tanaman herba aromatik, batang berongga, daun majemuk dan tunggal, bunga berbentuk payung (umbel) (P6 hlm. 7); Araliaceae — tanaman tropis, 70 marga dan 700 spesies, daun sederhana, stipula jelas, kelopak kelipatan 5, mahkota kelipatan 5–10 (P6 hlm. 16). Asteraceae sendiri beranggotakan 1.620 marga dari >23.600 spesies, berupa herba, semak, dan tanaman memanjat; spesies terkenalnya antara lain zinnia, marigold, dahlia, dan krisan (P6 hlm. 23). <b>Catatan:</b> Slide P6 hlm. 23 salah tulis \"Umbelliferae\" untuk Asteraceae — yang benar kapitulum. \"Umbelliferae\" adalah nama lama suku Apiaceae (umbel/payung), justru ciri Apiaceae, bukan Asteraceae."
+ },
+ {
+  "no": 51,
+  "p": "P6",
+  "topik": "Alur studi fitokimia menuju kandidat obat",
+  "lvl": "C4",
+  "src": "P6 hlm. 2–4",
+  "sup": false,
+  "q": "Suatu tanaman telah memiliki data empiris dan telah dipelajari morfologinya. Penelusuran literatur menunjukkan habitat tumbuhnya sudah diketahui, tetapi belum ada laporan senyawa dan isolatnya. Langkah studi fitokimia selanjutnya yang paling tepat adalah:",
+  "o": [
+   "Langsung menguji ekstrak kasar pada manusia tanpa penelusuran senyawa",
+   "Melakukan studi fitokimia: menelusuri senyawa, isolat, dan aktivitas yang sudah dilaporkan, lalu mengisolasi dan mengidentifikasi senyawa dari tanaman tersebut",
+   "Melompat ke studi kimia medisinal tanpa mengetahui senyawa aktifnya",
+   "Menghentikan penelitian karena tidak ada laporan senyawa sebelumnya",
+   "Langsung memformulasikan sediaan tanpa studi farmakologi"
+  ],
+  "a": 1,
+  "b": "Alur pengembangan kandidat obat menurut slide (P6 hlm. 2–4): Data Empiris → Studi Morfologi → Studi Fitokimia → Studi Farmakologi → Studi Kimia Medisinal → Kandidat Obat Baru. Rincian tahap Studi Fitokimia: dari data empiris → habitat tumbuh → senyawa yang sudah dilaporkan? → isolat yang dilaporkan? → aktivitas yang dilaporkan? Karena habitat sudah diketahui tetapi senyawa dan isolat belum dilaporkan, celah penelitiannya ada pada senyawa/isolat — langkah selanjutnya adalah studi fitokimia (isolasi dan identifikasi senyawa), baru kemudian studi farmakologi dan kimia medisinal. Mesin pencari jurnal yang dipakai untuk penelusuran literatur (P6 hlm. 4): Google Scholar, PubMed, Elsevier/Science Direct, NCBI, dan Taylor & Francis (contoh pencarian: \"centella asiatica active compounds review\")."
+ },
+ {
+  "no": 52,
+  "p": "P7",
+  "topik": "Morfologi dan potensi suku Fabaceae dan Lamiaceae",
+  "lvl": "C2",
+  "src": "P7 hlm. 5, 14",
+  "sup": false,
+  "q": "Seorang mahasiswa menemukan tanaman berkeping dua (dikotiledon) yang buahnya berupa polong dan pada akarnya terdapat bintil yang mampu mengikat nitrogen langsung dari udara karena bersimbiosis dengan bakteri tertentu. Tanaman lain yang diamatinya adalah herba aromatik berminyak atsiri khas, dipakai sebagai bahan masakan dan bahan utama pembuatan parfum.\n\nPasangan suku yang paling tepat untuk kedua tanaman tersebut secara berurutan adalah:",
+  "o": [
+   "Fabaceae dan Lamiaceae",
+   "Lamiaceae dan Fabaceae",
+   "Apiaceae dan Araliaceae",
+   "Myrtaceae dan Asteraceae",
+   "Asteraceae dan Fabaceae"
+  ],
+  "a": 0,
+  "b": "Fabaceae (P7 hlm. 5): suku polong-polongan — herba, semak, pohon, dan tanaman merambat di seluruh dunia terutama hutan hujan tropis; semua tumbuhan berkeping dua (dikotiledon); buah berupa polong; bunga hemaprodit (tertulis \"hemaprodit\" di slide); ciri khas jaringan berbintil karena kemampuan fiksasi nitrogen langsung dari udara (tidak melalui cairan tanah) bersimbiosis dengan bakteri tertentu pada akar atau batang; kegunaan sebagai bahan makanan, minuman, bumbu masak, zat pewarna, pupuk hijau, pakan ternak, dan bahan pengobatan. Lamiaceae (P7 hlm. 14): herba aromatik, suku nilam-nilaman; memiliki minyak nilam/minyak atsiri yang khas; digunakan sebagai bahan masakan dan bahan utama pembuatan parfum — contoh foto di slide: lavender, <i>Salvia</i> sp., dan kumis kucing (<i>Orthosiphon aristatus</i>). Golongan senyawa khas Fabaceae pada contoh <i>Crotalaria burhia</i> (P7 hlm. 4): alkaloid, flavonoid, saponin, tanin, dan steroid."
+ },
+ {
+  "no": 53,
+  "p": "P7",
+  "topik": "Hubungan struktur–aktivitas triterpenoid pentasiklik",
+  "lvl": "C4",
+  "src": "P7 hlm. 11",
+  "sup": false,
+  "q": "Disajikan beberapa modifikasi struktur triterpenoid pentasiklik (kerangka ursana/oleanana). Menurut QSAR di slide, modifikasi manakah yang diprediksi MENINGKATKAN aktivitas biologis secara besar (greatly)?",
+  "o": [
+   "Penambahan gugus gula (sugar moiety) pada C-3",
+   "Penggantian gugus dengan gugus hidroksil",
+   "Penambahan gugus karboksipropanoiloksi (carboxypropanoyloxy) pada gugus hidroksil C-3",
+   "Esterifikasi gugus karboksil",
+   "Penambahan gugus hidroksil, metil, atau okso tambahan"
+  ],
+  "a": 2,
+  "b": "Enam kaidah QSAR triterpenoid pentasiklik (P7 hlm. 11, Abdullah et al. 2016): (1) penggantian dengan gugus hidroksil akan menurunkan aktivitas; (2) gugus ester akan sangat menurunkan aktivitas, sedangkan karboksilasi akan meningkatkan aktivitas; (3) penambahan gugus hidroksil, metil, atau okso tambahan tidak berpengaruh atau menurunkan aktivitas; (4) penghilangan atau modifikasi gugus hidroksil akan menurunkan aktivitas ursana tetapi meningkatkan aktivitas oleanana (posisi C-28); (5) gugus metil, hidroksil, atau karboksil akan menurunkan aktivitas; (6) penghilangan atau modifikasi gugus hidroksil akan menurunkan aktivitas, gugus karboksipropanoiloksi akan meningkatkan aktivitas secara besar, sedangkan gugus gula akan menyebabkan hilangnya aktivitas. Jadi hanya C yang diprediksi meningkatkan aktivitas secara besar; A menyebabkan hilangnya aktivitas, B dan E menurunkan/tidak berpengaruh, D sangat menurunkan aktivitas."
+ },
+ {
+  "no": 54,
+  "p": "P7",
+  "topik": "Pemilihan teknik penyarian minyak atsiri",
+  "lvl": "C3",
+  "src": "P7 hlm. 16–17",
+  "sup": false,
+  "q": "Seorang peneliti ingin memperoleh minyak atsiri yang volatil dari bunga lavender (<i>Lavandula angustifolia</i>). Uap air dialirkan melalui simplisia, uap air dan minyak atsiri yang menguap kemudian didinginkan pada kondensor, lalu dipisahkan pada separator menjadi minyak atsiri dan air bunga (floral waters).\n\nTeknik penyarian yang paling sesuai dengan uraian tersebut adalah:",
+  "o": [
+   "Maserasi",
+   "Dekoksi",
+   "Ekstraksi Soxhlet",
+   "Destilasi uap (steam distillation)",
+   "Ekstraksi dengan pelarut heksana"
+  ],
+  "a": 3,
+  "b": "Empat diagram teknik penyarian (P7 hlm. 17, Dobros et al. 2022): (1) destilasi vakum — concrete (larutan lilin dan minyak) + alkohol → destilasi vakum menghilangkan alkohol → kondensor → absolute; (2) maserasi — simplisia dicincang halus dicampur pelarut, ampas diperas, disaring, cairan dicampur dan dijernihkan; (3) gas superkritis (supercritical CO₂) — tangki CO₂ cair → pompa → ekstraktor berisi simplisia dan CO₂ cair → katup penurun tekanan → separator → CO₂ kembali ke gas → bejana penampung; (4) destilasi uap — suplai uap → simplisia → uap air dan minyak atsiri yang menguap → kondensor (air dingin masuk, air panas keluar) → separator → minyak atsiri dan air bunga. Teknik yang dibandingkan untuk lavender di P7 hlm. 16 adalah maserasi, ekstraksi berbantu ultrasound, dan dekoksi — tetapi untuk memperoleh minyak atsiri volatil, destilasi uap adalah teknik yang alurnya persis seperti di soal. Soxhlet dipakai di slide untuk isolasi minyak biji kedawung (<i>Parkia</i>), bukan minyak atsiri volatil (P7 hlm. 7). Catatan istilah: di P7 hlm. 17 tertulis \"Hypercritical CO2\" — seharusnya Supercritical CO2."
+ },
+ {
+  "no": 55,
+  "p": "P7",
+  "topik": "Perbandingan teknik hidrodestilasi konvensional dan modern cengkeh",
+  "lvl": "C4",
+  "src": "P7 hlm. 24",
+  "sup": false,
+  "q": "Disajikan data minyak atsiri cengkeh hasil HD, U-HD, MHD, dan U-MHD. Kondisi optimum yang dilaporkan adalah ekstraksi ultrasonik pada 40°C selama 45 menit, daya microwave 400W selama 45 menit, dan rasio cengkeh : air 1:20 (g/mL). Dari grafik, kadar eugenol naik dari HD ~72% menjadi U-MHD ~79%, fenilpropanoid total dari ~79% menjadi ~88%, sedangkan seskuiterpen turun dari ~21% menjadi ~12%; keempat metode mencapai rendemen akhir ~15–16%, tetapi MHD dan U-MHD mencapainya paling cepat (~45–60 menit) sedangkan HD paling lambat (~180 menit).\n\nTeknik yang paling efisien dan paling ramah lingkungan untuk produksi minyak atsiri cengkeh adalah:",
+  "o": [
+   "HD, karena paling konvensional dan paling lama",
+   "U-HD, karena rendemennya paling tinggi dari semua metode",
+   "U-MHD, karena mencapai rendemen akhir paling cepat dengan kadar eugenol tertinggi dan waktu proses tersingkat sehingga konsumsi energi paling rendah",
+   "MHD saja, karena tidak memakai ultrasound sama sekali",
+   "HD, karena kadar seskuiterpennya paling tinggi"
+  ],
+  "a": 2,
+  "b": "Kondisi optimum persis di slide (P7 hlm. 24, Suttiaporn et al. 2024): \"The optimum conditions were as follows: ultrasonic extraction was at 40 °C for 45 min, microwave distillation power was 400 W for 45 min, and the clove to water ratio was 1:20 (g/mL).\" Dari grafik (perkiraan baca grafik, bukan angka tertulis): fenilpropanoid HD ~79%, MHD ~80%, U-HD ~84%, U-MHD ~88%; eugenol HD ~72%, MHD ~76%, U-HD ~77%, U-MHD ~79%; seskuiterpen HD ~21%, MHD ~19%, U-HD ~16%, U-MHD ~12%. Kurva kinetik: rendemen akhir keempat metode ~15–16%; MHD dan U-MHD mencapai ~16% paling cepat (~45–60 menit), U-HD ~15% pada ~120–150 menit, HD ~15% pada ~180 menit. U-MHD paling efisien karena waktu tersingkat + kadar eugenol tertinggi, sehingga energi dan waktu proses paling rendah. Koreksi istilah: kotak definisi di slide menulis \"U-MHD: Microwave Hydro-distillation\" — itu salah; dari diagram dan grafik, U-MHD adalah gabungan ultrasound + microwave (Ultrasound–Microwave Hydro-distillation), sedangkan MHD sendiri tidak didefinisikan di kotak tersebut."
+ },
+ {
+  "no": 56,
+  "p": "P7",
+  "topik": "Prinsip isolasi eugenol secara konvensional",
+  "lvl": "C3",
+  "src": "P7 hlm. 25",
+  "sup": false,
+  "q": "Skema isolasi eugenol dari cengkeh di slide: destilasi uap → ekstraksi dengan diklorometana → ekstraksi dengan kalium hidroksida (KOH) → cuci dengan diklorometana → pengasaman dengan asam klorida (HCl) → ekstraksi dengan diklorometana → cuci dengan air suling → cuci dengan natrium klorida → keringkan dengan natrium sulfat anhidrat → destilasi untuk menghilangkan diklorometana → eugenol murni.\n\nPrinsip kimia yang mendasari tahap ekstraksi KOH lalu pengasaman HCl adalah:",
+  "o": [
+   "Eugenol yang bersifat basa diprotonasi oleh KOH sehingga larut dalam air",
+   "Gugus fenol eugenol yang bersifat asam lemah dideprotonasi oleh KOH menjadi ion fenoksida yang larut dalam air (memisahkannya dari senyawa netral seperti β-kariofilen yang tetap dalam diklorometana), lalu HCl mengasamkan kembali fenoksida menjadi eugenol yang dapat diekstraksi kembali ke diklorometana",
+   "KOH mengoksidasi eugenol menjadi kuinon, lalu HCl mereduksinya kembali",
+   "KOH dan HCl hanya berfungsi sebagai katalis tanpa mengubah bentuk kimia eugenol",
+   "Eugenol menguap bersama KOH, lalu mengembun kembali setelah ditambah HCl"
+  ],
+  "a": 1,
+  "b": "Bagan alir lengkap di P7 hlm. 25: eugenol in cloves → steam distillation → eugenol in distillate → extract with dichloromethane → eugenol in dichloromethane extract → extract with potassium hydroxide → eugenol in base extract → wash with dichloromethane → acidify with hydrochloric acid → extract with dichloromethane → eugenol in dichloromethane extract → wash with distilled water → wash with sodium chloride → dry with anhydrous sodium sulfate → distill off dichloromethane → pure eugenol. Prinsipnya adalah pemisahan asam–basa: gugus –OH fenolik pada eugenol bersifat asam lemah, sehingga KOH mendeprotonasinya menjadi ion fenoksida yang larut dalam fase air/basa dan terpisah dari komponen netral (misalnya seskuiterpen seperti β-kariofilen) yang tetap berada dalam diklorometana; pencucian dengan diklorometana membuang pengotor netral tersebut, lalu HCl memprotonasi kembali fenoksida menjadi eugenol bebas yang kembali larut dalam diklorometana. <b>Catatan:</b> Di luar slide — suplemen, prinsip asam-basa ini tidak dijelaskan di slide; slide hanya menampilkan urutan langkah pada bagan alir (P7 hlm. 25), sehingga prinsipnya harus disimpulkan sendiri dari bagan tersebut."
+ },
+ {
+  "no": 57,
+  "p": "P7",
+  "topik": "Dampak lingkungan proses ekstraksi & strategi green chemistry",
+  "lvl": "C4",
+  "src": "Di luar slide — suplemen green chemistry",
+  "sup": true,
+  "q": "Sebuah industri berencana mengekstraksi minyak biji kedawung skala besar dengan Soxhlet menggunakan diklorometana dan heksana dalam jumlah besar, tanpa sistem daur ulang pelarut dan tanpa pengolahan limbah.\n\nAnalisis dan alternatif yang paling tepat berdasarkan prinsip green chemistry adalah:",
+  "o": [
+   "Proses tersebut sudah ramah lingkungan karena pelarut organik menguap sendiri dan tidak meninggalkan limbah",
+   "Dampaknya hanya pada biaya pelarut, tidak ada dampak lingkungan; tidak perlu diubah",
+   "Pelarut organik volatil seperti diklorometana dan heksana menimbulkan limbah cair dan uap yang toksik serta mencemari lingkungan; alternatif yang lebih hijau adalah menggantinya dengan CO₂ superkritis atau pelarut hijau (misalnya etanol/air), memakai ekstraksi berbantu ultrasound/microwave untuk mempersingkat waktu dan mengurangi pelarut, serta mendaur ulang pelarut yang masih dipakai",
+   "Mengganti diklorometana dengan heksana dalam jumlah yang lebih besar akan menyelesaikan masalah limbah",
+   "Membuang limbah pelarut langsung ke saluran air adalah cara yang dapat diterima bila dilakukan pada malam hari"
+  ],
+  "a": 2,
+  "b": "Prinsip green chemistry yang relevan: hindari atau minimalkan pelarut organik volatil dan toksik, gunakan pelarut yang lebih aman (CO₂ superkritis, etanol, air), hemat energi (waktu dan suhu proses lebih rendah, misalnya ekstraksi berbantu ultrasound/microwave), dan daur ulang pelarut. Diklorometana dan heksana adalah pelarut organik volatil yang limbah cair dan uapnya toksik serta mencemari lingkungan bila dibuang tanpa pengolahan; penggunaan dalam jumlah besar pada skala industri memperbesar beban limbah tersebut. Alternatif yang konsisten dengan materi slide: ekstraksi CO₂ superkritis (teknik yang ditampilkan pada P7 hlm. 17 sebagai \"Gas Superkritis\") serta metode berbantu ultrasound/microwave yang terbukti mempersingkat waktu proses pada cengkeh (P7 hlm. 24: U-MHD mencapai rendemen akhir dalam ~45–60 menit, jauh lebih cepat dari HD ~180 menit). <b>Catatan:</b> Di luar slide — suplemen, green chemistry TIDAK ADA sama sekali di slide; tidak ada pembahasan dampak lingkungan, pelarut organik, atau strategi green chemistry di P7. Satu-satunya yang terkait adalah penggunaan diklorometana berulang pada bagan isolasi eugenol (P7 hlm. 25) dan Soxhlet pada minyak biji <i>Parkia</i> (P7 hlm. 7) — keduanya tanpa komentar lingkungan. Heksana bahkan tidak disebut sama sekali di slide."
+ },
+ {
+  "no": 58,
+  "p": "P7",
+  "topik": "Stabilitas komponen minyak atsiri & keamanan",
+  "lvl": "C2",
+  "src": "P7 hlm. 15, 18",
+  "sup": false,
+  "q": "Seorang pengguna minyak lavender mengalami reaksi alergi kulit setelah memakai minyak lavender yang sudah disimpan lama dalam keadaan terbuka (wadah tidak tertutup rapat dan sering terpapar udara).\n\nPenyebab yang paling tepat menurut slide adalah:",
+  "o": [
+   "Linalool dalam minyak lavender teroksidasi oleh paparan udara membentuk hidroperoksida yang berperan sebagai alergen",
+   "Linalyl acetate berubah menjadi linalool karena wadah terbuka",
+   "Minyak lavender menjadi basa karena terpapar udara sehingga mengiritasi kulit",
+   "Lavandulol menguap seluruhnya sehingga minyak menjadi pekat dan beracun",
+   "Minyak lavender terkontaminasi bakteri dari udara terbuka yang menghasilkan toksin"
+  ],
+  "a": 0,
+  "b": "Mekanisme alergi di slide (P7 hlm. 15, Dobros et al. 2024): \"Although lavender oil is widely used, some people are allergic to it. This might be related to the fact that air-exposed linalool forms hydroperoxides as allergens.\" Disertai dua struktur hidroperoksida linalool (gugus –OOH). Komposisi minyak lavender (P7 hlm. 18, Liu et al. 2020): <i>Lavandula angustifolia</i> — linalool 33,6%, linalyl acetate 39,6% (linalool adalah komponen utama yang terpapar udara dan membentuk hidroperoksida). Implikasinya: minyak lavender yang disimpan lama dalam keadaan terbuka lebih berisiko menimbulkan alergi karena linalool terus terpapar udara. <b>Catatan:</b> Di luar slide — suplemen, anjuran penyimpanan (wadah tertutup rapat, hindari paparan udara dan cahaya, jangan simpan terlalu lama setelah dibuka) tidak ada di slide; yang ada di slide hanya mekanisme alergi melalui pembentukan hidroperoksida linalool (P7 hlm. 15)."
+ },
+ {
+  "no": 59,
+  "p": "P7",
+  "topik": "Golongan senyawa aktif suku Myrtaceae",
+  "lvl": "C2",
+  "src": "P7 hlm. 22–23",
+  "sup": false,
+  "q": "Disajikan empat senyawa dari cengkeh (<i>Syzygium aromaticum</i>) dan tanaman Myrtaceae lain: eugenol, β-kariofilen, asam oleanolat, dan β-sitosterol.\n\nPasangan senyawa–golongan yang seluruhnya benar adalah:",
+  "o": [
+   "Eugenol–seskuiterpen; β-kariofilen–fenilpropanoid; asam oleanolat–fitosterol; β-sitosterol–triterpenoid",
+   "Eugenol–fenilpropanoid; β-kariofilen–seskuiterpen; asam oleanolat–triterpenoid; β-sitosterol–fitosterol",
+   "Eugenol–triterpenoid; β-kariofilen–fitosterol; asam oleanolat–fenilpropanoid; β-sitosterol–seskuiterpen",
+   "Eugenol–fitosterol; β-kariofilen–triterpenoid; asam oleanolat–seskuiterpen; β-sitosterol–fenilpropanoid",
+   "Eugenol–alkaloid; β-kariofilen–flavonoid; asam oleanolat–saponin; β-sitosterol–tanin"
+  ],
+  "a": 1,
+  "b": "Senyawa cengkeh (P7 hlm. 22, Batiha et al. 2020): eugenol, kuersetin, asam galat, kaempferol, asam krategolat (tertulis \"Crategolic\"), β-kariofilen, asam oleanolat, stigmasterol, eugenitin, bikornin; skema hidrodestilasi di halaman yang sama menampilkan eugenol, α-humulen, β-kariofilen, dan eugenil asetat. Golongan senyawa aktif Myrtaceae (P7 hlm. 23, Saber et al. 2023): A. TRITERPENOID — asam asiatat, asam betulinat, asam madekasat, asam maslinat, asam oleanolat, asam ursolat; B. FITOSTEROL — avenasterol, sikloartenol, fukosterol, stigmastanol, β-sitosterol, sikloartenol (lagi — \"Cycloartenol\" muncul dua kali, duplikasi label). Klasifikasi untuk soal ini: eugenol = fenilpropanoid; β-kariofilen = seskuiterpen; asam oleanolat/ursolat = triterpenoid; β-sitosterol = fitosterol."
+ },
+ {
+  "no": 60,
+  "p": "P7",
+  "topik": "Interpretasi uji aktivitas antioksidan (DPPH)",
+  "lvl": "C3",
+  "src": "Di luar slide — data contoh suplemen (metode DPPH: P7 hlm. 8, 16)",
+  "sup": true,
+  "q": "Disajikan data contoh uji DPPH beberapa ekstrak/fraksi tanaman suku Fabaceae (data contoh suplemen, BUKAN data slide — lihat Catatan di bawah):\n\nSampel · IC50 DPPH (µg/mL) · Golongan senyawa dominan\nFraksi A · 12 · Fenol dan flavonoid\nFraksi B · 45 · Fenol dan flavonoid\nFraksi C · 120 · Saponin\nFraksi D · 250 · Steroid\n\nSampel dengan aktivitas antioksidan terkuat dan golongan senyawa yang paling berperan adalah:",
+  "o": [
+   "Fraksi D, karena IC50-nya paling besar; golongan steroid paling berperan",
+   "Fraksi A, karena IC50-nya paling kecil; golongan fenol dan flavonoid paling berperan sebagai pendonor hidrogen penangkap radikal DPPH",
+   "Fraksi C, karena saponin adalah antioksidan terkuat",
+   "Fraksi B, karena IC50 menengah berarti aktivitasnya paling seimbang",
+   "Semua fraksi sama kuat, karena semuanya diuji dengan metode DPPH yang sama"
+  ],
+  "a": 1,
+  "b": "Pada uji DPPH, nilai IC50 adalah konsentrasi yang dibutuhkan untuk menghambat 50% radikal DPPH — semakin KECIL nilai IC50, semakin KUAT aktivitas antioksidannya (dibutuhkan konsentrasi lebih rendah untuk mencapai efek yang sama). Fraksi A memiliki IC50 paling kecil (12 µg/mL), sehingga aktivitas antioksidannya paling kuat, diikuti Fraksi B (45 µg/mL), Fraksi C (120 µg/mL), dan Fraksi D (250 µg/mL, paling lemah). Golongan senyawa yang paling berperan adalah fenol dan flavonoid, karena gugus hidroksil fenoliknya mendonorkan atom hidrogen/elektron untuk menangkap radikal DPPH — sesuai dengan yang ditampilkan di slide pada diagram DPPH → fenol dan \"antiradical effect\" untuk <i>Parkia platycephala</i> (P7 hlm. 8), serta metode DPPH-EPR dan FRAP pada senyawa fenolik lavender (P7 hlm. 16). <b>Catatan:</b> Di luar slide — suplemen, tidak ada satu pun nilai IC50 DPPH di P6 maupun P7; DPPH hanya disebut sebagai metode (P7 hlm. 8 dan 16) tanpa angka. Tabel IC50 pada soal ini adalah data contoh untuk melatih interpretasi (IC50 kecil = aktivitas kuat), bukan data dari slide."
+ }
+];
 
     /* ================= MESIN KUIS ================= */
     var HURUF = ["A","B","C","D","E"];
-    var filterAktif = "SEMUA";
-    var daftar = [], idx = 0, terjawab = {}, skor = 0, selesai = false;
+    var filterP = "SEMUA", filterL = "SEMUA";
+    var daftar = [], idx = 0, terjawab = {}, selesai = false;
 
-    var filterBox = document.getElementById("quizFilters");
-    ["SEMUA","P1","P2","P3","P4","P5","P6","P7"].forEach(function(f){
-      var b = document.createElement("button");
-      b.className = "chip"; b.textContent = f === "SEMUA" ? "Semua pertemuan" : f;
-      b.setAttribute("aria-pressed", f === "SEMUA" ? "true" : "false");
-      b.addEventListener("click", function(){
-        filterAktif = f;
-        Array.prototype.forEach.call(filterBox.children, function(c){ c.setAttribute("aria-pressed", c === b ? "true" : "false"); });
-        mulaiKuis();
+    function buatBarisChips(boxId, nilai, labelFn, getAktif, onPilih){
+      var box = document.getElementById(boxId);
+      box.innerHTML = "";
+      nilai.forEach(function(v){
+        var b = document.createElement("button");
+        b.className = "chip"; b.textContent = labelFn(v);
+        b.setAttribute("aria-pressed", getAktif() === v ? "true" : "false");
+        b.addEventListener("click", function(){
+          onPilih(v);
+          Array.prototype.forEach.call(box.children, function(c, i){ c.setAttribute("aria-pressed", nilai[i] === v ? "true" : "false"); });
+          mulaiKuis(false);
+        });
+        box.appendChild(b);
       });
-      filterBox.appendChild(b);
-    });
+    }
+    buatBarisChips("quizFilters", ["SEMUA","P1","P2","P3","P4","P5","P6","P7"],
+      function(v){ return v === "SEMUA" ? "Semua pertemuan" : v; },
+      function(){ return filterP; }, function(v){ filterP = v; });
+    buatBarisChips("quizLevelFilters", ["SEMUA","C2","C3","C4"],
+      function(v){ return v === "SEMUA" ? "Semua level" : "Level " + v; },
+      function(){ return filterL; }, function(v){ filterL = v; });
 
-    function mulaiKuis(){
-      daftar = SOAL.filter(function(s){ return filterAktif === "SEMUA" || s.p === filterAktif; });
-      idx = 0; terjawab = {}; skor = 0; selesai = false;
+    function hitungDaftar(){
+      return SOAL.filter(function(s){
+        return (filterP === "SEMUA" || s.p === filterP) && (filterL === "SEMUA" || s.lvl === filterL);
+      });
+    }
+    function skorDaftar(){
+      var n = 0;
+      daftar.forEach(function(s){ if (terjawab[s.no] === s.a) n++; });
+      return n;
+    }
+    function terjawabDaftar(){
+      var n = 0;
+      daftar.forEach(function(s){ if (terjawab[s.no] !== undefined) n++; });
+      return n;
+    }
+    function labelSaring(){
+      var t = [];
+      if (filterP !== "SEMUA") t.push(filterP);
+      if (filterL !== "SEMUA") t.push("level " + filterL);
+      return t.length ? " · " + t.join(" · ") : "";
+    }
+
+    function mulaiKuis(resetJawaban){
+      daftar = hitungDaftar();
+      idx = 0; selesai = false;
+      if (resetJawaban){
+        daftar.forEach(function(s){ delete terjawab[s.no]; });
+      }
       renderSoal();
     }
 
@@ -594,24 +1623,31 @@
       var box = document.getElementById("quizBody");
       if (selesai){ renderHasil(box); return; }
       var s = daftar[idx];
-      var sudah = terjawab[idx] !== undefined;
-      var html = '<div class="progress-track"><div class="progress-fill" style="width:' + Math.round((idx / daftar.length) * 100) + '%"></div></div>' +
-        '<div class="quiz-meta"><span>Soal ' + (idx + 1) + ' dari ' + daftar.length + (filterAktif !== "SEMUA" ? ' · ' + filterAktif : '') + '</span><span class="skor">Skor sementara: ' + skor + '</span></div>' +
-        '<span class="q-topic">' + s.p + ' · ' + s.topik + '</span>' +
-        '<p class="q-text">' + s.q + '</p><div class="opts">';
+      var sudah = terjawab[s.no] !== undefined;
+      var persen = daftar.length ? Math.round((terjawabDaftar() / daftar.length) * 100) : 0;
+      var html = '<div class="progress-track"><div class="progress-fill" style="width:' + persen + '%"></div></div>' +
+        '<div class="quiz-meta"><span>Soal ' + (idx + 1) + ' dari ' + daftar.length + labelSaring() + '</span><span class="skor">Benar: ' + skorDaftar() + ' · Terjawab: ' + terjawabDaftar() + '/' + daftar.length + '</span></div>' +
+        '<div class="q-badges"><span class="q-topic">' + s.p + ' · Soal ' + s.no + '</span>' +
+        '<span class="lvl-badge lvl-' + s.lvl.toLowerCase() + '">' + s.lvl + '</span>' +
+        (s.sup ? '<span class="sup-badge">Suplemen</span>' : '') + '</div>' +
+        '<p class="q-topik">' + s.topik + '</p>' +
+        '<p class="q-text">' + s.q + '</p>' +
+        '<p class="q-src">Sumber PPT: ' + s.src + '</p>' +
+        '<div class="opts">';
       s.o.forEach(function(opt, i){
         var cls = "opt";
         if (sudah){
           if (i === s.a) cls += " benar";
-          else if (i === terjawab[idx]) cls += " salah";
+          else if (i === terjawab[s.no]) cls += " salah";
           else cls += " dim";
         }
         html += '<button class="' + cls + '" data-i="' + i + '"' + (sudah ? " disabled" : "") + '><span class="huruf">' + HURUF[i] + '</span><span>' + opt + '</span></button>';
       });
       html += '</div>';
       if (sudah){
-        var benar = terjawab[idx] === s.a;
-        html += '<div class="bahas show ' + (benar ? "ok" : "no") + '"><b class="judul">' + (benar ? "✅ Benar — jawaban " + HURUF[s.a] : "❌ Belum tepat — jawaban yang benar " + HURUF[s.a]) + '</b>' + s.b + '</div>';
+        var benar = terjawab[s.no] === s.a;
+        html += '<div class="bahas show ' + (benar ? "ok" : "no") + '"><b class="judul">' + (benar ? "✅ Benar — jawaban " + HURUF[s.a] : "❌ Belum tepat — jawaban yang benar " + HURUF[s.a]) + '</b>' + s.b +
+          '<span class="bahas-src">Sumber: ' + s.src + ' · Level ' + s.lvl + '</span></div>';
       }
       html += '<div class="quiz-nav">' +
         '<button class="btn-nav" id="qPrev"' + (idx === 0 ? " disabled" : "") + '>← Sebelumnya</button>' +
@@ -620,9 +1656,7 @@
 
       Array.prototype.forEach.call(box.querySelectorAll(".opt"), function(btn){
         btn.addEventListener("click", function(){
-          var pil = parseInt(btn.getAttribute("data-i"), 10);
-          terjawab[idx] = pil;
-          if (pil === daftar[idx].a) skor++;
+          terjawab[s.no] = parseInt(btn.getAttribute("data-i"), 10);
           renderSoal();
         });
       });
@@ -635,20 +1669,41 @@
 
     function renderHasil(box){
       var total = daftar.length;
-      var persen = Math.round((skor / total) * 100);
+      var skor = skorDaftar();
+      var persen = total ? Math.round((skor / total) * 100) : 0;
+      var belum = total - terjawabDaftar();
       var pesan = persen >= 85 ? "Siap tempur. Tinggal poles bagian jebakan dan gap slide, kamu sudah di atas rata-rata bahan."
-        : persen >= 65 ? "Kerangka materinya sudah pegang. Ulangi soal yang salah, lalu cek tab Jebakan UTS — di situlah poin sering hilang."
+        : persen >= 65 ? "Kerangka materinya sudah pegang. Telaah soal yang salah di daftar bawah, lalu cek tab Jebakan UTS — di situlah poin sering hilang."
         : persen >= 40 ? "Sudah ada fondasi. Baca lagi kartu materi pertemuan yang skornya paling sering salah, lalu coba putaran ini sekali lagi."
         : "Tidak apa-apa, ini memang bahan padat. Mulai dari tab Materi per pertemuan, lanjut Kartu Kilat, baru kembali ke sini.";
-      box.innerHTML = '<div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>' +
+      var html = '<div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>' +
         '<div class="hasil"><div class="skor-besar">' + skor + ' / ' + total + '</div>' +
-        '<p><b>' + persen + '% benar' + (filterAktif !== "SEMUA" ? ' pada ' + filterAktif : '') + '.</b> ' + pesan + '</p>' +
-        '<button class="btn btn-primary" id="qUlang">🔁 Ulangi putaran ini</button> ' +
-        '<button class="btn btn-ghost" id="qKeJebakan">Lihat jebakan UTS</button></div>';
-      document.getElementById("qUlang").addEventListener("click", mulaiKuis);
+        '<p><b>' + persen + '% benar' + (labelSaring() ? ' pada saringan' + labelSaring().replace(" · "," ") : '') + '.</b> ' + pesan +
+        (belum > 0 ? ' Masih ada <b>' + belum + ' soal belum dijawab</b> — ketuk nomornya di daftar telaah untuk mengerjakannya.' : '') + '</p>' +
+        '<button class="btn btn-primary" id="qUlang">🔁 Ulangi saringan ini</button> ' +
+        '<button class="btn btn-ghost" id="qKeJebakan">Lihat jebakan UTS</button></div>' +
+        '<h3 class="review-judul">Telaah per soal — ketuk untuk membuka</h3><div class="review-list">';
+      daftar.forEach(function(s, i){
+        var st, cls;
+        if (terjawab[s.no] === undefined){ st = "Belum dijawab"; cls = "kosong"; }
+        else if (terjawab[s.no] === s.a){ st = "Benar (" + HURUF[s.a] + ")"; cls = "ok"; }
+        else { st = "Salah — kunci " + HURUF[s.a]; cls = "no"; }
+        html += '<button class="review-item ' + cls + '" data-i="' + i + '"><span class="r-no">Soal ' + s.no + '</span><span class="r-topik">' + s.topik + '</span><span class="r-meta">' + s.lvl + ' · ' + s.src + '</span><span class="r-status">' + st + '</span></button>';
+      });
+      html += '</div>';
+      box.innerHTML = html;
+      document.getElementById("qUlang").addEventListener("click", function(){ mulaiKuis(true); });
       document.getElementById("qKeJebakan").addEventListener("click", function(){ showTab("jebakan"); });
+      Array.prototype.forEach.call(box.querySelectorAll(".review-item"), function(btn){
+        btn.addEventListener("click", function(){
+          idx = parseInt(btn.getAttribute("data-i"), 10);
+          selesai = false;
+          renderSoal();
+          document.querySelector(".quiz-shell").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
     }
-    mulaiKuis();
+    mulaiKuis(false);
 
     /* ================= KARTU KILAT ================= */
     var KARTU = [
