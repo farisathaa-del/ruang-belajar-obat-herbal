@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>Ruang Belajar Farmasi Lingkungan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff7f3; --bg2:#fdeedf; --card:#ffffff; --card2:#fff1ec;
+  --ink:#33222a; --ink2:#6d5560; --line:#f0d9d2;
+  --rose:#c2456b; --rose-d:#a03355; --rose-soft:#fbe3e9;
+  --teal:#1f7a6d; --teal-soft:#e0f2ee;
+  --amber:#b97a1e; --amber-soft:#fdf0d5;
+  --red:#b3261e; --red-soft:#fde8e6;
+  --shadow:0 6px 24px rgba(160,60,90,.10);
+  --radius:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#1d1418; --bg2:#241a1e; --card:#2a1e24; --card2:#33242c;
+    --ink:#f6e8ec; --ink2:#c9a9b4; --line:#4a323d;
+    --rose:#e87d9b; --rose-d:#f2a0b8; --rose-soft:#402630;
+    --teal:#4fc3ae; --teal-soft:#1d3631;
+    --amber:#e8b45a; --amber-soft:#3d3016;
+    --red:#f08a84; --red-soft:#402022;
+    --shadow:0 6px 24px rgba(0,0,0,.35);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:16px;line-height:1.6}
+h1,h2,h3{font-family:"Playfair Display",serif;line-height:1.25;margin:0}
+button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px 64px}
+
+/* HERO */
+.hero{padding:28px 0 8px;text-align:left}
+.hero .kiss{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);font-weight:700}
+.hero h1{font-size:2.05rem;margin:8px 0 6px}
+.hero h1 em{color:var(--rose);font-style:italic}
+.hero p.lead{color:var(--ink2);margin:0 0 14px;font-size:1rem}
+.love-note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--rose);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);font-size:.95rem}
+.love-note b{color:var(--rose-d)}
+.meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.meta-grid .m{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.meta-grid .m .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);font-weight:700}
+.meta-grid .m .v{font-weight:700;font-size:.95rem;margin-top:2px}
+.stat-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.stat{background:var(--rose-soft);color:var(--rose-d);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.86rem}
+.stat.teal{background:var(--teal-soft);color:var(--teal)}
+
+/* NAV TABS */
+nav.tabs{position:sticky;top:0;z-index:30;background:var(--bg);padding:12px 0 10px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+@media (max-width:560px){nav.tabs{flex-wrap:wrap;overflow-x:visible}.tab-btn{flex:1 1 40%;text-align:center}}
+.tab-btn{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 18px;font-weight:700;font-size:.92rem;min-height:44px}
+.tab-btn.active{background:var(--rose);border-color:var(--rose);color:#fff}
+@media (prefers-color-scheme: dark){.tab-btn.active{color:#241318}}
+section.panel{display:none}
+section.panel.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){section.panel.active{animation:none}}
+
+/* CARDS & MATERI */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+.card h3{font-size:1.25rem;margin-bottom:6px}
+.card h4{margin:16px 0 6px;font-size:1rem;color:var(--rose-d)}
+.card p{margin:6px 0}
+.card ul{margin:6px 0 6px 18px;padding:0}
+.card li{margin:4px 0}
+.chiprow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.chip{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 16px;font-weight:700;font-size:.88rem;min-height:40px}
+.chip.active{background:var(--rose);border-color:var(--rose);color:#fff}
+@media (prefers-color-scheme: dark){.chip.active{color:#241318}}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.75rem;font-weight:800;vertical-align:middle}
+.pill.src{background:var(--teal-soft);color:var(--teal)}
+.pill.lvl{background:var(--amber-soft);color:var(--amber)}
+.pill.sup{background:var(--red-soft);color:var(--red)}
+.kunci{background:var(--card2);border-radius:12px;padding:10px 14px;font-size:.93rem;margin:10px 0}
+.kunci b{color:var(--rose-d)}
+table.num{width:100%;border-collapse:collapse;font-size:.92rem}
+table.num th,table.num td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.num th{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
+table.num td.n{font-weight:800;color:var(--rose-d);white-space:nowrap}
+@media (max-width:640px){
+  table.num,table.num tbody,table.num tr,table.num td{display:block;width:100%}
+  table.num thead{display:none}
+  table.num tr{padding:10px 2px;border-bottom:1px solid var(--line)}
+  table.num td{border-bottom:none;padding:2px 4px;white-space:normal !important}
+  table.num td.n{font-size:1.02rem}
+}
+details.mat{border:1px solid var(--line);border-radius:14px;margin:10px 0;background:var(--card);overflow:hidden}
+details.mat summary{padding:14px 16px;font-weight:800;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.mat summary::-webkit-details-marker{display:none}
+details.mat summary .sub{font-weight:600;color:var(--ink2);font-size:.82rem;display:block}
+details.mat .body{padding:0 16px 16px}
+details.mat[open ] summary{color:var(--rose-d)}
+
+/* QUIZ */
+.filters{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+.filters .flabel{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);font-weight:800;margin:8px 0 2px}
+.progressbar{height:10px;background:var(--card2);border-radius:999px;overflow:hidden;margin:14px 0 6px;border:1px solid var(--line)}
+.progressbar>div{height:100%;background:var(--rose);width:0%;transition:width .3s}
+.qmeta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:.85rem;color:var(--ink2);font-weight:600}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-top:10px}
+.qcard .qtext{font-size:1.06rem;font-weight:600;line-height:1.65;margin:10px 0 16px}
+.opt{display:flex;gap:12px;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:13px 14px;margin:8px 0;font-size:.97rem;line-height:1.5;min-height:52px;align-items:flex-start}
+.opt .letter{flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;margin-top:1px}
+.opt.sel{border-color:var(--rose);background:var(--rose-soft)}
+.opt.sel .letter{background:var(--rose);color:#fff;border-color:var(--rose)}
+@media (prefers-color-scheme: dark){.opt.sel .letter{color:#241318}}
+.opt.correct{border-color:var(--teal);background:var(--teal-soft)}
+.opt.correct .letter{background:var(--teal);color:#fff}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .letter{background:var(--red);color:#fff}
+.qnav{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{border:none;border-radius:999px;padding:11px 22px;font-weight:800;font-size:.95rem;min-height:46px}
+.btn.primary{background:var(--rose);color:#fff}
+@media (prefers-color-scheme: dark){.btn.primary{color:#241318}}
+.btn.ghost{background:var(--card);border:1.5px solid var(--line);color:var(--ink)}
+.btn.teal{background:var(--teal);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.gridnav{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.gridnav button{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:.85rem;padding:0;min-height:40px}
+.gridnav button.done{background:var(--rose-soft);border-color:var(--rose);color:var(--rose-d)}
+.gridnav button.now{outline:3px solid var(--rose);outline-offset:1px}
+.explain{display:none;margin-top:16px;background:var(--card2);border-radius:14px;padding:14px 16px;font-size:.95rem}
+.explain.show{display:block}
+.explain .ans{font-weight:800;color:var(--teal)}
+.score-hero{text-align:center;padding:26px 18px}
+.score-hero .big{font-family:"Playfair Display",serif;font-size:3rem;color:var(--rose)}
+.review-item{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0;background:var(--card)}
+.review-item .st{font-weight:800}
+.review-item .st.ok{color:var(--teal)} .review-item .st.no{color:var(--red)} .review-item .st.empty{color:var(--amber)}
+.review-item p{margin:6px 0;font-size:.94rem}
+.review-item .exp{color:var(--ink2);font-size:.9rem}
+
+/* FLASHCARDS */
+.flash{perspective:900px;margin:16px 0}
+.flash-inner{position:relative;min-height:230px;transition:transform .5s;transform-style:preserve-3d;cursor:pointer}
+.flash-inner.flip{transform:rotateY(180deg)}
+@media (prefers-reduced-motion: reduce){.flash-inner{transition:none}}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px solid var(--line);box-shadow:var(--shadow)}
+.flash-front{background:var(--card)}
+.flash-back{background:var(--rose-soft);transform:rotateY(180deg)}
+.flash-face .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--rose);margin-bottom:8px}
+.flash-face .txt{font-size:1.12rem;font-weight:700;line-height:1.5}
+.flash-face .hint{margin-top:12px;font-size:.8rem;color:var(--ink2)}
+.heart{color:var(--rose)}
+footer{margin-top:36px;text-align:center;color:var(--ink2);font-size:.86rem}
+footer .heart{font-size:1rem}
+.empty-note{padding:22px;text-align:center;color:var(--ink2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kiss">Ruang Belajar · Untukmu <span class="heart">♥</span></div>
+    <h1>Farmasi <em>Lingkungan</em></h1>
+    <p class="lead">Belajar pelan-pelan tapi pasti — materi P1 sampai P6, artikel penelitian, dan 50 soal latihan sesuai blueprint UTS. Semua lengkap dengan pembahasan dan sumber halamannya.</p>
+    <div class="love-note">Dibuat dengan sayang untuk calon apotekerku tersayang. Semoga ruang kecil ini menemanimu belajar — kalau capek, istirahat dulu ya. Aku percaya kamu bisa. <b>Semangat, sayang ♥</b></div>
+    <div class="meta-grid">
+      <div class="m"><div class="k">Mata Kuliah</div><div class="v">Farmasi Lingkungan (FA611025)</div></div>
+      <div class="m"><div class="k">Program Studi</div><div class="v">Farmasi — UNJANI</div></div>
+      <div class="m"><div class="k">Semester</div><div class="v">Ganjil TA 2026/2027</div></div>
+      <div class="m"><div class="k">Koordinator MK</div><div class="v">apt. Luki Yogaswata Yusuf, S.Farm., M.Farm.</div></div>
+    </div>
+    <div class="stat-row">
+      <span class="stat">50 soal latihan</span>
+      <span class="stat teal">C1 · 22 soal</span>
+      <span class="stat teal">C2 · 17 soal</span>
+      <span class="stat teal">C3 · 6 soal</span>
+      <span class="stat teal">C4 · 5 soal</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="materi">Materi</button>
+    <button class="tab-btn" data-tab="latihan">Latihan Soal</button>
+    <button class="tab-btn" data-tab="kilat">Kartu Kilat</button>
+    <button class="tab-btn" data-tab="angka">Angka Kunci &amp; Jebakan</button>
+  </nav>
+
+  <!-- ============ MATERI ============ -->
+  <section class="panel active" id="panel-materi">
+    <div class="chiprow" id="materiChips">
+      <button class="chip active" data-m="p1">P1 · Pendahuluan</button>
+      <button class="chip" data-m="p2">P2 · Air</button>
+      <button class="chip" data-m="p3">P3 · Udara &amp; Tanah</button>
+      <button class="chip" data-m="p4">P4 · AMDAL</button>
+      <button class="chip" data-m="p5">P5 · Pertanian</button>
+      <button class="chip" data-m="p6">P6 · Hewan Ternak</button>
+      <button class="chip" data-m="artikel">Artikel 37–50</button>
+    </div>
+    <div id="materiBody"></div>
+  </section>
+
+  <!-- ============ LATIHAN ============ -->
+  <section class="panel" id="panel-latihan">
+    <div id="quizSetup">
+      <div class="filters">
+        <div class="flabel">Saring per pertemuan</div>
+        <div class="chiprow" id="fPertemuan" style="margin-top:4px">
+          <button class="chip active" data-f="all">Semua</button>
+          <button class="chip" data-f="P1">P1</button>
+          <button class="chip" data-f="P2">P2</button>
+          <button class="chip" data-f="P3">P3</button>
+          <button class="chip" data-f="P4">P4</button>
+          <button class="chip" data-f="P5">P5</button>
+          <button class="chip" data-f="P6">P6</button>
+          <button class="chip" data-f="Artikel">Artikel 37–50</button>
+        </div>
+        <div class="flabel">Saring per level kognitif</div>
+        <div class="chiprow" id="fLevel" style="margin-top:4px">
+          <button class="chip active" data-f="all">Semua level</button>
+          <button class="chip" data-f="C1">C1 · Mengingat</button>
+          <button class="chip" data-f="C2">C2 · Memahami</button>
+          <button class="chip" data-f="C3">C3 · Menerapkan</button>
+          <button class="chip" data-f="C4">C4 · Menganalisis</button>
+        </div>
+        <p id="filterInfo" style="margin:10px 0 4px;color:var(--ink2);font-size:.9rem"></p>
+        <p style="margin:4px 0 0;font-size:.88rem;color:var(--ink2)">Jawabanmu tersimpan selama berpindah soal — kerjakan dengan tenang, tidak perlu terburu-buru. ♥</p>
+      </div>
+      <div id="quizArea"></div>
+    </div>
+    <div id="quizResult" style="display:none"></div>
+  </section>
+
+  <!-- ============ KARTU KILAT ============ -->
+  <section class="panel" id="panel-kilat">
+    <p style="color:var(--ink2);margin:14px 0 0">Ketuk kartunya untuk membalik dan melihat jawabannya. Cocok untuk mengulang cepat sebelum masuk kelas.</p>
+    <div class="flash"><div class="flash-inner" id="flashInner">
+      <div class="flash-face flash-front"><div class="tag" id="flashTagF">Kartu Kilat</div><div class="txt" id="flashFront"></div><div class="hint">Ketuk untuk melihat jawaban ♥</div></div>
+      <div class="flash-face flash-back"><div class="tag">Jawaban</div><div class="txt" id="flashBack"></div><div class="hint">Ketuk untuk kembali</div></div>
+    </div></div>
+    <div class="qnav" style="justify-content:space-between">
+      <button class="btn ghost" id="flashPrev">← Sebelumnya</button>
+      <span id="flashCount" style="align-self:center;font-weight:700;color:var(--ink2)"></span>
+      <button class="btn primary" id="flashNext">Berikutnya →</button>
+    </div>
+    <div class="qnav"><button class="btn ghost" id="flashShuffle">Acak kartu</button></div>
+  </section>
+
+  <!-- ============ ANGKA & JEBAKAN ============ -->
+  <section class="panel" id="panel-angka">
+    <div class="card">
+      <h3>Angka Kunci</h3>
+      <p style="color:var(--ink2)">Angka-angka yang paling sering keluar di soal. Hafalkan beserta konteksnya ya.</p>
+      <table class="num"><thead><tr><th>Angka</th><th>Artinya</th><th>Sumber</th></tr></thead><tbody id="angkaBody"></tbody></table>
+    </div>
+    <div class="card">
+      <h3>Jebakan UTS <span class="heart">♥</span> hati-hati di sini</h3>
+      <div id="jebakanBody"></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Dibuat dengan <span class="heart">♥</span> untuk menemanimu belajar Farmasi Lingkungan.<br>Farmasi UNJANI · Semester Ganjil TA 2026/2027</p>
+  </footer>
+</div>
+<script>
+/* ================= MATERI ================= */
+var MATERI = {
+p1:{title:"P1 · Pendahuluan Farmasi Lingkungan", sub:"Dosen: apt. Athina Mardatillah, M.Farm. · Dasar untuk soal 1–13", html:
+'<h4>Tingkat organisasi kehidupan</h4>'+
+'<ul><li><b>Individu</b> — satuan terkecil dalam populasi: satu organisme tunggal (manusia, hewan, mikroorganisme). Dalam farmasi lingkungan, individu adalah entitas yang terpapar langsung residu farmasi lewat air, udara, atau makanan. <span class="pill src">P1 hlm. 6</span></li>'+
+'<li><b>Populasi</b> — kelompok individu dari spesies yang sama, hidup di wilayah geografis yang sama, dan saling berinteraksi. Kata kunci: <i>sejenis + wilayah tertentu</i>. <span class="pill src">P1 hlm. 3</span></li>'+
+'<li><b>Ekosistem</b> — satu kesatuan interaksi komunitas organisme (biotik) dengan lingkungan fisik (abiotik: air, tanah, udara) di wilayah tertentu. <span class="pill src">P1 hlm. 8</span></li></ul>'+
+'<div class="kunci">Faktor demografi yang memengaruhi lingkungan (hlm. 4): <b>Age, Gender, Education Level, Health Status, Geographic Location</b>. Konsumsi obat global naik karena populasi menua, penyakit kronis meningkat, dan akses obat bebas (OTC) makin mudah.</div>'+
+'<h4>Produsen, konsumen, dekomposer</h4>'+
+'<ul><li><b>Produsen</b> — membuat makanan sendiri lewat fotosintesis (autotrof). Setiap rantai makanan dimulai dari produsen. Contoh: bunga, rumput, pohon.</li>'+
+'<li><b>Konsumen</b> — bergantung pada produsen/konsumen lain; berburu, mengumpulkan, dan memakan untuk memperoleh energi. Tiga jenis: primer, sekunder, tersier. Contoh slide: capung = primer, burung = sekunder, singa = tersier.</li>'+
+'<li><b>Dekomposer</b> — menguraikan tumbuhan dan hewan mati dan mengembalikan nutrisi ke tanah. Contoh: bakteri, jamur, cacing tanah.</li></ul>'+
+'<span class="pill src">P1 hlm. 11–12</span>'+
+'<h4>Rantai makanan &amp; tingkat trofik</h4>'+
+'<p>Rantai makanan darat: tumbuhan → belalang (konsumen primer) → katak (konsumen sekunder) → ular (konsumen tersier) → elang (predator puncak).</p>'+
+'<p>Piramida makanan manusia di laut: alga (produsen, trofik 1) → udang (primer, trofik 2) → <b>tuna (sekunder, trofik 3)</b> → <b>manusia (tersier, trofik 4/puncak)</b>.</p>'+
+'<div class="kunci">Aliran energi: matahari <b>100% → produsen 10% → konsumen primer 1% → manusia 0,1%</b>. Sisanya hilang sebagai panas. <span class="pill src">P1 hlm. 14</span></div>'+
+'<h4>API &amp; eksipien</h4>'+
+'<ul><li><b>API (Active Pharmaceutical Ingredient)</b> — komponen utama obat yang bertanggung jawab atas efek farmakologis. Setelah dipakai, API masuk ke lingkungan lewat ekskresi atau pembuangan obat yang tidak tepat. <span class="pill src">P1 hlm. 16</span></li>'+
+'<li><b>Eksipien (bahan tambahan obat)</b> — komponen non-aktif untuk kestabilan, konsistensi, rasa, dan penampilan; tidak punya efek terapeutik. <span class="pill src">P1 hlm. 17</span></li></ul>'},
+p2:{title:"P2 · Sumber Cemaran Residu & Limbah Farmasi di Lingkungan — Air", sub:"Dasar untuk soal 21–23 (dan pengantar soal air lainnya)", html:
+'<h4>Sifat unik air</h4>'+
+'<ul><li><b>Molekul polar</b> — pelarut universal.</li>'+
+'<li><b>Ikatan hidrogen</b> — menimbulkan sifat kohesif, adhesif, dan tegangan permukaan tinggi → air bisa bergerak melawan gravitasi pada tanaman (<b>kapilaritas</b>).</li>'+
+'<li><b>Kapasitas panas tinggi</b> — menstabilkan iklim dan suhu lingkungan.</li>'+
+'<li><b>Kepadatan anomali</b> — kepadatan tertinggi pada 4°C; es lebih ringan sehingga mengapung.</li></ul><span class="pill src">P2 hlm. 3</span>'+
+'<h4>Jenis air berdasarkan salinitas</h4>'+
+'<ul><li><b>Air tawar</b> — garam &lt; 0,5 ppt (sungai, danau, mata air, akuifer).</li>'+
+'<li><b>Air payau</b> — campuran tawar + laut (muara, laguna); salinitas di antara air tawar dan air laut.</li>'+
+'<li><b>Air laut</b> — salinitas rata-rata ±3,5%.</li>'+
+'<li><b>Air asin</b> — salinitas lebih tinggi dari air laut.</li></ul><span class="pill src">P2 hlm. 5</span>'+
+'<div class="kunci">Air hujan sedikit asam karena CO₂ larut membentuk asam karbonat lemah (H₂CO₃).</div>'+
+'<h4>Enam sumber limbah farmasi ke air</h4>'+
+'<ol><li>Pembuangan obat langsung ke toilet/saluran</li><li>Air limbah fasilitas kesehatan (RS, klinik, lab)</li><li>Limbah pabrik obat</li><li>Air limbah pertanian &amp; peternakan (antibiotik/hormon diekskresikan lewat urine &amp; feses)</li><li>Air limbah rumah tangga — termasuk <b>PPCPs</b> (kosmetik, sabun, sampo) yang tidak terurai sempurna di IPAL lalu mencapai air permukaan dan tanah</li><li>Air buangan akuakultur</li></ol><span class="pill src">P2 hlm. 7–12</span>'+
+'<h4>Peristiwa pencemaran</h4>'+
+'<ul><li><b>Sungai Cisadane</b> — lebih dari 5.000 pabrik di sepanjang aliran; tahun 2020 ditemukan lonjakan limbah medis (masker, sarung tangan, kantong infus, jarum suntik).</li>'+
+'<li><b>Parasetamol di Teluk Jakarta</b> (penelitian 2021) — konsentrasi tinggi, melebihi batas aman Standar Kualitas Air Laut Indonesia; mengancam budidaya kerang.</li>'+
+'<li><b>Metformin di Sungai Angke</b> — 27–414 ng/L.</li></ul>'+
+'<div class="kunci">BOD/COD air limbah farmasi <b>&lt; 0,3</b> → perlu pre-treatment. Sistem hybrid (koagulasi + MBBR + elektrokoagulasi + ultrafiltrasi) mencapai efisiensi TSS 96,85%, COD 97,49%, BOD 97,53%. <span class="pill src">P2 hlm. 16</span></div>'},
+p3:{title:"P3 · Sumber Cemaran di Udara & Tanah", sub:"Dosen: apt. Athina Mardatillah, M.Farm. · Dasar untuk soal 14–20 & 24–26", html:
+'<h4>Komposisi atmosfer</h4>'+
+'<table class="num"><thead><tr><th>Gas</th><th>Proporsi</th><th>Catatan</th></tr></thead><tbody>'+
+'<tr><td>Nitrogen (N₂)</td><td class="n">±78%</td><td>Terbesar; penting untuk siklus nitrogen</td></tr>'+
+'<tr><td>Oksigen (O₂)</td><td class="n">±21%</td><td>Respirasi &amp; pembakaran</td></tr>'+
+'<tr><td>Argon (Ar)</td><td class="n">±0,93%</td><td>Gas inert, tidak bereaksi kimia</td></tr>'+
+'<tr><td>Karbon dioksida (CO₂)</td><td class="n">±0,04%</td><td>Terkecil di antara komponen utama; fotosintesis &amp; efek rumah kaca</td></tr>'+
+'<tr><td>Uap air (H₂O)</td><td class="n">0–4%</td><td>Bervariasi menurut suhu &amp; kelembapan</td></tr></tbody></table>'+
+'<p style="font-size:.9rem;color:var(--ink2)">Gas jejak (Ne, He, CH₄, H₂, Kr) jumlahnya sangat kecil dan tidak diberi angka di slide. <span class="pill src">P3-Udara hlm. 3–4</span></p>'+
+'<h4>Jenis-jenis udara</h4>'+
+'<ul><li><b>Udara kering</b> — uap air sangat rendah (gurun, musim dingin) → kulit kering, iritasi pernapasan, debu mudah menyebar.</li>'+
+'<li><b>Udara lembab</b> — uap air tinggi → tubuh sulit melepas panas, risiko jamur naik.</li>'+
+'<li><b>Udara laut</b> — partikel garam; konsentrasi tinggi menyebabkan korosi logam/bangunan.</li>'+
+'<li><b>Udara pegunungan</b> — tekanan &amp; oksigen lebih rendah → bisa sesak napas.</li>'+
+'<li><b>Udara tercemar</b> — CO, SO₂, NO₂, O₃, PM2.5, PM10.</li></ul><span class="pill src">P3-Udara hlm. 5–12</span>'+
+'<h4>Senyawa farmasi yang memengaruhi lingkungan</h4>'+
+'<ul><li><b>Bisphenol A (BPA)</b> — dari <b>kemasan farmasi / botol plastik</b>, larut ke air minum, mengganggu sistem estrogenik. ← soal 14</li>'+
+'<li><b>Triclosan</b> — sabun antibakteri &amp; pasta gigi; mengganggu fungsi tiroid dan hormon reproduksi. ← soal 23</li>'+
+'<li><b>Etinilestradiol</b> — pil kontrasepsi; feminisasi ikan jantan.</li>'+
+'<li><b>DES</b> — hormon sintetik, disruptor endokrin sangat kuat.</li>'+
+'<li><b>Ibuprofen</b> — NSAID; memengaruhi hormon reproduksi ikan.</li></ul><span class="pill src">P3-Udara hlm. 16</span>'+
+'<h4>Komposisi tanah</h4>'+
+'<table class="num"><thead><tr><th>Komponen</th><th>Proporsi</th></tr></thead><tbody>'+
+'<tr><td>Bahan mineral (pasir, debu/silt, lempung/clay)</td><td class="n">45% — terbesar</td></tr>'+
+'<tr><td>Air</td><td class="n">25%</td></tr>'+
+'<tr><td>Udara</td><td class="n">25%</td></tr>'+
+'<tr><td>Bahan organik (humus)</td><td class="n">5% — terkecil</td></tr></tbody></table><span class="pill src">P3-Tanah hlm. 5–6</span>'+
+'<h4>Jenis tanah yang sering jadi jebakan</h4>'+
+'<ul><li><b>Laterit</b> — tropis, curah hujan tinggi, banyak oksida besi &amp; aluminium, berwarna <b>merah</b>, asam, miskin hara.</li>'+
+'<li><b>Podsolik</b> — curah hujan tinggi tapi <b>suhu rendah</b>, horizon eluvial jelas, pegunungan/hutan beriklim sedang.</li>'+
+'<li><b>Loamy</b> — campuran seimbang, paling subur &amp; ideal untuk pertanian. <b>Gambut</b> — kaya bahan organik, pH asam. <b>Andosol</b> — dari abu vulkanik, sangat subur. <b>Aluvial</b> — endapan sungai, subur.</li></ul><span class="pill src">P3-Tanah hlm. 10–13</span>'+
+'<h4>Point source vs non-point source</h4>'+
+'<ul><li><b>Point source (titik)</b> — konsentrasi <b>tinggi</b>: pembuangan limbah medis yang tidak tepat; limbah fasilitas peternakan &amp; pabrik obat.</li>'+
+'<li><b>Non-point source (menyebar)</b> — konsentrasi <b>rendah</b> karena obat dikonsumsi dulu baru jadi limbah: ekskresi hewan, pupuk dari kotoran, biosolid, pestisida terkontaminasi.</li></ul><span class="pill src">P3-Tanah hlm. 15–17</span>'+
+'<div class="kunci">Kasus Bandung (Alfian, 2021): <b>&gt;82%</b> masyarakat membuang obat tak terpakai ke tempat sampah rumah tangga; <b>&lt;1%</b> mengembalikannya ke apotek. Catatan tangan dosen (hlm. 15): limbah farmasi ex tablet = <b>blister/strip, tabletnya, botol kaca</b>.</div>'},
+p4:{title:"P4 · AMDAL — Analisis Mengenai Dampak Lingkungan Hidup", sub:"55 halaman · Dasar untuk soal 27–32", html:
+'<p><b>AMDAL = Analisis Mengenai Dampak Lingkungan Hidup</b> — kajian mengenai dampak besar dan penting suatu rencana usaha/kegiatan pada lingkungan hidup, yang diperlukan bagi proses pengambilan keputusan (PP No. 27/1999 Pasal 1). AMDAL adalah bagian tak terpisahkan dari Pengelolaan Lingkungan Hidup. <span class="pill src">P4 hlm. 1, 3</span></p>'+
+'<h4>6 kriteria dampak besar dan penting</h4>'+
+'<ol><li>Jumlah manusia yang kena dampak</li><li>Luas wilayah penyebaran dampak</li><li>Intensitas dan lamanya dampak berlangsung</li><li>Banyaknya komponen lingkungan yang terkena dampak</li><li>Sifat kumulatif dampak</li><li>Sifat berbalik (reversible) atau tidak berbalik (irreversible) dampak</li></ol><span class="pill src">P4 hlm. 4</span>'+
+'<h4>Dokumen AMDAL — jangan tertukar</h4>'+
+'<ul><li><b>KA-ANDAL</b> — kerangka acuan / ruang lingkup studi (hasil pelingkupan).</li>'+
+'<li><b>ANDAL</b> — telaah secara cermat dan mendalam tentang dampak besar dan penting. ← soal 30</li>'+
+'<li><b>RKL</b> — Rencana Pengelolaan Lingkungan (mencegah, mengendalikan, menanggulangi).</li>'+
+'<li><b>RPL</b> — Rencana Pemantauan Lingkungan (sistematis, berulang, terencana).</li>'+
+'<li><b>UKL/UPL</b> — untuk kegiatan yang tidak berdampak penting / di luar daftar wajib AMDAL.</li>'+
+'<li><b>SPPL</b> — pernyataan kesanggupan untuk usaha kecil/mikro yang tidak wajib UKL/UPL.</li></ul><span class="pill src">P4 hlm. 14, 27, 40, 43, 51</span>'+
+'<h4>Kegiatan wajib AMDAL</h4>'+
+'<p>9 kriteria, antara lain: pengubahan bentuk lahan &amp; bentang alam; eksploitasi SDA; proses yang berpotensi menimbulkan pencemaran &amp; kerusakan lingkungan; introduksi jenis tumbuhan/hewan/jasren; kegiatan berisiko tinggi. Bidang kefarmasian yang wajib AMDAL: industri farmasi, industri bahan obat, ekstrak bahan alam, kosmetika, rumah sakit, alat PKRT &amp; alat kesehatan. <span class="pill src">P4 hlm. 15–16</span></p>'+
+'<p>Tidak wajib AMDAL: kegiatan di luar daftar (cukup UKL/UPL), kegiatan dalam kawasan yang sudah ber-AMDAL, dan penanggulangan keadaan darurat. <span class="pill src">P4 hlm. 18</span></p>'+
+'<h4>Alur pengerjaan AMDAL</h4>'+
+'<p><b>Pelingkupan</b> (→ KA-ANDAL) → <b>Analisis</b> (→ ANDAL: prakiraan dampak lalu <b>evaluasi dampak</b>) → <b>Perencanaan pengendalian</b> (→ RKL &amp; RPL → Surat Kelayakan Lingkungan). Prakiraan &amp; evaluasi dilakukan pada 4 tahap: prakonstruksi, konstruksi, operasi, pasca operasi. Evaluasi menilai dampak terhadap kesehatan manusia, kualitas air, biologi, dan sosial-ekonomi-budaya dengan baku mutu lingkungan sebagai tolok ukur. <span class="pill src">P4 hlm. 19, 28, 31, 35–38</span></p>'+
+'<div class="kunci">Angka penting: keputusan kelayakan lingkungan terbit selambat-lambatnya <b>75 hari</b> (lewat dari itu dianggap layak); keputusan <b>kadaluarsa dalam 3 tahun</b> bila rencana tidak dilaksanakan. PermenLH 05/2012: <b>14 bidang, 72 jenis kegiatan</b> wajib AMDAL — terbanyak Energi &amp; ESDM (18). <span class="pill src">P4 hlm. 17, 48–50</span></div>'+
+'<div class="kunci">Soal 32 (limbah B3) <b>tidak ada di slide P4</b> — kata "B3" tidak pernah muncul. Jawaban suplemen: <b>PP No. 22 Tahun 2021</b> (menggantikan PP 101/2014) + PermenLHK No. 6 Tahun 2021. <span class="pill sup">Di luar slide — suplemen</span></div>'},
+p5:{title:"P5 · Pengelolaan Residu Farmasi pada Produk Pertanian", sub:"Dosen: apt. Athina Mardatillah, M.Farm. · Dasar untuk soal 33", html:
+'<h4>4 sumber residu farmasi di pertanian</h4>'+
+'<ol><li><b>Penggunaan pupuk organik</b> — kotoran hewan mengandung residu obat, dipakai sebagai pupuk alami → <b>sumber utama</b> kontaminasi tanah &amp; tanaman. ← soal 33</li>'+
+'<li><b>Penggunaan obat hewan</b> — antibiotik, antiparasit, hormon tersisa di kotoran.</li>'+
+'<li><b>Irigasi air limbah</b> — dari industri farmasi, RS, IPAL.</li>'+
+'<li><b>Aplikasi obat pada tanaman</b> — pestisida / pengendali hama langsung ke tanaman.</li></ol><span class="pill src">P5 hlm. 3</span>'+
+'<p>Penyerapan oleh tanaman dipengaruhi: jenis tanah, pH, kandungan bahan organik, dan sifat kimia obat. Sebagian obat mengalami <b>bioakumulasi</b> di jaringan tanaman. Senyawa risiko skenario terburuk: karbamazepin &amp; sulfametoksazol. <span class="pill src">P5 hlm. 4, 6</span></p>'+
+'<h4>Periode penghentian obat (withdrawal period)</h4>'+
+'<p>Waktu yang harus dilalui setelah pemberian terakhir obat hewan sebelum hewan disembelih atau produknya (susu, telur) dipanen — agar residu di bawah MRL.</p>'+
+'<div class="kunci">Contoh kasus oksitetrasiklin pada sapi: penghentian <b>daging 28 hari, susu 7 hari</b> setelah dosis terakhir. <span class="pill src">P5 hlm. 10–12</span></div>'+
+'<h4>Pengolahan kotoran &amp; biosolid</h4>'+
+'<ul><li>Perlakuan panas, fermentasi, pencernaan anaerob — menurunkan antibiotik dalam limbah hewan.</li>'+
+'<li><b>Pencernaan anaerob</b> — menghasilkan biogas (metana), patogen turun 1–2 log unit.</li>'+
+'<li>Stabilisasi menstabilkan N, P, K agar tidak hilang lewat pencucian/volatilisasi.</li></ul><span class="pill src">P5 hlm. 13–17</span>'+
+'<h4>Regulasi yang disebut di P5</h4>'+
+'<ul><li>PP 101/2014 — limbah farmasi = limbah B3 (pemisahan → pengumpulan → penyimpanan → pengangkutan → pengolahan → pembuangan aman).</li>'+
+'<li>Permenkes 18/2020 — limbah medis fasyankes (insinerasi &amp; pengolahan termal).</li>'+
+'<li>Permen LHK P.56/2015 — teknis limbah B3 fasyankes.</li>'+
+'<li>Permentan 41/2014 — limbah usaha peternakan.</li>'+
+'<li>PerBPOM 27/2017 — pengawasan &amp; MRL pada pangan asal hewan.</li>'+
+'<li>PP 81/2012 — sampah rumah tangga (termasuk sisa obat).</li>'+
+'<li>Permen LHK P.75/2019 — peta jalan pengurangan sampah oleh produsen.</li></ul>'+
+'<p>Teknologi lanjutan: filtrasi membran, adsorpsi karbon aktif, oksidasi lanjutan, dan <b>bioremediasi</b> dengan mikroorganisme. <span class="pill src">P5 hlm. 26</span></p>'},
+p6:{title:"P6 · Pengelolaan Residu Farmasi pada Produk Hewan Ternak", sub:"Dosen: apt. Rina Anugrah, M.Si. · Dasar untuk soal 34–36", html:
+'<p><b>Residu farmasi dalam peternakan</b> = sisa produk farmasi/obat pada produk hewan ternak (daging segar maupun olahan). Sumbernya: <b>obat, makanan, dan kontaminasi lingkungan</b> (air, tanah, manusia/peternak). <span class="pill src">P6 hlm. 3</span></p>'+
+'<h4>Obat hewan (UU No. 41 Tahun 2009)</h4>'+
+'<p>3 tujuan penggunaan: <b>pemeliharaan kesehatan</b>, <b>pengobatan</b>, dan <b>imbuhan pakan (feed additive)</b> — memacu pertumbuhan (growth promoter), meningkatkan produksi &amp; efisiensi pakan.</p>'+
+'<p>4 jenis sediaan: biologik (vaksin, serum), farmakoseutika, premiks, obat hewan alami. 3 golongan: Obat Keras, Obat Bebas Terbatas, Obat Bebas. <span class="pill src">P6 hlm. 5–6</span></p>'+
+'<h4>Bahaya residu antibiotik — inti soal 34</h4>'+
+'<ul><li><b>Toksikologi</b> — mutagenik (perubahan genetik), teratogenik (cacat lahir), karsinogenik (sel kanker).</li>'+
+'<li><b>Mikrobiologis</b> — resistensi pengobatan antibiotik; gangguan flora normal usus.</li>'+
+'<li><b>Imunopatologi</b> — <b>reaksi alergis</b>. Penisilin → anafilaksis yang diperantarai IgE; amoksisilin (± asam klavulanat) pencetus alergi tersering; kadar 6 µg/L saja sudah bisa menimbulkan reaksi; ±10% populasi diyakini alergi penisilin.</li></ul><span class="pill src">P6 hlm. 10–11</span>'+
+'<h4>MRL amoksisilin — ada DUA nilai, perhatikan acuannya</h4>'+
+'<table class="num"><thead><tr><th>Acuan</th><th>Susu</th><th>Daging/otot</th></tr></thead><tbody>'+
+'<tr><td><b>SNI</b> (tabel persyaratan mutu BMR)</td><td class="n">0,01 mg/kg</td><td>0,01 mg/kg (telur juga 0,01)</td></tr>'+
+'<tr><td><b>Uni Eropa</b> (Ghimpeteanu 2022)</td><td class="n">4 µg/kg</td><td>50 µg/kg (otot/lemak/hati/ginjal)</td></tr></tbody></table>'+
+'<p style="font-size:.9rem">0,01 mg/kg = 10 µg/kg ≠ 4 µg/kg. Soal 35 memakai acuan <b>SNI → 0,01 mg/kg</b>. <span class="pill src">P6 hlm. 14–15</span></p>'+
+'<h4>Metode analisis residu — inti soal 36</h4>'+
+'<ul><li><b>Screening</b> (kualitatif, hasil wajib dikonfirmasi): microtest, <b>Delvotest</b>, ELISA, RIA, CLIA, CGIA, FPIA, LFIA.</li>'+
+'<li><b>Confirmation</b> (spesifisitas lebih tinggi, alat mahal): KLT, KCKT, LC-MS/MS, GC-MS/MS.</li></ul>'+
+'<div class="kunci"><b>Delvotest</b> = uji klasik antibiotik dalam <b>susu</b>, sangat sensitif terhadap <b>β-laktam</b>. Microtest: hasil setelah rata-rata 18 jam inkubasi. LC-MS/MS: 7 kelas / 30 antibiotik dalam &lt;8 menit. CGIA: 36 antibiotik dalam &lt;10 menit. <span class="pill src">P6 hlm. 25–27</span></div>'+
+'<p>Tahapan analisis: pengambilan sampel → penanganan &amp; transportasi → preparasi (ekstraksi dengan shaker/vortex → pemurnian <b>SPE cartridge C18</b>) → deteksi (KCKT/KG/KLT). <span class="pill src">P6 hlm. 28</span></p>'+
+'<div class="kunci">Data Indonesia (Etikaningrum 2017): residu daging ayam 1993–2004 berkisar <b>8%–70%</b>; residu di <b>hati ayam lebih tinggi</b> daripada daging (4,17%–83,3%). Oksitetrasiklin hati ayam Jatim 83,3% positif; daging ayam Jabar 70% positif.</div>'},
+artikel:{title:"Artikel Penelitian · Soal 37–50 (Sub-CPMK 1)", sub:"Rangkuman presentasi kelompok atas 14 artikel penelitian", html:
+'<p>Soal 37–50 berasal dari artikel/penelitian nyata. Hafalkan angka dan kesimpulan kuncinya:</p>'+
+'<ul>'+
+'<li><b>No. 37 — Pemusnahan limbah obat (Bandung Timur)</b>: 47 sarana (37 apotek + 10 klinik). <b>85,7% memusnahkan mandiri</b>; 69% belum bekerja sama dengan pihak ketiga; cara buang terbanyak: ke saluran air 38,5%, dikubur 27,8%; hanya 59,6% sesuai Pedoman Kemenkes 2021.</li>'+
+'<li><b>No. 38 — E. coli resisten di Citarum Hulu (Kusumah 2024)</b>: beban tertinggi dari <b>peternakan 43.347 CFU/100 mL</b> ≫ domestik 1.190, RS 736, industri farmasi 112.</li>'+
+'<li><b>No. 39 — IPAL industri farmasi Semarang (Sa\'adah 2025)</b>: efluen masih mengandung antibiotik (oksitetrasiklin hingga 3,887 mg/L). Kelemahan regulasi: <b>Permen LH 5/2014 hanya mengatur COD, BOD, TSS, pH</b> — belum ada batas residu antibiotik &amp; analisis antibiotik rutin belum wajib.</li>'+
+'<li><b>No. 40 — Sungai Musi, Palembang</b>: terdeteksi <b>siprofloksasin + netilmisin</b> di semua titik (Ampera, Kertapati, Musi 2); penelitian kualitatif.</li>'+
+'<li><b>No. 41 — Susu segar Aceh Besar (Meutia 2016)</b>: antibiotik dipakai untuk <b>mengobati infeksi, termasuk mastitis</b>; 10/10 sampel positif residu.</li>'+
+'<li><b>No. 42 — Teknologi limbah cair</b>: <b>flotasi</b> = gelembung udara membawa kontaminan (logam berat) ke permukaan; cepat, tapi butuh reagen.</li>'+
+'<li><b>No. 43 — Waduk Cirata (Ariyani 2024)</b>: 65 antibiotik dianalisis LC-MS/MS; <b>sulfametoksazol</b> terdeteksi di 79% lokasi hingga 109 ng/L; total tertinggi 440 ng/L (inlet A, musim hujan). <span class="pill sup">Soal suplemen</span></li>'+
+'<li><b>No. 44 — DAS North Canal, Beijing (Huangfu 2024)</b>: sumber terbesar = <b>efluen IPAL/WWTP</b>; ofloksasin terdeteksi di 100% dari 82 lokasi; norfloksasin maks 193 ng/L.</li>'+
+'<li><b>No. 45 — Bioremediasi parasetamol</b>: 40 mg/L turun 50% dalam 14 hari → <b>20 mg/L</b>; COD 120→60 mg/L, DO 2,5→5,5 mg/L, pH 6,0→7,2.</li>'+
+'<li><b>No. 46 — Parasetamol Teluk Jakarta (Koagouw 2021)</b>: metode <b>UPLC-MS/MS</b>; tertinggi Angke 610 ng/L, Ancol 420 ng/L; lokasi lain &lt;50 ng/L.</li>'+
+'<li><b>No. 47 — Amoksisilin Sungai Seketak (Lubis 2025)</b>: preparasi <b>SPE</b> + HPLC-UV; S2 = 8,2 µg/L, RQ 105,13 (risiko tinggi); PNEC 0,078 µg/L.</li>'+
+'<li><b>No. 48 — Take-back (Bassani 2024)</b>: kendala = partisipasi &amp; pemilahan masyarakat rendah + infrastruktur pengumpulan–daur ulang terbatas; solusi = titik take-back di apotek + edukasi/pelabelan + EPR. <span class="pill sup">Sebagian suplemen</span></li>'+
+'<li><b>No. 49 — Tetrasiklin (Amangelsin 2023)</b>: persisten karena stabil, sulit dioksidasi, ±75% diekskresikan utuh, mudah mengikat Ca²⁺; ±80% antibiotik akuakultur terlepas ke perairan.</li>'+
+'<li><b>No. 50 — Tetrasiklin vs sulfonamida di tanah (Conde-Cid 2020)</b>: tetrasiklin adsorpsi ±100%, desorpsi &lt;10% → tertahan di tanah; sulfonamida adsorpsi rendah, desorpsi tinggi → mobil, mudah leaching ke air tanah.</li>'+
+'</ul>'}
+};
+</script>
+<script>
+/* ================= SOAL 1–50 (sesuai file latihan, apa adanya) ================= */
+var QUESTIONS = [
+{n:1,p:"P1",lvl:"C1",src:"P1 hlm. 6",q:"Seorang peneliti menemukan residu parasetamol di dalam tubuh seekor ikan yang hidup di sungai yang tercemar limbah farmasi. Dalam konteks tingkat organisasi kehidupan, ikan tersebut merupakan contoh tingkat organisasi …",opts:["Populasi, karena ikan tersebut hidup bersama ikan lain di sungai yang sama","Individu, karena ikan tersebut adalah satu organisme tunggal yang terpapar langsung residu farmasi","Komunitas, karena ikan tersebut berinteraksi dengan berbagai spesies di sungai","Ekosistem, karena ikan tersebut berinteraksi dengan air sungai sebagai komponen abiotik","Biosfer, karena ikan tersebut merupakan bagian dari seluruh kehidupan di bumi"],ans:1,exp:"Individu adalah satuan terkecil dalam populasi, yaitu satu organisme tunggal (baik manusia, hewan, atau mikroorganisme). Dalam konteks farmasi lingkungan, individu adalah entitas yang terpapar langsung oleh residu farmasi melalui air, udara, atau makanan. Kata kunci soal adalah satu organisme yang terpapar residu farmasi."},
+{n:2,p:"P1",lvl:"C1",src:"P1 hlm. 3",q:"Sekelompok ikan nila dari spesies yang sama hidup di sebuah danau yang tercemar residu antibiotik dan saling berinteraksi satu sama lain. Kelompok ikan nila tersebut dalam tingkat organisasi kehidupan disebut …",opts:["Individu","Komunitas","Populasi","Ekosistem","Habitat"],ans:2,exp:"Populasi adalah kelompok individu dari spesies yang sama yang hidup di wilayah geografis yang sama dan berinteraksi satu sama lain. Dalam konteks farmasi lingkungan, populasi merujuk pada kumpulan organisme, baik manusia maupun hewan, yang terpapar bahan farmasi (API) di lingkungan. Kata kunci soal adalah sejenis + wilayah tertentu."},
+{n:3,p:"P1",lvl:"C2",src:"P1 hlm. 8",q:"Suatu danau yang airnya tercemar residu farmasi menunjukkan perubahan pada populasi ikan dan kadar oksigen terlarut di dalamnya. Untuk menjelaskan keterkaitan antara organisme yang terpapar residu farmasi dengan komponen air, tanah, dan udara di sekitarnya, digunakan konsep tingkat organisasi …",opts:["Individu, karena yang terpapar adalah satu organisme","Populasi, karena yang terdampak adalah sekelompok organisme sejenis","Ekosistem, karena mencakup interaksi komunitas organisme (biotik) dengan lingkungan fisik (abiotik)","Komunitas, karena hanya mencakup interaksi antarorganisme tanpa komponen fisik","Biosfer, karena mencakup seluruh danau dan isinya"],ans:2,exp:"Ekosistem adalah satu kesatuan interaksi antara komunitas organisme (biotik) dengan lingkungan fisik (abiotik) di wilayah tertentu. Dalam konteks farmasi lingkungan, ekosistem mencakup interaksi antara organisme yang terpapar residu farmasi dan dampak dari bahan farmasi tersebut pada elemen fisik seperti air, tanah, dan udara. Kata kunci soal adalah organisme + komponen abiotik (air, tanah, udara)."},
+{n:4,p:"P1",lvl:"C1",src:"P1 hlm. 11",q:"Berdasarkan sumber nutrisinya dalam rantai makanan, organisme yang memperoleh makanan dengan cara berburu, mengumpulkan, dan memakan produsen atau konsumen lain disebut …",opts:["Produsen","Konsumen","Dekomposer","Autotrof","Detritivor"],ans:1,exp:"Konsumen adalah organisme yang bergantung pada produsen atau pada konsumen lain untuk memperoleh makanannya. Makhluk hidup yang berburu, mengumpulkan, dan memakan makanannya disebut konsumen; konsumen makan untuk memperoleh energi. Terdapat tiga jenis konsumen: primer, sekunder, dan tersier. Kata kunci soal adalah memperoleh nutrisi dengan memakan produsen/konsumen lain."},
+{n:5,p:"P1",lvl:"C1",src:"P1 hlm. 11",q:"Rumput, bunga, dan pohon dikelompokkan sebagai produsen dalam ekosistem karena organisme tersebut …",opts:["Memakan tumbuhan lain untuk memperoleh energi","Menguraikan tumbuhan dan hewan yang telah mati menjadi nutrisi tanah","Menghasilkan makanannya sendiri melalui fotosintesis","Berburu hewan kecil sebagai sumber nutrisinya","Memperoleh energi dari sisa-sisa organisme yang telah mati"],ans:2,exp:"Produsen adalah organisme yang membuat atau menghasilkan makanannya sendiri melalui fotosintesis (autotrof). Setiap rantai makanan dimulai dengan produsen. Contoh produsen di slide: flowers, grass, tree. Kata kunci soal adalah menghasilkan makanan sendiri lewat fotosintesis."},
+{n:6,p:"P1",lvl:"C2",src:"P1 hlm. 11–12",q:"Dalam suatu rantai makanan darat, terdapat tumbuhan, belalang, katak, ular, dan elang. Berdasarkan perannya dalam ekosistem, belalang dan katak masing-masing diklasifikasikan sebagai …",opts:["Belalang produsen; katak konsumen primer","Belalang konsumen primer; katak konsumen sekunder","Belalang konsumen sekunder; katak konsumen tersier","Belalang dekomposer; katak konsumen primer","Belalang konsumen tersier; katak konsumen sekunder"],ans:1,exp:"Pada rantai makanan darat di slide: produsen primer adalah tumbuhan; konsumen primer adalah herbivora kecil (belalang dan kelinci); konsumen sekunder adalah karnivora/predator kecil (katak, laba-laba, dan ikan); konsumen tersier adalah predator besar (elang dan burung hantu). Belalang memakan tumbuhan (herbivora) sehingga menjadi konsumen primer, sedangkan katak memakan belalang (karnivora) sehingga menjadi konsumen sekunder."},
+{n:7,p:"P1",lvl:"C2",src:"P1 hlm. 11",q:"Di antara organisme berikut, yang diklasifikasikan sebagai produsen berdasarkan kemampuannya menghasilkan makanan sendiri adalah …",opts:["Capung (dragonfly)","Burung (bird)","Singa (lion)","Rumput (grass)","Jamur (mushroom)"],ans:3,exp:"Produsen adalah organisme autotrof yang menghasilkan makanannya sendiri melalui fotosintesis; setiap rantai makanan dimulai dengan produsen. Contoh produsen di slide: flowers, grass, tree. Capung adalah konsumen primer, burung konsumen sekunder, singa konsumen tersier, sedangkan jamur adalah dekomposer yang mengurai tumbuhan dan hewan mati."},
+{n:8,p:"P1",lvl:"C1",src:"P1 hlm. 11–12",q:"Bakteri dan jamur berperan penting dalam ekosistem sebagai dekomposer karena organisme tersebut …",opts:["Menghasilkan makanan sendiri melalui fotosintesis","Memakan tumbuhan hidup untuk memperoleh energi","Menguraikan tumbuhan dan hewan yang telah mati serta mengembalikan nutrisi ke dalam tanah","Berburu hewan kecil sebagai sumber nutrisinya","Menyerap energi matahari dan mengubahnya menjadi energi kimia"],ans:2,exp:"Dekomposer menguraikan tumbuhan dan hewan yang telah mati dan mengembalikan nutrisi ke dalam tanah. Contoh di slide: bacteria dan mushrooms (jamur); pada rantai makanan darat disebutkan pula fungi, bacteria, dan earthworms (cacing tanah) sebagai dekomposer. Kata kunci soal adalah pengurai bahan organik (tumbuhan/hewan mati)."},
+{n:9,p:"P1",lvl:"C1",src:"P1 hlm. 16",q:"Dalam suatu tablet parasetamol, komponen yang bertanggung jawab terhadap efek farmakologis (menurunkan demam dan meredakan nyeri) adalah …",opts:["Eksipien (bahan tambahan obat)","Bahan pengikat tablet","Zat pewarna dan perasa tablet","Active Pharmaceutical Ingredient (API)","Bahan pelapis (coating) tablet"],ans:3,exp:"Active Pharmaceutical Ingredient (API) adalah komponen utama dalam obat-obatan yang bertanggung jawab atas efek farmakologis. API dirancang untuk bekerja secara biologis di dalam tubuh manusia atau hewan, tetapi setelah digunakan, API dapat masuk ke lingkungan melalui ekskresi atau pembuangan obat yang tidak tepat. Kata kunci soal adalah komponen yang bertanggung jawab terhadap efek farmakologis → API (zat aktif)."},
+{n:10,p:"P1",lvl:"C2",src:"P1 hlm. 17",q:"Suatu sediaan tablet ditambahkan bahan yang berfungsi memberikan kestabilan, konsistensi, rasa, dan penampilan yang baik, meskipun bahan tersebut tidak memiliki efek terapeutik. Komponen yang dimaksud adalah …",opts:["Active Pharmaceutical Ingredient (API)","Bahan tambahan obat (eksipien)","Zat aktif biologis","Senyawa metabolit obat","Bahan baku simplisia"],ans:1,exp:"Bahan tambahan obat (excipient) adalah komponen non-aktif yang ditambahkan dalam formulasi obat untuk memberikan karakteristik tertentu pada obat, seperti kestabilan, konsistensi, rasa, atau penampilan. Meskipun bahan tambahan ini tidak memiliki efek terapeutik, penggunaannya dapat memengaruhi lingkungan jika tidak dikelola dengan baik. Kata kunci soal adalah non-aktif dan fungsinya memberi kestabilan, konsistensi, rasa, dan penampilan."},
+{n:11,p:"P1",lvl:"C3",src:"P1 hlm. 14",q:"Dalam piramida makanan manusia di laut, produsen adalah alga, konsumen primer adalah udang, konsumen sekunder adalah tuna, dan konsumen tersier adalah manusia. Berdasarkan posisi dan sumber makanannya dalam jaring makanan tersebut, ikan tuna menempati tingkat trofik ke- …",opts:["Tingkat trofik ke-1, karena tuna memakan alga secara langsung","Tingkat trofik ke-2, karena tuna adalah konsumen primer","Tingkat trofik ke-3, karena tuna adalah konsumen sekunder yang memakan udang (konsumen primer)","Tingkat trofik ke-4, karena tuna adalah konsumen tersier","Tingkat trofik puncak, karena tuna adalah predator puncak di laut"],ans:2,exp:"Pada piramida makanan manusia (hlm. 14): produsen = alga (tingkat trofik ke-1), konsumen primer = udang (tingkat trofik ke-2), konsumen sekunder = tuna (tingkat trofik ke-3), konsumen tersier = manusia (tingkat trofik ke-4/puncak). Aliran energinya: matahari 100% → produsen 10% → konsumen primer 1% → manusia 0,1%, dengan energi yang hilang sebagai panas. Jadi tuna adalah konsumen sekunder, tingkat trofik ke-3, dengan energi yang diterimanya sebesar 1%."},
+{n:12,p:"P1",lvl:"C2",src:"P1 hlm. 12–13",q:"Dalam rantai makanan darat berikut: tumbuhan → belalang → katak → ular → elang, organisme yang menempati tingkat konsumen sekunder adalah …",opts:["Tumbuhan","Belalang","Katak","Ular","Elang"],ans:2,exp:"Pada rantai makanan darat di slide: produsen primer adalah tumbuhan; konsumen primer adalah herbivora (belalang, kelinci); konsumen sekunder adalah karnivora (katak, laba-laba, ikan) pada tingkat trofik ke-3; konsumen tersier adalah karnivora sekunder (ular, serigala) pada tingkat trofik ke-4; predator puncak adalah elang, burung hantu, singa, dan harimau. Katak memakan belalang (konsumen primer), sehingga katak adalah konsumen sekunder."},
+{n:13,p:"P1",lvl:"C2",src:"P1 hlm. 14–15",q:"Dalam piramida makanan manusia, manusia memperoleh sebagian besar energi makanannya dari produsen primer darat (misalnya padi dan jagung) serta konsumen primer (misalnya sapi dan domba), sedangkan dari laut manusia memanen predator puncak seperti tuna, hiu, todak, dan makarel. Berdasarkan perannya dalam piramida makanan tersebut, manusia menempati tingkat trofik …",opts:["Tingkat trofik ke-1 sebagai produsen","Tingkat trofik ke-2 sebagai konsumen primer","Tingkat trofik ke-3 sebagai konsumen sekunder","Tingkat trofik ke-4 sebagai konsumen tersier/puncak","Di luar piramida sebagai dekomposer"],ans:3,exp:"Pada piramida makanan manusia (hlm. 14): produsen = alga, konsumen primer = udang, konsumen sekunder = tuna, konsumen tersier = manusia. Manusia adalah konsumen tersier pada tingkat trofik ke-4/puncak, dan hanya menerima 0,1% dari energi matahari awal (100% → 10% → 1% → 0,1%), karena sebagian besar energi hilang sebagai panas pada setiap perpindahan tingkat trofik. Dekomposer berada di luar piramida karena mengurai semua tingkat."},
+{n:14,p:"P3",lvl:"C1",src:"P3-udara hlm. 16",q:"Senyawa pencemar berikut yang dapat berasal dari bahan kemasan farmasi adalah …",opts:["Etinilestradiol dari pil kontrasepsi","Bisphenol A (BPA) dari kemasan farmasi atau botol plastik","Ibuprofen dari obat anti-inflamasi","Triclosan dari sabun antibakteri","Diethylstilbestrol (DES) dari hormon sintetik"],ans:1,exp:"BPA sering ditemukan dalam kemasan farmasi atau botol plastik dan dapat larut ke dalam air minum; BPA mengganggu sistem estrogenik sehingga memengaruhi perkembangan dan reproduksi. Etinilestradiol, ibuprofen, triclosan, dan DES berasal dari sediaan obat atau produk perawatan pribadi, bukan dari bahan kemasan. Catatan: limbah farmasi ex tablet berupa blister/strip, tabletnya, dan botol kaca hanya tercatat pada catatan tangan dosen di P3-tanah hlm. 15, bukan teks cetak slide."},
+{n:15,p:"P3",lvl:"C1",src:"P3-udara hlm. 3–4",q:"Gas yang memiliki proporsi terbesar dalam atmosfer adalah …",opts:["Oksigen (O₂) ~21%","Argon (Ar) ~0,93%","Karbon dioksida (CO₂) ~0,04%","Nitrogen (N₂) ~78%","Uap air (H₂O) 0–4%"],ans:3,exp:"Nitrogen (N₂) merupakan gas yang paling melimpah di atmosfer dengan proporsi sekitar 78%. Oksigen sekitar 21%, argon sekitar 0,93%, karbon dioksida sekitar 0,04%, dan uap air bervariasi 0–4%."},
+{n:16,p:"P3",lvl:"C1",src:"P3-udara hlm. 3–4",q:"Di antara komponen utama atmosfer yang dibahas di slide, gas dengan proporsi terkecil adalah …",opts:["Nitrogen (N₂) ~78%","Oksigen (O₂) ~21%","Argon (Ar) ~0,93%","Karbon dioksida (CO₂) ~0,04%","Uap air (H₂O) 0–4%"],ans:3,exp:"Di antara empat komponen utama yang diberi angka di slide (N₂ ~78%, O₂ ~21%, Ar ~0,93%, CO₂ ~0,04%), yang terkecil adalah karbon dioksida (~0,04%). Gas-gas jejak (Ne, He, CH₄, H₂, Kr) memang lebih kecil lagi, tetapi tidak diberi angka di slide, sehingga bukan jawaban yang dimaksud soal."},
+{n:17,p:"P3",lvl:"C1",src:"P3-tanah hlm. 5",q:"Komponen penyusun tanah dengan proporsi terbesar adalah …",opts:["Bahan organik 5%","Air 25%","Udara 25%","Bahan mineral 45%","Humus 5%"],ans:3,exp:"Bahan mineral menyusun sebagian besar komposisi tanah, yaitu 45%, terdiri dari partikel pasir, debu (silt), dan lempung (clay). Bahan organik 5%, air 25%, dan udara 25%."},
+{n:18,p:"P3",lvl:"C1",src:"P3-tanah hlm. 6",q:"Komponen penyusun tanah dengan proporsi terkecil adalah …",opts:["Bahan mineral 45%","Air 25%","Udara 25%","Bahan organik 5%","Pasir 45%"],ans:3,exp:"Bahan organik merupakan komponen penyusun tanah dengan proporsi terkecil, yaitu 5%, berupa sisa-sisa tumbuhan, hewan, dan mikroorganisme yang terdekomposisi. Bahan mineral 45%, sedangkan air dan udara masing-masing 25%."},
+{n:19,p:"P3",lvl:"C4",src:"P3-tanah hlm. 13",q:"Suatu wilayah beriklim tropis dengan curah hujan tinggi memiliki tanah berwarna merah yang cenderung asam dan miskin unsur hara karena banyak mengandung oksida besi dan aluminium. Jenis tanah yang sesuai dengan karakteristik tersebut adalah …",opts:["Tanah Podsolik","Tanah Aluvial","Tanah Laterit","Tanah Gambut","Tanah Vulkanik (Andosol)"],ans:2,exp:"Tanah Laterit terbentuk di daerah tropis dengan curah hujan tinggi, mengandung banyak oksida besi dan aluminium sehingga berwarna merah, cenderung asam dan miskin unsur hara. Tanah Podsolik memang juga terbentuk di daerah curah hujan tinggi dan asam, tetapi cirinya suhu rendah dan memiliki horizon eluvial yang jelas, biasanya di pegunungan dan hutan beriklim sedang — bukan iklim tropis."},
+{n:20,p:"P3",lvl:"C2",src:"P3-tanah hlm. 15–16",q:"Berikut ini yang merupakan contoh sumber pencemaran titik (point source) residu farmasi adalah …",opts:["Penggunaan pupuk dari kotoran hewan yang mengandung antibiotik","Ekskresi antibiotik dan hormon melalui urine dan feses hewan ternak","Pembuangan limbah medis yang tidak tepat, misalnya obat dibuang langsung ke tempat pembuangan sampah","Penggunaan lumpur pengolahan air limbah (biosolid) sebagai amandemen tanah","Penggunaan pestisida yang terkontaminasi residu farmasi"],ans:2,exp:"Point source adalah sumber pencemaran titik dengan konsentrasi yang tinggi, contohnya pembuangan limbah medis yang tidak tepat dan limbah dari fasilitas peternakan serta pabrik obat. Pilihan A, B, D, dan E termasuk sumber non-titik (disperse non-point source) yang konsentrasinya rendah karena obat dikonsumsi dulu baru menjadi limbah."},
+{n:21,p:"P2",lvl:"C2",src:"P2 hlm. 3",q:"Air dapat bergerak pada permukaan atau melawan gravitasi pada tanaman (misalnya naik melalui pembuluh tanaman). Sifat fisik air yang mendasari fenomena kapilaritas tersebut adalah …",opts:["Kapasitas panas tinggi yang menstabilkan suhu lingkungan","Ikatan hidrogen yang menimbulkan sifat kohesif, adhesif, dan tegangan permukaan yang tinggi","Kepadatan anomali dengan kepadatan tertinggi pada suhu 4°C","Molekul polar yang bertindak sebagai pelarut universal","Titik beku rendah sehingga es mengapung di atas permukaan air"],ans:1,exp:"Ikatan hidrogen antar molekul air menimbulkan sifat kohesif, adhesif, dan tegangan permukaan yang tinggi, sehingga air dapat menyebar pada permukaan atau bergerak melawan gravitasi pada tanaman — inilah kapilaritas. Kapasitas panas tinggi berkaitan dengan stabilisasi suhu, kepadatan anomali berkaitan dengan es yang mengapung, dan molekul polar berkaitan dengan sifat pelarut universal."},
+{n:22,p:"P2",lvl:"C1",src:"P2 hlm. 5",q:"Air laut memiliki salinitas rata-rata sekitar 3,5%, sedangkan air tawar memiliki kandungan garam kurang dari 0,5 ppt. Berdasarkan kadar garam terlarutnya, air yang salinitasnya lebih tinggi daripada air tawar tetapi lebih rendah daripada air laut adalah …",opts:["Air hujan","Air tanah","Air payau","Air glacial","Air asin"],ans:2,exp:"Air payau (brackish water) adalah campuran air tawar dan air laut, biasanya di muara sungai atau laguna, dengan salinitas lebih tinggi daripada air tawar tetapi lebih rendah daripada air laut. Air asin justru memiliki salinitas lebih tinggi dari air laut."},
+{n:23,p:"P2",lvl:"C2",src:"P3-udara hlm. 16; P2 hlm. 11",sup:true,q:"Produk perawatan pribadi (PPCPs) seperti sabun antibakteri dan pasta gigi mengandung triclosan yang dapat mencemari perairan. Badan air yang berpotensi tercemar akibat penggunaan dan pembuangan produk perawatan pribadi tersebut adalah …",opts:["Air tanah di lapisan akuifer yang dalam saja","Air permukaan, seperti sungai dan danau, yang menerima buangan air limbah rumah tangga","Air glacial dari pencairan gletser","Air hujan sebelum jatuh ke permukaan tanah","Air laut dalam yang tidak berhubungan dengan daratan"],ans:1,exp:"Triclosan digunakan dalam produk perawatan pribadi seperti sabun antibakteri dan pasta gigi dan dapat mengganggu fungsi tiroid dan hormon reproduksi. Produk perawatan pribadi (PPCPs) seperti kosmetik, sabun, dan sampo menjadi sumber pencemaran air karena sering tidak sepenuhnya terurai dalam sistem pengolahan air limbah, sehingga akhirnya mencapai air permukaan dan tanah. Catatan: jenis badan air yang tercemar tidak disebut eksplisit pada pembahasan triclosan di slide; bagian ini disuplemen dari materi PPCP di P2 hlm. 11."},
+{n:24,p:"P3",lvl:"C1",src:"P3-udara hlm. 3",q:"Gas atmosfer yang memiliki proporsi volume sekitar 0,93% adalah …",opts:["Nitrogen (N₂)","Oksigen (O₂)","Argon (Ar)","Karbon dioksida (CO₂)","Neon (Ne)"],ans:2,exp:"Argon (Ar) memiliki proporsi volume sekitar 0,93% di atmosfer dan merupakan gas inert yang tidak bereaksi secara kimia dengan senyawa lain di atmosfer."},
+{n:25,p:"P3",lvl:"C1",src:"P3-udara hlm. 3",q:"Gas atmosfer yang memiliki proporsi volume sekitar 0,04% adalah …",opts:["Nitrogen (N₂)","Oksigen (O₂)","Argon (Ar)","Karbon dioksida (CO₂)","Metana (CH₄)"],ans:3,exp:"Karbon dioksida (CO₂) memiliki proporsi volume sekitar 0,04% di atmosfer. Meskipun persentasenya kecil, CO₂ berperan penting dalam fotosintesis tanaman dan berkontribusi terhadap efek rumah kaca yang menjaga suhu bumi tetap stabil."}
+];
+</script>
+<script>
+QUESTIONS = QUESTIONS.concat([
+{n:26,p:"P3",lvl:"C2",src:"P3-udara hlm. 7–9",q:"Udara kering memiliki kandungan uap air yang sangat rendah. Dampak udara kering terhadap kesehatan manusia yang disebutkan di slide adalah …",opts:["Tubuh sulit melepaskan panas dan risiko pertumbuhan jamur meningkat","Kulit kering, iritasi pernapasan, dan peningkatan risiko penyebaran partikel debu","Sesak napas akibat tekanan atmosfer yang lebih rendah dan kadar oksigen yang lebih sedikit","Korosi pada bangunan atau logam akibat partikel garam","Peningkatan pertumbuhan jamur dan penurunan kenyamanan"],ans:1,exp:"Udara kering (dry air) memiliki kandungan uap air yang sangat rendah, biasanya di daerah gurun atau musim dingin, sehingga menyebabkan kulit kering, iritasi pernapasan, dan meningkatkan risiko penyebaran partikel debu. Pilihan A dan E adalah ciri udara lembab, pilihan C adalah ciri udara pegunungan, dan pilihan D adalah ciri udara laut."},
+{n:27,p:"P4",lvl:"C1",src:"P4 hlm. 1, 3",q:"Apa kepanjangan AMDAL dalam konteks pengelolaan lingkungan hidup di Indonesia?",opts:["Analisis Mengenai Dampak Lingkungan Hidup","Analisis Masalah Dampak Lingkungan Hayati","Asesmen Mengenai Dampak Lingkungan Hidup","Analisis Mengenai Data Lingkungan Hidup","Administrasi Mengenai Dampak Lingkungan Hidup"],ans:0,exp:"AMDAL adalah Analisis Mengenai Dampak Lingkungan Hidup, yaitu kajian mengenai dampak besar dan penting suatu rencana usaha dan/atau kegiatan yang direncanakan pada lingkungan hidup, yang diperlukan bagi proses pengambilan keputusan (PP No. 27/1999 Pasal 1). AMDAL merupakan bagian yang tidak terpisahkan dari Pengelolaan Lingkungan Hidup."},
+{n:28,p:"P4",lvl:"C2",src:"P4 hlm. 15–16, 18",q:"Suatu industri farmasi berencana membangun pabrik baru dengan mengubah bentuk lahan dan bentang alam, serta proses produksinya berpotensi menimbulkan pencemaran dan kerusakan lingkungan hidup. Berdasarkan karakteristik dampaknya, dokumen lingkungan apa yang wajib dimiliki rencana usaha/kegiatan tersebut?",opts:["SPPL, karena kegiatannya berskala kecil","UKL/UPL, karena kegiatannya berada di luar daftar wajib AMDAL","Dokumen AMDAL, karena kegiatannya mengubah bentuk lahan dan berpotensi menimbulkan pencemaran serta kerusakan lingkungan","Tidak perlu dokumen apa pun, karena kegiatan penanggulangan keadaan darurat dikecualikan","Tidak perlu dokumen AMDAL, karena kawasan tersebut sudah memiliki AMDAL kawasan"],ans:2,exp:"Kegiatan wajib AMDAL antara lain yang melakukan pengubahan bentuk lahan dan bentang alam serta proses/kegiatan yang secara potensial dapat menimbulkan pencemaran dan kerusakan lingkungan hidup (kriteria a dan c). Industri farmasi termasuk bidang kefarmasian yang wajib AMDAL. Sebaliknya: usaha di luar daftar wajib AMDAL cukup UKL/UPL (opsi B), kegiatan darurat tidak perlu AMDAL (opsi D), dan usaha di dalam kawasan yang sudah ber-AMDAL tidak wajib membuat AMDAL lagi (opsi E) — ketiganya tidak cocok dengan kasus ini."},
+{n:29,p:"P4",lvl:"C4",src:"P4 hlm. 4",q:"Berikut ini adalah kriteria yang digunakan untuk menentukan suatu dampak sebagai dampak besar dan penting, KECUALI …",opts:["Jumlah manusia yang akan kena dampak","Luas wilayah penyebaran dampak","Sifat kumulatif dampak","Intensitas dan lamanya dampak berlangsung","Warna dan bentuk bangunan pabrik pemrakarsa"],ans:4,exp:"Enam kriteria dampak besar dan penting adalah: (1) jumlah manusia yang kena dampak; (2) luas wilayah penyebaran dampak; (3) intensitas dan lamanya dampak berlangsung; (4) banyaknya komponen lingkungan yang terkena dampak; (5) sifat kumulatif dampak; (6) sifat berbalik (reversible) atau tidak berbaliknya (irreversible) dampak. Warna dan bentuk bangunan bukan komponen lingkungan dan bukan kriteria dampak — maka opsi E adalah pengecualinya."},
+{n:30,p:"P4",lvl:"C1",src:"P4 hlm. 27",q:"Dokumen AMDAL yang memuat telaah secara cermat dan mendalam tentang dampak besar dan penting suatu kegiatan yang direncanakan adalah …",opts:["KA-ANDAL","ANDAL","RKL","RPL","UKL/UPL"],ans:1,exp:"ANDAL (Analisis Dampak Lingkungan) adalah telaah secara cermat dan mendalam tentang dampak besar dan penting suatu kegiatan yang direncanakan (PP No. 27/1999 Pasal 1). Jangan tertukar: KA-ANDAL adalah kerangka acuan/ruang lingkup studi ANDAL, RKL adalah rencana pengelolaan lingkungan, RPL adalah rencana pemantauan lingkungan, sedangkan UKL/UPL adalah dokumen untuk kegiatan yang tidak berdampak penting."},
+{n:31,p:"P4",lvl:"C3",src:"P4 hlm. 8, 19, 28, 31, 35–38",sup:true,q:"Dalam penyusunan AMDAL, tahap yang digunakan untuk menilai hasil prakiraan dampak — misalnya dengan membandingkan prakiraan konsentrasi pencemar dengan baku mutu lingkungan — adalah …",opts:["Pelingkupan (penyusunan KA-ANDAL)","Prakiraan dampak","Evaluasi dampak","Penyusunan RKL","Penyusunan RPL"],ans:2,exp:"Alur analisis AMDAL adalah prakiraan dampak → evaluasi dampak. Prakiraan menghasilkan perkiraan besaran/konsentrasi dampak pada tiap tahapan kegiatan (prakonstruksi, konstruksi, operasi, pasca operasi), sedangkan evaluasi menilai dampak tersebut — antara lain terhadap kesehatan manusia, kualitas air, komponen biologi, dan sosial-ekonomi-budaya — dengan menggunakan baku mutu lingkungan sebagai tolok ukur. RKL dan RPL adalah tahap perencanaan pengendalian setelahnya, sedangkan pelingkupan hanya merumuskan ruang lingkup studi. Catatan: sebagian suplemen — frasa membandingkan dengan baku mutu tidak tertulis eksplisit di slide; jawaban disimpulkan dari logika alur prakiraan → evaluasi."},
+{n:32,p:"P4",lvl:"C1",src:"Di luar slide — suplemen (PP 22/2021; PermenLHK 6/2021)",sup:true,q:"Peraturan perundang-undangan yang saat ini mengatur pengelolaan limbah bahan berbahaya dan beracun (limbah B3) adalah …",opts:["PP No. 22 Tahun 2021 tentang Penyelenggaraan Perlindungan dan Pengelolaan Lingkungan Hidup","PP No. 27 Tahun 1999 tentang Analisis Mengenai Dampak Lingkungan (AMDAL)","UU No. 23 Tahun 1992 tentang Kesehatan","Keputusan MenLH No. 86 Tahun 2002 tentang Pedoman Pelaksanaan UKL-UPL","PP No. 81 Tahun 2012 tentang Pengelolaan Sampah Rumah Tangga dan Sampah Sejenis Sampah Rumah Tangga"],ans:0,exp:"Pengelolaan limbah B3 saat ini diatur dalam PP No. 22 Tahun 2021 tentang Penyelenggaraan Perlindungan dan Pengelolaan Lingkungan Hidup (menggantikan PP No. 101 Tahun 2014 tentang Pengelolaan Limbah B3), dengan aturan pelaksana teknisnya antara lain PermenLHK No. 6 Tahun 2021 tentang Tata Cara dan Persyaratan Pengelolaan Limbah B3. PP 27/1999 mengatur AMDAL, bukan limbah B3; UU 23/1992 mengatur kesehatan; KepMenLH 86/2002 mengatur UKL-UPL; PP 81/2012 mengatur sampah rumah tangga. Catatan: kata B3 tidak pernah muncul di P4; soal ini dibuat dari regulasi yang berlaku saat ini, bukan dari isi slide."},
+{n:33,p:"P5",lvl:"C3",src:"P5 hlm. 3",q:"Berdasarkan sumber dan praktik pemanfaatan limbah, jalur utama masuknya residu farmasi ke ekosistem pertanian adalah melalui …",opts:["Penggunaan pupuk organik dari kotoran hewan yang mengandung residu obat farmasi","Penyinaran sinar matahari langsung pada lahan pertanian","Penggunaan benih tanaman unggul bersertifikat","Pemberian pupuk anorganik yang bebas residu farmasi","Pengolahan tanah dengan traktor secara mekanis"],ans:0,exp:"Ada empat sumber residu farmasi di pertanian: penggunaan pupuk organik, penggunaan obat hewan, irigasi air limbah, dan aplikasi obat pada tanaman. Penggunaan pupuk organik — kotoran hewan yang mengandung residu obat farmasi yang sering digunakan sebagai pupuk alami di lahan pertanian — adalah sumber utama kontaminasi farmasi pada tanah dan tanaman, karena residu terakumulasi di tanah lalu diserap tanaman dan masuk ke rantai makanan."},
+{n:34,p:"P6",lvl:"C2",src:"P6 hlm. 11 (juga hlm. 9–10)",q:"Residu antibiotik pada produk hewan dapat menimbulkan bahaya imunopatologis. Contoh dampak imunopatologis tersebut adalah …",opts:["Perubahan genetik (mutagenik)","Cacat lahir/cacat bawaan (teratogenik)","Timbulnya sel-sel kanker (karsinogenik)","Reaksi alergis","Resistensi terhadap pengobatan antibiotik"],ans:3,exp:"Dampak residu antibiotik pada produk hewan dibagi tiga: bahaya toksikologi (mutagenik, teratogenik, karsinogenik), bahaya mikrobiologis (resistensi pengobatan antibiotik dan gangguan flora normal usus), dan bahaya imunopatologi: reaksi alergis. Contohnya: penisilin dapat menimbulkan reaksi hipersensitivitas yang diperantarai IgE hingga anafilaksis; amoksisilin (dengan/tanpa asam klavulanat) adalah pencetus alergi tersering, dan kadar sangat rendah (6 µg/L) sudah dapat menimbulkan reaksi."},
+{n:35,p:"P6",lvl:"C1",src:"P6 hlm. 14 (SNI); bandingkan hlm. 15 (UE: 4 µg/kg)",q:"Menurut acuan SNI yang digunakan dalam materi, berapakah batas maksimum residu (MRL) amoksisilin pada produk susu?",opts:["0,01 mg/kg","4 µg/kg","50 µg/kg","0,1 mg/kg","1 mg/kg"],ans:0,exp:"Tabel SNI Spesifikasi persyaratan mutu batas maksimum residu dalam bahan makanan asal hewan menetapkan amoksisilin: daging 0,01; telur 0,01; susu 0,01 mg/kg (0,01 mg/kg = 10 µg/kg). Waspada jebakan: tabel Uni Eropa (Ghimpeteanu et al. 2022) pada slide yang sama menetapkan amoksisilin pada susu sebesar 4 µg/kg (dan 50 µg/kg untuk otot/lemak/hati/ginjal) — nilai yang berbeda karena acuannya berbeda. Dalam konteks Indonesia, jawaban yang dipakai adalah nilai SNI."},
+{n:36,p:"P6",lvl:"C3",src:"P6 hlm. 25–26",q:"Metode analisis yang sesuai untuk mendeteksi residu antibiotik golongan beta-laktam pada produk susu adalah …",opts:["Delvotest","Kromatografi Lapis Tipis (KLT)","LC-MS/MS","ELISA","Microtest (microbial inhibition test)"],ans:0,exp:"Metode analisis residu dibagi dua: screening method (microtest, Delvotest, ELISA) dan confirmation method (KLT, KCKT, LC-MS, GC-MS). Delvotest adalah uji klasik untuk menentukan antibiotik dalam susu dan sangat sensitif terhadap antibiotik β-laktam, sehingga paling sesuai untuk mendeteksi residu beta-laktam pada susu. KLT dan LC-MS/MS adalah metode konfirmasi (bukan skrining), ELISA adalah skrining umum, dan microtest adalah skrining umum yang hasilnya baru diperoleh setelah rata-rata 18 jam inkubasi."},
+{n:37,p:"Artikel",lvl:"C2",src:"Artikel No. 37",q:"Survei di 47 sarana pelayanan farmasi komunitas di wilayah Bandung Timur (37 apotek + 10 klinik pratama) menemukan bahwa sebagian besar sarana memusnahkan limbah obatnya secara mandiri, tanpa melibatkan pihak ketiga. Berapa persentase sarana yang melakukan pemusnahan secara mandiri?",opts:["27,8%","38,5%","59,6%","69,0%","85,7%"],ans:4,exp:"Pemusnahan mandiri adalah metode yang paling banyak diterapkan, yaitu 85,7% sarana; 69% sarana belum bekerja sama dengan pihak ketiga. Angka 38,5% (dibuang ke saluran air) dan 27,8% (dikubur) adalah cara pembuangan mandiri yang paling sering disebut, bukan persentase pemusnahan mandiri itu sendiri. Hanya 59,6% sarana yang alur pemusnahannya sesuai Pedoman Kemenkes 2021."},
+{n:38,p:"Artikel",lvl:"C1",src:"Artikel No. 38",q:"Penelitian Kusumah dkk. (2024) di Citarum Hulu mengukur beban rata-rata Escherichia coli resisten antibiotik (CFU/100 mL) dari berbagai sumber limbah. Sumber limbah manakah yang paling besar berkontribusi terhadap keberadaan E. coli resisten di sungai tersebut?",opts:["Industri farmasi — 112 CFU/100 mL","Rumah sakit — 736 CFU/100 mL","Limbah domestik — 1.190 CFU/100 mL","Peternakan — 43.347 CFU/100 mL","IPAL domestik — 28.700 CFU/100 mL"],ans:3,exp:"Beban E. coli resisten rata-rata tertinggi berasal dari peternakan (43.347 CFU/100 mL), jauh di atas limbah domestik (1.190), rumah sakit (736), dan industri farmasi (112). Angka 28.700 CFU/100 mL adalah lonjakan E. coli total di titik Bojongsoang setelah Sungai Cikapundung bergabung, bukan beban dari satu sumber limbah. Catatan: penelusuran sumber statistik (Uji Wilcoxon) menyebut industri farmasi paling mungkin menjadi sumber di banyak titik sungai, tetapi itu perkiraan statistik, bukan beban terukur."},
+{n:39,p:"Artikel",lvl:"C4",src:"Artikel No. 39",q:"Kajian Sa'adah dkk. (2025) terhadap dua industri farmasi di Kota Semarang menemukan bahwa efluen akhir IPAL kedua perusahaan masih mengandung residu antibiotik (misalnya oksitetrasiklin hingga 3,887 mg/L), meskipun parameter konvensionalnya sebagian besar memenuhi baku mutu. Kelemahan regulasi apakah yang diidentifikasi kajian sebagai penyebab utama kondisi tersebut?",opts:["Tidak ada peraturan sama sekali yang mengatur air limbah industri farmasi","Permen LH No. 5/2014 hanya mengatur COD, BOD, TSS, dan pH; belum menetapkan batas residu antibiotik dan analisis antibiotik rutin belum diwajibkan","Industri farmasi dilarang memiliki IPAL sendiri sehingga limbah dibuang tanpa pengolahan","Baku mutu air limbah industri farmasi sudah mencakup antibiotik, tetapi industri sengaja melanggarnya","Permenko PMK No. 7/2021 melarang pemantauan antibiotik di efluen industri"],ans:1,exp:"Kelemahan utamanya adalah baku mutu air limbah (Permen LH No. 5/2014) masih berfokus pada COD, BOD, TSS, dan pH, belum memuat batas residu antibiotik, dan analisis antibiotik rutin belum diwajibkan. Akibatnya, IPAL konvensional yang lolos parameter konvensional tetap membuang residu antibiotik — IPAL tersebut dirancang untuk bahan organik/padatan/pH, bukan mikropolutan farmasi. Permenko PMK No. 7/2021 disebut dalam kajian tetapi tidak menutup celah baku mutu tersebut."},
+{n:40,p:"Artikel",lvl:"C1",src:"Artikel No. 40",q:"Penelitian kualitas perairan Sungai Musi, Kota Palembang (3 titik: Jembatan Ampera, Jembatan Kertapati, dan Jembatan Musi 2; sampel Maret–Oktober 2019) melaporkan terdeteksinya dua jenis antibiotik pada ketiga sampel air sungai. Dua antibiotik apakah itu?",opts:["Amoksisilin dan doksisiklin","Siprofloksasin dan netilmisin","Oksitetrasiklin dan sefadroksil","Sulfametoksazol dan trimetoprim","Eritromisin dan klaritromisin"],ans:1,exp:"Dua antibiotik yang terdeteksi di semua titik adalah siprofloksasin (ciprofloxacin) dan netilmisin (netilmicin), dengan intensitas sinyal deteksi siprofloksasin tertinggi. Penelitian ini bersifat kualitatif dan belum menentukan konsentrasi antibiotik secara kuantitatif, sehingga peneliti merekomendasikan analisis kuantitatif lanjutan."},
+{n:41,p:"Artikel",lvl:"C2",src:"Artikel No. 41",q:"Dalam penelitian Meutia dkk. (2016) tentang residu antibiotik pada air susu segar dari peternakan di wilayah Aceh Besar, untuk tujuan apakah antibiotik digunakan pada sapi perah?",opts:["Sebagai pemacu pertumbuhan (growth promoter) agar produksi susu meningkat","Sebagai pengawet susu agar tahan lebih lama","Untuk mengobati infeksi, termasuk mastitis pada sapi perah","Untuk meningkatkan kandungan lemak susu","Sebagai pengganti pakan konsentrat"],ans:2,exp:"Antibiotik digunakan untuk mengobati infeksi, termasuk mastitis pada sapi perah. Seluruh 10 sampel susu (5 dari Pagar Air, 5 dari Saree) positif residu antibiotik, yang menurut slide antara lain disebabkan oleh ketidakpatuhan terhadap masa henti obat (withdrawal time), dosis yang tidak sesuai, dan kurangnya pengawasan dokter hewan."},
+{n:42,p:"Artikel",lvl:"C2",src:"Artikel No. 42",q:"Suatu teknologi pengolahan limbah cair menggunakan gelembung udara untuk membawa kontaminan (misalnya logam berat) ke permukaan sehingga dapat dipisahkan dari air limbah. Teknologi apakah itu?",opts:["Koagulasi-flokulasi","Adsorpsi","Filtrasi membran","Elektrokoagulasi","Flotasi"],ans:4,exp:"Flotasi menggunakan gelembung udara untuk membawa kontaminan ke permukaan agar dapat dipisahkan; kelebihannya pemisahan cepat, kekurangannya membutuhkan reagen. Pembandingnya: koagulasi-flokulasi menggabungkan partikel menjadi flok yang diendapkan; adsorpsi mengikat ion pada permukaan adsorben; filtrasi membran dan elektrokoagulasi menggunakan membran atau arus listrik."},
+{n:43,p:"Artikel",lvl:"C2",src:"Artikel No. 43",sup:true,q:"Penelitian Ariyani dkk. (2024) di Waduk Cirata menganalisis 65 antibiotik dengan LC-MS/MS pada 144 sampel air dan 48 sampel sedimen dari 24 titik, pada musim hujan dan kemarau. Antibiotik manakah yang paling sering terdeteksi di perairan waduk tersebut, ditemukan di 79% lokasi dengan konsentrasi hingga 109 ng/L?",opts:["Siprofloksasin","Enrofloksasin","Sulfametoksazol","Sarafloksasin","Trimetoprim"],ans:2,exp:"Sulfametoksazol terdeteksi di 79% lokasi, hingga 109 ng/L. Total residu antibiotik tertinggi di air tercatat 440 ng/L di inlet A pada musim hujan. Sulfonamid dan trimetoprim dominan karena mudah larut dan banyak dipakai di peternakan; fluorokuinolon (sarafloksasin) lebih sering muncul saat hujan karena terbawa limpasan dan erosi. Catatan suplemen: indikator blueprint soal ini menanyakan antibiotik yang konsentrasinya relatif sama pada musim hujan dan kemarau, tetapi data perbandingan antar musim per antibiotik tidak ada di artikel — soal ini dibuat dari data yang ada di artikel (frekuensi deteksi sulfametoksazol)."},
+{n:44,p:"Artikel",lvl:"C1",src:"Artikel No. 44",q:"Penelitian Huangfu dkk. (2024) di Daerah Aliran Sungai North Canal, Beijing, memetakan 82 titik sampel di sungai utama dan anak sungai. Sumber utama cemaran residu farmasi di DAS tersebut adalah…",opts:["Limpasan pertanian dari lahan sawah di sekitar sungai","Limbah medis dan klinis dari rumah sakit saja","Efluen IPAL / WWTP (instalasi pengolahan air limbah)","Tumpahan langsung dari pabrik farmasi ke sungai","Air hujan yang membawa deposisi atmosfer"],ans:2,exp:"Slide menegaskan bahwa efluen IPAL/WWTP adalah Sumber Terbesar pencemaran residu obat di perairan DAS North Canal. Sumber lain yang disebut adalah limbah medis dan klinis serta sumber campuran wilayah suburban (IPAL + perikanan + limbah domestik). Data pendukung: ofloksasin terdeteksi di 100% dari 82 lokasi; konsentrasi maksimum norfloksasin 193 ng/L."},
+{n:45,p:"Artikel",lvl:"C3",src:"Artikel No. 45",q:"Dalam studi kasus bioremediasi residu farmasi, konsentrasi awal residu parasetamol adalah 40 mg/L. Setelah proses bioremediasi selama 14 hari, konsentrasinya turun sebesar 50%. Berapa konsentrasi residu parasetamol setelah bioremediasi?",opts:["10 mg/L","15 mg/L","20 mg/L","25 mg/L","30 mg/L"],ans:2,exp:"40 mg/L × (100% − 50%) = 40 mg/L × 0,5 = 20 mg/L. Parameter pendukung yang juga membaik setelah 14 hari: COD 120 mg/L → 60 mg/L, DO 2,5 mg/L → 5,5 mg/L, dan pH 6,0 → 7,2 (sesuai baku mutu)."},
+{n:46,p:"Artikel",lvl:"C1",src:"Artikel No. 46",q:"Studi Koagouw dkk. (2021) mengukur parasetamol di perairan Teluk Jakarta pada konsentrasi ng/L — tertinggi di Angke (610 ng/L) dan Ancol (420 ng/L). Metode analisis apakah yang digunakan untuk mengukur residu parasetamol pada konsentrasi serendah itu?",opts:["Spektrofotometri UV-Vis","HPLC-UV","Kromatografi gas–spektrometri massa (GC-MS)","UPLC-MS/MS","Titrasi iodometri"],ans:3,exp:"Parasetamol diukur dengan UPLC-MS/MS (Xevo G2-XS QTof). Konsentrasi tertinggi tercatat di Angke (610 ng/L) dan Ancol (420 ng/L), sedangkan di Tanjung Priok, Cilincing, dan Eretan berada di bawah batas deteksi (<50 ng/L). Nilai di Angke sekitar 12–18 kali lebih tinggi dari maksimum 34,6 ng/L yang dilaporkan di Brasil. Baku mutu air laut (Kepmen LH 51/2004) sendiri tidak memuat parameter obat/parasetamol."},
+{n:47,p:"Artikel",lvl:"C3",src:"Artikel No. 47",q:"Penelitian Lubis dkk. (2025) di Sungai Seketak, Semarang, menganalisis amoksisilin dalam sampel air menggunakan HPLC-UV dan menemukan 8,2 µg/L di stasiun S2 (dekat outlet rumah sakit). Teknik preparasi sampel apakah yang digunakan sebelum analisis HPLC-UV tersebut?",opts:["Filtrasi sederhana dengan kertas saring","Ekstraksi cair-cair (liquid–liquid extraction/LLE)","Solid Phase Extraction (SPE)","Sentrifugasi tanpa ekstraksi","Destilasi uap"],ans:2,exp:"Preparasi sampel dilakukan dengan Solid Phase Extraction (SPE), dilanjutkan analisis kuantitatif dengan HPLC-UV. Amoksisilin terdeteksi di S2 sebesar 8,2 µg/L dan di S3 (zona perkotaan) 6,5 µg/L; S1 dan S4 di bawah batas deteksi (<0,05 µg/L). Dengan PNEC 0,078 µg/L, risk quotient (RQ) di S2 mencapai 105,13 — risiko tinggi, sekitar 105 kali di atas ambang aman."},
+{n:48,p:"Artikel",lvl:"C4",src:"Artikel No. 48",sup:true,q:"Program pengembalian obat (take-back) bertujuan meningkatkan pengembalian sisa obat masyarakat agar tidak dibuang sembarangan. Berdasarkan kajian yang dirujuk (Bassani dkk., 2024), kendala utama pelaksanaan program take-back dan solusi yang paling sesuai adalah…",opts:["Kendala: biaya produksi kemasan terlalu murah; solusi: menaikkan harga obat agar masyarakat enggan membuangnya","Kendala: rendahnya partisipasi dan pemilahan masyarakat serta keterbatasan infrastruktur pengumpulan–daur ulang; solusi: perluasan titik pengumpulan take-back di apotek disertai edukasi/pelabelan dan penerapan EPR (Extended Producer Responsibility)","Kendala: tidak ada apotek yang bersedia menjadi titik pengumpulan; solusi: menutup semua apotek yang menolak","Kendala: obat sisa tidak berbahaya bagi lingkungan; solusi: membiarkan masyarakat membuangnya ke tempat sampah rumah tangga","Kendala: regulasi melarang pengembalian obat ke apotek; solusi: membakar semua sisa obat di rumah"],ans:1,exp:"Kendala utama adalah masyarakat membuang kemasan bersama sampah biasa (tidak dipilah), partisipasi aktif yang kurang, serta keterbatasan sistem pengumpulan dan infrastruktur daur ulang. Solusi yang direkomendasikan: perluasan skema take-back (kolaborasi industri–regulator, titik pengumpulan di apotek), edukasi dan pelabelan konsumen (instruksi pemilahan yang jelas pada kemasan), ecodesign/downsizing kemasan, dan penerapan EPR. Data pendukung: take-back memberi dampak lingkungan lebih rendah pada 7 dari 13 kategori dampak dibanding pembuangan ke sampah rumah tangga; pembuangan akhir di TPA dampaknya hingga 230 kali lebih tinggi dibanding skema take-back pada kategori tertentu. Catatan: artikel yang dirujuk membahas take-back kemasan farmasi, bukan pengembalian obat sisa secara khusus — sebagian poin bersifat suplemen."},
+{n:49,p:"Artikel",lvl:"C2",src:"Artikel No. 49",q:"Menurut kajian Amangelsin dkk. (2023), faktor atau karakteristik apakah yang menyebabkan tetrasiklin sulit terurai (persisten) di lingkungan perairan?",opts:["Tetrasiklin mudah larut dan cepat teroksidasi oleh oksigen terlarut sehingga cepat hilang dari air","Tetrasiklin sangat stabil, sulit dioksidasi, sekitar 75% diekskresikan dalam bentuk utuh (tidak termetabolisme), dan mudah mengikat ion seperti Ca²⁺","Tetrasiklin hanya digunakan dalam jumlah sangat kecil sehingga tidak pernah terdeteksi di lingkungan","Tetrasiklin terurai sempurna oleh sinar matahari dalam hitungan jam di semua kondisi perairan","Tetrasiklin tidak dapat mengikat ion logam sehingga mudah terserap dan terdegradasi oleh mikroorganisme"],ans:1,exp:"Tetrasiklin persisten karena stabilitas kimianya tinggi, sulit dioksidasi, dan sekitar 75% antibiotik diekskresikan dalam bentuk asli (utuh/tidak termetabolisme); tetrasiklin juga mudah mengikat ion seperti Ca²⁺ (membentuk kompleks). Ditambah penggunaannya yang masif dan limbah yang dibuang tanpa pengolahan memadai — sekitar 80% antibiotik yang digunakan dalam akuakultur terlepas ke lingkungan perairan. Dampaknya antara lain penghambatan pertumbuhan alga hingga 94% pada 30 mg/L."},
+{n:50,p:"Artikel",lvl:"C4",src:"Artikel No. 50",q:"Berdasarkan penelitian-penelitian yang dirangkum dalam review Conde-Cid dkk. (2020) — termasuk penelitian di Spanyol — bagaimanakah perbedaan perilaku tetrasiklin dan sulfonamida di dalam tanah?",opts:["Keduanya teradsorpsi kuat dan tertahan di tanah sehingga tidak pernah mencapai air tanah","Tetrasiklin mudah tercuci ke air tanah, sedangkan sulfonamida tertahan kuat di lapisan atas tanah","Tetrasiklin teradsorpsi mendekati 100% dengan desorpsi umumnya <10% sehingga tertahan dan terakumulasi di tanah; sulfonamida adsorpsinya relatif rendah dan desorpsinya relatif tinggi sehingga lebih mobil dan mudah tercuci (leaching) ke air tanah atau terbawa limpasan","Sulfonamida teradsorpsi mendekati 100% sedangkan tetrasiklin hampir tidak teradsorpsi sama sekali","Tidak ada perbedaan perilaku; keduanya memiliki adsorpsi dan desorpsi yang sama di semua jenis tanah"],ans:2,exp:"Tetrasiklin memiliki banyak gugus fungsi dan membentuk kompleks dengan ion logam multivalen, sehingga adsorpsinya mendekati 100% dan desorpsinya umumnya <10% — retensi kuat, cenderung tertahan dan terakumulasi di tanah dengan mobilitas rendah. Sebaliknya, sulfonamida adsorpsinya relatif rendah dan desorpsinya relatif tinggi, sehingga lebih mobil dan lebih berpotensi tercuci (leaching) ke air tanah atau terbawa limpasan ke air permukaan. Jalur masuk keduanya: antibiotik veteriner diekskresikan lewat feses/urin, lalu manure/slurry dipakai sebagai pupuk di lahan pertanian."}
+]);
+
+/* ================= KARTU KILAT ================= */
+var FLASH = [
+["P1","Apa itu individu dalam tingkat organisasi kehidupan?","Satu organisme tunggal — entitas yang terpapar langsung residu farmasi lewat air, udara, atau makanan. (P1 hlm. 6)"],
+["P1","Apa beda API dan eksipien?","API = zat aktif, bertanggung jawab atas efek farmakologis. Eksipien = bahan tambahan non-aktif untuk kestabilan, konsistensi, rasa, penampilan. (P1 hlm. 16–17)"],
+["P1","Ikan tuna menempati tingkat trofik ke berapa?","Ke-3 — tuna adalah konsumen sekunder (alga → udang → tuna → manusia). Energi yang diterima tuna: 1%. (P1 hlm. 14)"],
+["P1","Berapa energi yang sampai ke manusia di piramida makanan?","0,1% — alirannya 100% → 10% → 1% → 0,1%, sisanya hilang sebagai panas. (P1 hlm. 14)"],
+["P2","Sifat air apa yang mendasari kapilaritas?","Ikatan hidrogen → kohesif, adhesif, tegangan permukaan tinggi → air bergerak melawan gravitasi pada tanaman. (P2 hlm. 3)"],
+["P2","Salinitas air laut, air tawar, air payau?","Air laut ±3,5%; air tawar <0,5 ppt; air payau di antara keduanya (muara/laguna). (P2 hlm. 5)"],
+["P3","Gas terbesar & terkecil di atmosfer?","Terbesar: Nitrogen ±78%. Terkecil (komponen utama): CO₂ ±0,04%. Argon ±0,93%, Oksigen ±21%. (P3-Udara hlm. 3)"],
+["P3","Komponen tanah terbesar & terkecil?","Terbesar: bahan mineral 45%. Terkecil: bahan organik 5%. Air & udara masing-masing 25%. (P3-Tanah hlm. 5–6)"],
+["P3","Laterit vs Podsolik — apa pembedanya?","Laterit: tropis, oksida besi & aluminium, merah. Podsolik: suhu rendah, horizon eluvial jelas, iklim sedang. (P3-Tanah hlm. 13)"],
+["P3","Contoh point source residu farmasi?","Pembuangan limbah medis yang tidak tepat — konsentrasi tinggi, sumbernya jelas/titik. (P3-Tanah hlm. 15)"],
+["P3","Senyawa dari kemasan farmasi?","Bisphenol A (BPA) — dari kemasan farmasi/botol plastik, larut ke air minum, mengganggu sistem estrogenik. (P3-Udara hlm. 16)"],
+["P4","Apa kepanjangan AMDAL & ANDAL?","AMDAL = Analisis Mengenai Dampak Lingkungan Hidup. ANDAL = dokumen telaah cermat & mendalam tentang dampak besar dan penting. (P4 hlm. 1, 27)"],
+["P4","Tahap apa yang menilai prakiraan dampak terhadap baku mutu?","Evaluasi dampak — tahap setelah prakiraan dampak dalam ANDAL. (P4 hlm. 35–38)"],
+["P4","Regulasi limbah B3 yang berlaku sekarang?","PP No. 22 Tahun 2021 (+ PermenLHK 6/2021). Tidak ada di slide P4 — suplemen."],
+["P5","Jalur utama residu farmasi masuk ke pertanian?","Pupuk organik dari kotoran hewan yang mengandung residu obat — sumber utama kontaminasi tanah & tanaman. (P5 hlm. 3)"],
+["P5","Withdrawal period oksitetrasiklin pada sapi?","Daging 28 hari, susu 7 hari setelah dosis terakhir. (P5 hlm. 10)"],
+["P6","Contoh bahaya imunopatologis residu antibiotik?","Reaksi alergis — misalnya anafilaksis penisilin yang diperantarai IgE. (P6 hlm. 11)"],
+["P6","MRL amoksisilin pada susu menurut SNI?","0,01 mg/kg. (Acuan UE berbeda: 4 µg/kg — perhatikan acuan di soal!) (P6 hlm. 14–15)"],
+["P6","Metode deteksi β-laktam pada susu?","Delvotest — uji klasik antibiotik dalam susu, sangat sensitif terhadap β-laktam (screening). (P6 hlm. 26)"],
+["Artikel","Sumber E. coli resisten terbesar di Citarum Hulu?","Peternakan — 43.347 CFU/100 mL, jauh di atas domestik, RS, dan industri farmasi. (Artikel 38)"],
+["Artikel","Dua antibiotik yang terdeteksi di Sungai Musi?","Siprofloksasin dan netilmisin — di semua titik sampel. (Artikel 40)"],
+["Artikel","Metode ukur parasetamol ng/L di Teluk Jakarta?","UPLC-MS/MS — tertinggi di Angke 610 ng/L, Ancol 420 ng/L. (Artikel 46)"],
+["Artikel","Preparasi sampel amoksisilin sebelum HPLC-UV?","Solid Phase Extraction (SPE). Hasil S2 Sungai Seketak: 8,2 µg/L, RQ 105,13. (Artikel 47)"],
+["Artikel","Kenapa tetrasiklin persisten di perairan?","Sangat stabil, sulit dioksidasi, ±75% diekskresikan utuh, mudah mengikat Ca²⁺. (Artikel 49)"],
+["Artikel","Tetrasiklin vs sulfonamida di tanah?","Tetrasiklin: adsorpsi ±100%, desorpsi <10% → tertahan. Sulfonamida: adsorpsi rendah, desorpsi tinggi → mobil, mudah leaching. (Artikel 50)"]
+];
+
+/* ================= ANGKA KUNCI ================= */
+var ANGKA = [
+["100% → 10% → 1% → 0,1%","Aliran energi piramida makanan manusia (matahari → produsen → konsumen primer → manusia)","P1 hlm. 14"],
+["4°C","Suhu kepadatan tertinggi air (kepadatan anomali)","P2 hlm. 3"],
+["3,5% · <0,5 ppt","Salinitas rata-rata air laut · batas garam air tawar","P2 hlm. 5"],
+[">5.000 pabrik","Pabrik di sepanjang Sungai Cisadane","P2 hlm. 13"],
+["27–414 ng/L","Konsentrasi metformin di Sungai Angke","P2 hlm. 15"],
+["BOD/COD <0,3","Air limbah farmasi perlu pre-treatment","P2 hlm. 16"],
+["N₂ 78% · O₂ 21% · Ar 0,93% · CO₂ 0,04%","Komposisi atmosfer (terbesar N₂, terkecil CO₂)","P3-Udara hlm. 3"],
+["Uap air 0–4%","Kandungan uap air di udara","P3-Udara hlm. 4"],
+["Mineral 45% · Air 25% · Udara 25% · Organik 5%","Komposisi tanah (terbesar mineral, terkecil organik)","P3-Tanah hlm. 5–6"],
+[">82% · <1%","Masyarakat Bandung membuang obat ke sampah rumah tangga · yang mengembalikan ke apotek","P3-Tanah hlm. 19"],
+["6 kriteria","Kriteria dampak besar dan penting AMDAL","P4 hlm. 4"],
+["9 kriteria · 6 bidang farmasi","Kriteria kegiatan wajib AMDAL · bidang kefarmasian wajib AMDAL","P4 hlm. 15–16"],
+["14 bidang · 72 jenis kegiatan","Lampiran PermenLH 05/2012 tentang wajib AMDAL","P4 hlm. 17"],
+["75 hari · 3 tahun","Batas terbit keputusan kelayakan LH · masa kadaluarsa keputusan kelayakan","P4 hlm. 48–50"],
+["28 hari · 7 hari","Withdrawal oksitetrasiklin sapi: daging · susu","P5 hlm. 10"],
+["1–2 log unit","Penurunan patogen oleh pencernaan anaerob","P5 hlm. 16"],
+["0,01 mg/kg","MRL amoksisilin SNI — daging, telur, dan susu","P6 hlm. 14"],
+["4 µg/kg · 50 µg/kg","MRL amoksisilin UE — susu · otot/lemak/hati/ginjal","P6 hlm. 15"],
+["6 µg/L · ±10%","Kadar penisilin yang sudah bisa memicu alergi · proporsi populasi yang diyakini alergi penisilin","P6 hlm. 10"],
+["18 jam","Waktu inkubasi rata-rata microtest sampai hasil keluar","P6 hlm. 26"],
+["85,7%","Sarana farmasi Bandung Timur yang memusnahkan limbah obat secara mandiri","Artikel 37"],
+["43.347 CFU/100 mL","Beban E. coli resisten dari peternakan di Citarum Hulu (terbesar)","Artikel 38"],
+["3,887 mg/L","Oksitetrasiklin tertinggi di efluen IPAL industri farmasi Semarang","Artikel 39"],
+["79% · 109 ng/L · 440 ng/L","Sulfametoksazol di Waduk Cirata: frekuensi lokasi · konsentrasi maks · total residu tertinggi (inlet A, musim hujan)","Artikel 43"],
+["100% · 193 ng/L","Ofloksasin terdeteksi di semua 82 lokasi North Canal · norfloksasin maksimum","Artikel 44"],
+["40 → 20 mg/L","Parasetamol setelah bioremediasi 14 hari (turun 50%)","Artikel 45"],
+["610 ng/L · 420 ng/L","Parasetamol Teluk Jakarta: Angke (tertinggi) · Ancol","Artikel 46"],
+["8,2 µg/L · RQ 105,13","Amoksisilin di S2 Sungai Seketak · risk quotient-nya (PNEC 0,078 µg/L)","Artikel 47"],
+["±75% · ±80%","Tetrasiklin diekskresikan utuh · antibiotik akuakultur yang terlepas ke perairan","Artikel 49"],
+["±100% · <10%","Adsorpsi tetrasiklin di tanah · desorpsinya","Artikel 50"]
+];
+
+/* ================= JEBAKAN UTS ================= */
+var JEBAKAN = [
+["Soal 35 — dua MRL amoksisilin","Di slide P6 ada dua nilai: SNI 0,01 mg/kg (hlm. 14) dan Uni Eropa 4 µg/kg untuk susu / 50 µg/kg untuk otot (hlm. 15). Baca acuan yang disebut di soal — soal latihan ini memakai SNI. Ingat: 0,01 mg/kg = 10 µg/kg, bukan 4 µg/kg."],
+["Soal 16 — gas terkecil","Gas jejak (Ne, He, CH₄, H₂, Kr) memang lebih kecil dari CO₂, tapi tidak diberi angka di slide. Di antara komponen utama yang dibahas, yang terkecil adalah CO₂ ±0,04%."],
+["Soal 19 — Laterit vs Podsolik","Keduanya curah hujan tinggi + asam. Pembedanya: Laterit = tropis + oksida besi/aluminium + merah; Podsolik = suhu rendah + horizon eluvial jelas + iklim sedang."],
+["Soal 23, 31, 32, 43, 48 — suplemen","Lima soal ini ditandai \"Di luar slide — suplemen\": badan air yang tercemar PPCPs (23), frasa baku mutu pada evaluasi dampak (31), regulasi limbah B3 = PP 22/2021 (32), data musim antibiotik Cirata (43), dan take-back obat sisa (48, artikel aslinya membahas take-back kemasan). Tetap pelajari — bisa saja keluar di UTS."],
+["AMDAL vs ANDAL vs KA-ANDAL","AMDAL = keseluruhan kajian. ANDAL = dokumen telaah mendalam tentang dampak besar dan penting. KA-ANDAL = kerangka acuan/ruang lingkupnya. RKL = pengelolaan, RPL = pemantauan."],
+["Soal 37 — 85,7% vs 38,5%","85,7% = sarana yang memusnahkan mandiri. 38,5% = cara buang terbanyak (ke saluran air) dan 27,8% = dikubur. Jangan tertukar yang ditanyakan: metode pemusnahan atau cara pembuangannya."],
+["Soal 38 — beban vs penelusuran sumber","Berdasarkan beban terukur (CFU), sumber terbesar E. coli resisten adalah peternakan (43.347). Penelusuran statistik (Wilcoxon) menyebut industri farmasi paling mungkin di banyak titik — tapi itu perkiraan, bukan beban."],
+["Screening vs confirmation (Soal 36)","Delvotest, microtest, ELISA = screening. KLT, KCKT, LC-MS/MS, GC-MS/MS = confirmation. Untuk β-laktam di susu, jawabannya Delvotest — bukan LC-MS/MS."],
+["Toksikologi vs mikrobiologis vs imunopatologi (Soal 34)","Mutagenik/teratogenik/karsinogenik = toksikologi. Resistensi & gangguan flora usus = mikrobiologis. Reaksi alergis = imunopatologi."],
+["Point vs non-point source","Point source = konsentrasi tinggi, sumber jelas (limbah medis dibuang langsung, limbah pabrik). Non-point = konsentrasi rendah karena obat dikonsumsi dulu (ekskresi, pupuk kotoran, biosolid)."]
+];
+</script>
+<script>
+/* ================= LOGIKA APLIKASI ================= */
+function $(id){return document.getElementById(id);}
+var LETTERS=["A","B","C","D","E"];
+
+/* --- Tab utama --- */
+var tabBtns=document.querySelectorAll("#tabs .tab-btn");
+for(var i=0;i<tabBtns.length;i++){tabBtns[i].addEventListener("click",function(){
+  for(var j=0;j<tabBtns.length;j++)tabBtns[j].classList.remove("active");
+  this.classList.add("active");
+  var panels=document.querySelectorAll("section.panel");
+  for(var k=0;k<panels.length;k++)panels[k].classList.remove("active");
+  $("panel-"+this.getAttribute("data-tab")).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+});}
+
+/* --- Materi --- */
+function renderMateri(key){
+  var m=MATERI[key];
+  $("materiBody").innerHTML='<div class="card"><h3>'+m.title+'</h3><p style="color:var(--ink2);font-size:.9rem;margin-top:2px">'+m.sub+'</p>'+m.html+'</div>';
+}
+var mChips=document.querySelectorAll("#materiChips .chip");
+for(var i=0;i<mChips.length;i++){mChips[i].addEventListener("click",function(){
+  for(var j=0;j<mChips.length;j++)mChips[j].classList.remove("active");
+  this.classList.add("active"); renderMateri(this.getAttribute("data-m"));
+});}
+renderMateri("p1");
+
+/* --- Latihan Soal --- */
+var answers={};            /* nomor soal -> indeks jawaban terpilih (tersimpan selama sesi) */
+var filterP="all", filterL="all";
+var currentList=[], pos=0, submitted=false;
+
+function filteredQuestions(){
+  return QUESTIONS.filter(function(q){
+    return (filterP==="all"||q.p===filterP)&&(filterL==="all"||q.lvl===filterL);
+  });
+}
+function bindFilter(id, setter){
+  var chips=document.querySelectorAll("#"+id+" .chip");
+  for(var i=0;i<chips.length;i++){chips[i].addEventListener("click",function(){
+    var sib=this.parentNode.querySelectorAll(".chip");
+    for(var j=0;j<sib.length;j++)sib[j].classList.remove("active");
+    this.classList.add("active"); setter(this.getAttribute("data-f")); startQuiz();
+  });}
+}
+bindFilter("fPertemuan",function(v){filterP=v;});
+bindFilter("fLevel",function(v){filterL=v;});
+
+function startQuiz(){
+  currentList=filteredQuestions(); pos=0; submitted=false;
+  $("quizResult").style.display="none"; $("quizSetup").style.display="block";
+  var done=currentList.filter(function(q){return answers[q.n]!==undefined;}).length;
+  $("filterInfo").textContent="Menampilkan "+currentList.length+" soal"+(currentList.length?" · sudah dijawab "+done+" dari "+currentList.length:"")+".";
+  renderQuestion();
+}
+function pills(q){
+  var h='<span class="pill lvl">'+q.lvl+'</span> <span class="pill src">Sumber: '+q.src+'</span>';
+  if(q.sup)h+=' <span class="pill sup">Di luar slide — suplemen</span>';
+  return h;
+}
+function renderQuestion(){
+  var area=$("quizArea");
+  if(!currentList.length){area.innerHTML='<div class="empty-note">Tidak ada soal pada saringan ini. Coba kombinasi lain ya.</div>';return;}
+  if(pos<0)pos=0; if(pos>currentList.length-1)pos=currentList.length-1;
+  var q=currentList[pos];
+  var answered=currentList.filter(function(x){return answers[x.n]!==undefined;}).length;
+  var pct=Math.round(answered/currentList.length*100);
+  var h='<div class="progressbar"><div style="width:'+pct+'%"></div></div>';
+  h+='<div class="qmeta"><span>Soal '+(pos+1)+' dari '+currentList.length+' · Nomor blueprint '+q.n+' · '+q.p+'</span><span>'+answered+' terjawab</span></div>';
+  h+='<div class="qcard"><div>'+pills(q)+'</div><div class="qtext">'+q.q+'</div>';
+  for(var i=0;i<q.opts.length;i++){
+    var sel=answers[q.n]===i;
+    h+='<button class="opt'+(sel?" sel":"")+'" data-opt="'+i+'"><span class="letter">'+LETTERS[i]+'</span><span>'+q.opts[i]+'</span></button>';
+  }
+  h+='<div class="explain" id="explainBox"></div>';
+  h+='<div class="qnav"><button class="btn ghost" id="qPrev"'+(pos===0?" disabled":"")+'>← Sebelumnya</button>';
+  h+='<button class="btn ghost" id="qCheck">Cek jawaban soal ini</button>';
+  if(pos<currentList.length-1)h+='<button class="btn primary" id="qNext">Berikutnya →</button>';
+  else h+='<button class="btn teal" id="qFinish">Selesai &amp; lihat hasil ♥</button>';
+  h+='</div>';
+  h+='<div class="gridnav">';
+  for(var g=0;g<currentList.length;g++){
+    var qq=currentList[g];
+    h+='<button data-go="'+g+'" class="'+(answers[qq.n]!==undefined?"done":"")+(g===pos?" now":"")+'" title="Soal nomor '+qq.n+'">'+qq.n+'</button>';
+  }
+  h+='</div>';
+  if(pos===currentList.length-1&&currentList.length>1)h+='<div class="qnav"><button class="btn teal" id="qFinish2" style="display:none"></button></div>';
+  h+='</div>';
+  area.innerHTML=h;
+  var opts=area.querySelectorAll(".opt");
+  for(var o=0;o<opts.length;o++){opts[o].addEventListener("click",function(){
+    answers[q.n]=parseInt(this.getAttribute("data-opt"),10);
+    renderQuestion();
+  });}
+  var prev=$("qPrev"); if(prev)prev.addEventListener("click",function(){pos--;renderQuestion();window.scrollTo({top:0,behavior:"smooth"});});
+  var next=$("qNext"); if(next)next.addEventListener("click",function(){pos++;renderQuestion();window.scrollTo({top:0,behavior:"smooth"});});
+  var chk=$("qCheck"); if(chk)chk.addEventListener("click",function(){showExplain(q);});
+  var fin=$("qFinish"); if(fin)fin.addEventListener("click",showResults);
+  var gos=area.querySelectorAll("[data-go]");
+  for(var b=0;b<gos.length;b++){gos[b].addEventListener("click",function(){pos=parseInt(this.getAttribute("data-go"),10);renderQuestion();window.scrollTo({top:0,behavior:"smooth"});});}
+  $("filterInfo").textContent="Menampilkan "+currentList.length+" soal · sudah dijawab "+answered+" dari "+currentList.length+".";
+}
+function showExplain(q){
+  var box=$("explainBox"); if(!box)return;
+  var mine=answers[q.n];
+  var opts=document.querySelectorAll("#quizArea .opt");
+  for(var i=0;i<opts.length;i++){
+    opts[i].classList.remove("correct","wrong");
+    if(i===q.ans)opts[i].classList.add("correct");
+    else if(mine===i)opts[i].classList.add("wrong");
+  }
+  var verdict = mine===undefined ? "Kamu belum memilih jawaban untuk soal ini." : (mine===q.ans ? "Betul! Kerja bagus, sayang ♥" : "Belum tepat — jawaban yang benar adalah "+LETTERS[q.ans]+". Tidak apa-apa, justru dari sini belajarnya nempel.");
+  box.innerHTML='<div class="ans">Jawaban: '+LETTERS[q.ans]+'. '+q.opts[q.ans]+'</div><p style="margin:8px 0 4px"><b>'+verdict+'</b></p><p style="margin:4px 0">'+q.exp+'</p><p style="margin:4px 0 0;color:var(--ink2);font-size:.88rem">Sumber: '+q.src+' · Level '+q.lvl+(q.sup?' · Di luar slide — suplemen':'')+'</p>';
+  box.classList.add("show");
+}
+function showResults(){
+  submitted=true;
+  var list=currentList, correct=0, answeredCount=0;
+  var review="";
+  for(var i=0;i<list.length;i++){
+    var q=list[i], mine=answers[q.n];
+    var ok = mine===q.ans;
+    if(mine!==undefined)answeredCount++;
+    if(ok)correct++;
+    var st = mine===undefined ? '<span class="st empty">Belum dijawab</span>' : (ok ? '<span class="st ok">✓ Benar</span>' : '<span class="st no">✗ Belum tepat</span>');
+    review+='<div class="review-item"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>Soal '+q.n+' · '+q.p+'</b>'+st+'</div>'
+      +'<p>'+q.q+'</p>'
+      +'<p>Jawabanmu: <b>'+(mine===undefined?"—":LETTERS[mine]+". "+q.opts[mine])+'</b><br>Jawaban benar: <b>'+LETTERS[q.ans]+". "+q.opts[q.ans]+'</b></p>'
+      +'<p class="exp"><b>Pembahasan:</b> '+q.exp+'</p>'
+      +'<p class="exp">Sumber: '+q.src+' · Level '+q.lvl+(q.sup?' · Di luar slide — suplemen':'')+'</p></div>';
+  }
+  var pct=list.length?Math.round(correct/list.length*100):0;
+  var msg = pct>=80 ? "Luar biasa! Kamu sudah sangat siap. Aku bangga padamu ♥" : pct>=60 ? "Bagus sekali — tinggal poles sedikit lagi dari telaah di bawah ini ya." : pct>=40 ? "Sudah ada kemajuan! Pelajari telaahnya pelan-pelan, kamu pasti bisa." : "Tidak apa-apa, ini baru latihan. Baca telaahnya, istirahat sebentar, lalu coba lagi ya sayang ♥";
+  $("quizSetup").style.display="none";
+  var r=$("quizResult"); r.style.display="block";
+  r.innerHTML='<div class="card score-hero"><div style="color:var(--ink2);font-weight:700">Skor kamu</div><div class="big">'+correct+' / '+list.length+'</div><div style="font-weight:800;font-size:1.15rem">'+pct+'%</div><p style="color:var(--ink2)">'+answeredCount+' soal dijawab dari '+list.length+' soal pada saringan ini.</p><p><b>'+msg+'</b></p><div class="qnav" style="justify-content:center"><button class="btn ghost" id="rBack">Kembali ke soal</button><button class="btn primary" id="rReset">Ulangi dari awal (hapus jawaban saringan ini)</button></div></div>'
+    +'<h3 style="margin:20px 0 4px;font-size:1.3rem">Telaah per soal</h3>'+review;
+  $("rBack").addEventListener("click",function(){r.style.display="none";$("quizSetup").style.display="block";startQuiz();window.scrollTo({top:0,behavior:"smooth"});});
+  $("rReset").addEventListener("click",function(){for(var i=0;i<list.length;i++)delete answers[list[i].n];r.style.display="none";$("quizSetup").style.display="block";startQuiz();window.scrollTo({top:0,behavior:"smooth"});});
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+startQuiz();
+
+/* --- Kartu Kilat --- */
+var flashIdx=0, flashFlipped=false;
+function renderFlash(){
+  var c=FLASH[flashIdx];
+  $("flashTagF").textContent="Kartu Kilat · "+c[0];
+  $("flashFront").textContent=c[1];
+  $("flashBack").textContent=c[2];
+  $("flashCount").textContent=(flashIdx+1)+" / "+FLASH.length;
+  $("flashInner").classList.remove("flip"); flashFlipped=false;
+}
+$("flashInner").addEventListener("click",function(){flashFlipped=!flashFlipped;this.classList.toggle("flip",flashFlipped);});
+$("flashNext").addEventListener("click",function(){flashIdx=(flashIdx+1)%FLASH.length;renderFlash();});
+$("flashPrev").addEventListener("click",function(){flashIdx=(flashIdx-1+FLASH.length)%FLASH.length;renderFlash();});
+$("flashShuffle").addEventListener("click",function(){
+  for(var i=FLASH.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=FLASH[i];FLASH[i]=FLASH[j];FLASH[j]=t;}
+  flashIdx=0;renderFlash();
+});
+renderFlash();
+
+/* --- Angka Kunci & Jebakan --- */
+var ah="";
+for(var i=0;i<ANGKA.length;i++){ah+='<tr><td class="n">'+ANGKA[i][0]+'</td><td>'+ANGKA[i][1]+'</td><td style="white-space:nowrap;color:var(--ink2)">'+ANGKA[i][2]+'</td></tr>';}
+$("angkaBody").innerHTML=ah;
+var jh="";
+for(var j=0;j<JEBAKAN.length;j++){jh+='<details class="mat"><summary>'+JEBAKAN[j][0]+'</summary><div class="body"><p>'+JEBAKAN[j][1]+'</p></div></details>';}
+$("jebakanBody").innerHTML=jh;
+</script>
+</body>
+</html>
