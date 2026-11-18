@@ -26,6 +26,9 @@
         --sage: #3f7d5c;
         --sage-deep: #2f6247;
         --sage-tint: #e2efe4;
+        --amber: #b07c1e;
+        --amber-deep: #8f6113;
+        --amber-tint: #f7ecd2;
         --gold: #c98a2d;
         --shadow: 0 10px 30px rgba(142, 42, 56, 0.10), 0 2px 6px rgba(61, 43, 43, 0.06);
         --shadow-hover: 0 18px 40px rgba(142, 42, 56, 0.16), 0 4px 10px rgba(61, 43, 43, 0.08);
@@ -45,6 +48,9 @@
           --sage: #8fcea6;
           --sage-deep: #a9dcbc;
           --sage-tint: #22362a;
+          --amber: #e3b566;
+          --amber-deep: #f0cd8f;
+          --amber-tint: #3a2f1c;
           --gold: #e0aa4e;
           --shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.3);
           --shadow-hover: 0 18px 40px rgba(0, 0, 0, 0.45), 0 4px 10px rgba(0, 0, 0, 0.35);
@@ -116,6 +122,10 @@
       @media (min-width: 640px) {
         .choices { grid-template-columns: 1fr 1fr; gap: 1.4rem; }
       }
+      @media (min-width: 1024px) {
+        .wrap { max-width: 1120px; }
+        .choices { grid-template-columns: repeat(3, 1fr); }
+      }
 
       .card {
         position: relative;
@@ -149,6 +159,7 @@
 
       .card--herbal { --accent: var(--rose); --tint: var(--rose-tint); --deep: var(--rose-deep); }
       .card--lingkungan { --accent: var(--sage); --tint: var(--sage-tint); --deep: var(--sage-deep); }
+      .card--rkpo { --accent: var(--amber); --tint: var(--amber-tint); --deep: var(--amber-deep); }
 
       .card-art {
         position: absolute;
@@ -249,7 +260,7 @@
         </p>
         <h1>Mau belajar<br />yang mana hari ini?</h1>
         <p class="lede">
-          Dua mata kuliah, satu tujuan: UTS yang lancar.
+          Tiga mata kuliah, satu tujuan: UTS yang lancar.
           Pilih materinya, lalu belajar pelan-pelan — <em>semangat ya, calon apoteker.</em>
         </p>
       </header>
@@ -296,6 +307,31 @@
           </span>
           <h2>Farmasi Lingkungan</h2>
           <p>Soal per pertemuan dan per level, plus kartu kilat, angka kunci, dan jebakan UTS yang sering keluar.</p>
+          <span class="chips">
+            <span class="chip">50 soal latihan</span>
+            <span class="chip">Persiapan UTS</span>
+          </span>
+          <span class="enter">
+            Masuk materi
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" /></svg>
+          </span>
+        </a>
+
+        <a class="card card--rkpo" href="rkpo/">
+          <svg class="card-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+            <circle cx="50" cy="50" r="36" />
+            <circle cx="50" cy="50" r="22" />
+            <circle cx="50" cy="50" r="8" />
+          </svg>
+          <span class="icon-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5" />
+              <circle cx="12" cy="12" r="4.5" />
+              <circle cx="12" cy="12" r="0.5" fill="currentColor" />
+            </svg>
+          </span>
+          <h2>RKPO</h2>
+          <p>Rancangan Kualitas Produk Obat — latihan soal perancangan mutu produk, dari atribut kritis sampai pengendalian kualitas.</p>
           <span class="chips">
             <span class="chip">50 soal latihan</span>
             <span class="chip">Persiapan UTS</span>
