@@ -1,0 +1,1014 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Ruang Belajar RKPO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #fdf6f1;
+        --bg-soft: #f9e9e2;
+        --surface: #ffffff;
+        --surface-2: #fdf0ea;
+        --ink: #37222b;
+        --muted: #84626e;
+        --line: #eed9d2;
+        --accent: #b2335c;
+        --accent-ink: #ffffff;
+        --accent-soft: #fbe3ea;
+        --terra: #c05f2e;
+        --terra-soft: #fbeadd;
+        --good: #1e7d4f;
+        --good-soft: #e2f3e8;
+        --bad: #b3261e;
+        --bad-soft: #fbe7e4;
+        --warn: #9a6a00;
+        --warn-soft: #fdf3d3;
+        --shadow: 0 10px 28px rgba(146, 64, 84, 0.12);
+        --radius: 16px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #201418;
+          --bg-soft: #2a1a20;
+          --surface: #2c1e24;
+          --surface-2: #33222a;
+          --ink: #f7eae4;
+          --muted: #cda9b2;
+          --line: #4a3039;
+          --accent: #ef87a4;
+          --accent-ink: #2b121c;
+          --accent-soft: #462633;
+          --terra: #f0a06e;
+          --terra-soft: #453022;
+          --good: #6fd598;
+          --good-soft: #1e3a2a;
+          --bad: #ff9d94;
+          --bad-soft: #452622;
+          --warn: #f2cd72;
+          --warn-soft: #453a1c;
+          --shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+      h1, h2, h3, .serif { font-family: "Lora", Georgia, serif; }
+      button { font: inherit; cursor: pointer; }
+      button, [role="button"], select, summary { min-height: 2.5rem; }
+      .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px 64px; }
+
+      /* ---------- Hero ---------- */
+      .hero { padding: 30px 4px 8px; }
+      .hero .kicker {
+        color: var(--accent); font-weight: 800; letter-spacing: 0.14em;
+        font-size: 0.78rem; text-transform: uppercase; margin: 0 0 6px;
+      }
+      .hero h1 { font-size: clamp(1.9rem, 6vw, 2.7rem); line-height: 1.15; margin: 0 0 8px; font-weight: 700; }
+      .hero p.lede { color: var(--muted); font-size: 1.02rem; margin: 0 0 14px; max-width: 56ch; }
+      .hero p.lede em { color: var(--accent); font-family: "Lora", Georgia, serif; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+      .chip {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+        padding: 6px 12px; font-size: 0.85rem; font-weight: 700; color: var(--ink);
+      }
+      .chip b { color: var(--accent); }
+      .love-note {
+        margin-top: 16px; background: var(--accent-soft); border-radius: var(--radius);
+        padding: 14px 16px; font-size: 0.95rem;
+      }
+      .love-note .heart { color: var(--accent); }
+
+      /* ---------- Tabs ---------- */
+      .tabs {
+        position: sticky; top: 0; z-index: 20;
+        background: var(--bg); padding: 10px 0 8px;
+        display: flex; flex-wrap: wrap; gap: 8px;
+      }
+      .tab-btn {
+        flex: 0 0 auto; border: 1px solid var(--line); background: var(--surface);
+        color: var(--ink); border-radius: 999px; padding: 9px 16px; font-weight: 800; font-size: 0.92rem;
+      }
+      .tab-btn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .panel { display: none; }
+      .panel.active { display: block; }
+      .panel > h2 { font-size: 1.45rem; margin: 18px 0 4px; }
+      .panel > .sub { color: var(--muted); margin: 0 0 16px; font-size: 0.95rem; }
+
+      /* ---------- Materi ---------- */
+      .pnav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+      .pnav a {
+        display: inline-flex; align-items: center; min-height: 2.5rem;
+        text-decoration: none; color: var(--ink); background: var(--surface);
+        border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 0.9rem;
+      }
+      .materi-card {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 18px 18px 8px; margin-bottom: 16px; box-shadow: var(--shadow);
+      }
+      .materi-card h3 { margin: 0 0 2px; font-size: 1.22rem; }
+      .materi-card .meta { color: var(--accent); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 10px; }
+      .materi-card h4 { margin: 16px 0 4px; font-size: 1rem; color: var(--terra); font-family: "Nunito Sans", sans-serif; font-weight: 800; }
+      .materi-card ul { margin: 4px 0 12px; padding-left: 20px; }
+      .materi-card li { margin-bottom: 5px; }
+      .materi-card p { margin: 4px 0 12px; }
+      .formula {
+        background: var(--surface-2); border-radius: 10px; padding: 10px 14px;
+        font-weight: 700; margin: 8px 0 12px; overflow-x: auto;
+      }
+      .mini-table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 0.92rem; }
+      .mini-table th, .mini-table td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      .mini-table th { color: var(--accent); font-weight: 800; }
+
+      /* ---------- Latihan ---------- */
+      .filter-block { margin-bottom: 6px; }
+      .filter-label { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 12px 0 6px; }
+      .fchips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .fchip {
+        border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+        border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: 0.9rem; min-height: 2.5rem;
+      }
+      .fchip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .quiz-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 16px 0 6px; flex-wrap: wrap; }
+      .quiz-meta .count { color: var(--muted); font-size: 0.9rem; font-weight: 700; }
+      .progress { height: 9px; background: var(--surface-2); border-radius: 99px; overflow: hidden; border: 1px solid var(--line); }
+      .progress > div { height: 100%; background: var(--accent); width: 0%; transition: width 0.25s ease; }
+      .qcard {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 18px; margin-top: 14px; box-shadow: var(--shadow);
+      }
+      .qbadges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+      .badge { font-size: 0.75rem; font-weight: 800; border-radius: 999px; padding: 3px 10px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+      .badge.p { background: var(--terra-soft); color: var(--terra); border-color: transparent; }
+      .badge.lvl { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+      .badge.sup { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+      .qtext { font-size: 1.05rem; font-weight: 600; margin: 0 0 14px; }
+      .opts { display: grid; gap: 9px; }
+      .opt {
+        display: flex; gap: 11px; align-items: flex-start; text-align: left; width: 100%;
+        background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px;
+        padding: 12px 13px; color: var(--ink); min-height: 3rem;
+      }
+      .opt .letter {
+        flex: 0 0 auto; width: 27px; height: 27px; border-radius: 50%;
+        background: var(--surface-2); border: 1px solid var(--line);
+        display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;
+      }
+      .opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+      .opt[aria-pressed="true"] .letter { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+      .qnav { display: flex; gap: 9px; margin-top: 16px; flex-wrap: wrap; }
+      .btn {
+        border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+        border-radius: 12px; padding: 10px 18px; font-weight: 800; min-height: 2.75rem;
+      }
+      .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+      .btn.grow { flex: 1 1 auto; }
+      .numgrid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+      .numgrid button {
+        width: 40px; height: 40px; min-height: 40px; border-radius: 10px; border: 1px solid var(--line);
+        background: var(--surface); color: var(--ink); font-weight: 700; font-size: 0.88rem; padding: 0;
+      }
+      .numgrid button.done { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+      .numgrid button.now { outline: 2.5px solid var(--accent); outline-offset: 1px; }
+      .empty-note { background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); padding: 22px; text-align: center; color: var(--muted); margin-top: 14px; }
+
+      /* ---------- Hasil ---------- */
+      .score-card {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 22px 18px; text-align: center; box-shadow: var(--shadow); margin-top: 14px;
+      }
+      .score-big { font-family: "Lora", Georgia, serif; font-size: 3rem; font-weight: 700; color: var(--accent); line-height: 1; }
+      .score-card p { color: var(--muted); margin: 8px 0 0; }
+      .breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+      @media (max-width: 560px) { .breakdown { grid-template-columns: 1fr; } }
+      .bd-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+      .bd-card h4 { margin: 0 0 8px; font-size: 0.95rem; }
+      .bd-row { display: flex; justify-content: space-between; font-size: 0.92rem; padding: 3px 0; border-bottom: 1px dashed var(--line); }
+      .bd-row:last-child { border-bottom: none; }
+      .review { margin-top: 20px; }
+      .review-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px; }
+      .review-item.ok { border-top: 4px solid var(--good); }
+      .review-item.no { border-top: 4px solid var(--bad); }
+      .review-item.skip { border-top: 4px solid var(--warn); }
+      .review-item .status { font-weight: 800; font-size: 0.85rem; }
+      .review-item.ok .status { color: var(--good); }
+      .review-item.no .status { color: var(--bad); }
+      .review-item.skip .status { color: var(--warn); }
+      .review-item .rq { font-weight: 700; margin: 6px 0 8px; }
+      .review-item .ans { font-size: 0.93rem; margin: 3px 0; }
+      .review-item .ans b.k { color: var(--good); }
+      .review-item .expl { background: var(--surface-2); border-radius: 10px; padding: 10px 13px; font-size: 0.93rem; margin-top: 10px; }
+      .review-item .src { color: var(--muted); font-size: 0.85rem; margin-top: 8px; }
+
+      /* ---------- Kartu kilat ---------- */
+      .flash-wrap { perspective: 1200px; margin-top: 16px; }
+      .flash {
+        position: relative; width: 100%; min-height: 230px; border: none; background: transparent; padding: 0;
+        transform-style: preserve-3d; transition: transform 0.5s ease; display: block;
+      }
+      .flash.flipped { transform: rotateY(180deg); }
+      .flash-face {
+        position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        border-radius: var(--radius); padding: 24px 20px; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center; gap: 10px;
+        border: 1px solid var(--line); box-shadow: var(--shadow);
+      }
+      .flash-front { background: var(--surface); }
+      .flash-back { background: var(--accent-soft); transform: rotateY(180deg); }
+      .flash-face .tag { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+      .flash-face .big { font-family: "Lora", Georgia, serif; font-size: 1.3rem; font-weight: 600; line-height: 1.35; }
+      .flash-face .small { color: var(--muted); font-size: 0.85rem; }
+      .flash-nav { display: flex; gap: 9px; align-items: center; margin-top: 14px; flex-wrap: wrap; }
+      .flash-nav .ctr { font-weight: 800; color: var(--muted); }
+
+      /* ---------- Angka & jebakan ---------- */
+      .angka-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; font-size: 0.94rem; }
+      .angka-table th, .angka-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      .angka-table tr:last-child td { border-bottom: none; }
+      .angka-table td:first-child { font-weight: 700; }
+      .angka-table td:last-child { color: var(--muted); white-space: nowrap; font-size: 0.85rem; }
+      .trap {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 15px 17px; margin-bottom: 11px;
+      }
+      .trap h4 { margin: 0 0 4px; font-size: 1rem; color: var(--bad); font-family: "Nunito Sans", sans-serif; font-weight: 800; }
+      .trap p { margin: 0; font-size: 0.95rem; }
+      footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 0.88rem; }
+      footer .heart { color: var(--accent); }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .flash { transition: none; }
+        .progress > div { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero">
+        <p class="kicker">♥ Ruang Belajar</p>
+        <h1>Rancangan Kualitas<br />Produk Obat (RKPO)</h1>
+        <p class="lede">Persiapan Sumatif 1 — Farmasi UNJANI, Semester 7. Belajar pelan-pelan dari materi P1–P7, lalu uji diri dengan 50 soal sesuai blueprint. <em>Semangat ya, calon apoteker.</em></p>
+        <div class="chips">
+          <span class="chip"><b>50</b> soal latihan</span>
+          <span class="chip"><b>7</b> pertemuan (P1–P7)</span>
+          <span class="chip">C1 <b>4</b> · C2 <b>26</b> · C3 <b>13</b> · C4 <b>7</b></span>
+          <span class="chip"><b>10</b> soal suplemen di luar slide</span>
+        </div>
+        <div class="love-note"><span class="heart">♥</span> Ruang kecil ini dibuat khusus buat kamu — biar belajar RKPO-nya terasa lebih ringan. Kerjakan tanpa buru-buru; jawabanmu tersimpan selama kamu berpindah-pindah soal di sesi ini.</div>
+      </header>
+
+      <nav class="tabs" role="tablist" aria-label="Bagian ruang belajar">
+        <button class="tab-btn" role="tab" data-tab="materi" aria-selected="true">Materi</button>
+        <button class="tab-btn" role="tab" data-tab="latihan" aria-selected="false">Latihan Soal</button>
+        <button class="tab-btn" role="tab" data-tab="kilat" aria-selected="false">Kartu Kilat</button>
+        <button class="tab-btn" role="tab" data-tab="angka" aria-selected="false">Angka Kunci</button>
+        <button class="tab-btn" role="tab" data-tab="jebakan" aria-selected="false">Jebakan UTS</button>
+      </nav>
+
+      <!-- ================= MATERI ================= -->
+      <section class="panel active" id="panel-materi">
+        <h2>Materi P1–P7</h2>
+        <p class="sub">Ringkasan tiap pertemuan dari slide kuliah — baca dulu di sini, baru lanjut ke latihan soal.</p>
+        <div class="pnav">
+          <a href="#materi-p1">P1 · QbD</a>
+          <a href="#materi-p2">P2 · Atribut Produk</a>
+          <a href="#materi-p3">P3 · CMA Bahan Baku</a>
+          <a href="#materi-p4">P4 · QRM</a>
+          <a href="#materi-p5">P5 · Uji Mutu Bahan Baku</a>
+          <a href="#materi-p6">P6 · Proses Manufaktur</a>
+          <a href="#materi-p7">P7 · Mikrobiologi</a>
+        </div>
+
+        <article class="materi-card" id="materi-p1">
+          <p class="meta">Pertemuan 1</p>
+          <h3>Pendahuluan RKPO &amp; Paradigma QbD</h3>
+          <h4>Mutu obat &amp; kenapa harus konsisten</h4>
+          <ul>
+            <li>Mutu/kualitas obat ditentukan oleh <strong>Bahan Aktif Farmasi, Eksipien, dan Bahan Pengemas</strong>. Konsistensinya dijaga lewat persyaratan kompendial, persyaratan non-kompendial, kualifikasi, dan validasi.</li>
+            <li>Hubungan formulasi dan parameter proses manufaktur harus dikendalikan agar produk berkualitas dan konsisten.</li>
+            <li>Uji QC sediaan padat oral: kekerasan, kerapuhan, disintegrasi, disolusi. Uji sediaan steril: sterilitas, pirogen, pH, osmolaritas.</li>
+          </ul>
+          <h4>Pendekatan tradisional vs QbD</h4>
+          <ul>
+            <li><strong>Tradisional:</strong> produk dibuat untuk memenuhi uji kualitas dalam spesifikasi; batch yang gagal → ditolak (reject) atau diproses ulang.</li>
+            <li><strong>QbD (ICH Q8 — Pharmaceutical Development (R2)):</strong> pendekatan sistematik dalam pengembangan yang dimulai dengan tujuan yang telah ditentukan sebelumnya dan menekankan pemahaman produk dan proses, serta pengendalian proses, berdasarkan ilmu pengetahuan yang baik dan manajemen risiko kualitas.</li>
+            <li>Manfaat QbD: tingkat keberhasilan produk naik, kegagalan dicegah, beban validasi berkurang, jalur regulasi lebih cepat, perubahan pasca-pemasaran berkurang.</li>
+          </ul>
+          <h4>6 prinsip kunci QbD</h4>
+          <ul>
+            <li>Pemahaman produk dan proses; identifikasi CQA; identifikasi CPP; risk assessment; design space; control strategy.</li>
+            <li>6 elemen (prior knowledge): <strong>QTPP → CQA → penilaian risiko → ruang desain → strategi kontrol → manajemen siklus hidup produk</strong>.</li>
+          </ul>
+          <h4>QTPP &amp; CQA</h4>
+          <ul>
+            <li><strong>QTPP</strong> = ringkasan prospektif karakteristik mutu produk obat yang idealnya dicapai untuk memastikan mutu yang diinginkan, dengan mempertimbangkan keamanan dan kemanjuran. Ditetapkan di awal pengembangan.</li>
+            <li>Elemen QTPP yang diperlukan: karakteristik kualitas (sterilitas, kemurnian), farmakokinetik (disolusi), efek terapeutik, populasi pasien, umur simpan. Elemen yang diinginkan: bentuk sediaan, rute pemberian, pengaturan klinis, kemasan primer/sekunder.</li>
+            <li><strong>CQA</strong> = karakteristik atau distribusi yang bila dikendalikan dalam batas/jangkauan/distribusi dapat menentukan kualitas produk yang diinginkan. Contoh: kekerasan tablet, ukuran partikel, kadar zat aktif.</li>
+          </ul>
+          <h4>Kasus Obat X &amp; QRM sekilas</h4>
+          <ul>
+            <li>Obat X: kelarutan buruk, permeabilitas baik → disolusi memperhatikan ukuran partikel; tekanan kompresi dan lama pencampuran memengaruhi keseragaman produk.</li>
+            <li><strong>QRM</strong> = proses sistematis untuk penilaian, pengendalian, dan pengkajian risiko terhadap mutu produk jadi sepanjang siklus hidup. Tujuannya: jaminan khasiat, keamanan, dan kualitas setiap produk; mutu harus dibentuk ke dalam produk, bukan hanya dibuktikan lewat pengujian produk jadi.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p2">
+          <p class="meta">Pertemuan 2</p>
+          <h3>Atribut Kritis Produk</h3>
+          <h4>Definisi &amp; unsur atribut produk</h4>
+          <ul>
+            <li>Menurut Tiptono (2007): atribut produk adalah unsur-unsur produk yang dipandang penting oleh konsumen dan dijadikan dasar pengambilan keputusan pembelian.</li>
+            <li>Unsur atribut produk menurut <strong>Kotler 2008</strong>: (1) Kualitas Produk, (2) Fitur Produk, (3) Desain Produk.</li>
+            <li>Kualitas produk = alat utama positioning; produk berkualitas jika dapat menjalankan fungsi-fungsinya. Fitur = alat bersaing untuk membedakan produk dari pesaing. Desain = cara menambah nilai pelanggan lewat rancangan yang berbeda.</li>
+            <li>Faktor pertimbangan desain produk: <strong>Estetika, Ekonomis, Bahan</strong>.</li>
+          </ul>
+          <h4>Hierarki mutu produk ideal</h4>
+          <div class="formula">1. SAFE (Aman) → 2. EFFECTIVE (Berkhasiat) → 3. ACCEPTABLE (Nyaman)</div>
+          <ul>
+            <li>Aman: tidak menimbulkan efek samping yang tidak dikehendaki pada dosis terapeutik. Berkhasiat: menimbulkan efek farmakologis. Nyaman: dapat diterima pasien.</li>
+          </ul>
+          <h4>Mutu harus dibangun — 4 realisasi</h4>
+          <ul>
+            <li>Mewujudkan apa yang direncanakan; mengerjakan apa yang tercatat; mencatat apa yang dikerjakan; melakukan kontrol <strong>sebelum, selama, dan sesudah</strong> fabrikasi.</li>
+          </ul>
+          <h4>In-Process Control (IPC)</h4>
+          <table class="mini-table">
+            <tr><th>Tahap</th><th>Yang dikontrol</th></tr>
+            <tr><td>Sebelum</td><td>Ukuran partikel, bentuk partikel, kelarutan dalam solven</td></tr>
+            <tr><td>Selama</td><td>Homogenitas campuran, kadar air dalam granul</td></tr>
+            <tr><td>Sesudah</td><td>Keseragaman bobot tablet, kekerasan, kerapuhan, waktu hancur tablet, kandungan zat aktif</td></tr>
+          </table>
+          <h4>Komponen pokok, label, ED vs BUD</h4>
+          <ul>
+            <li>Komponen pokok atribut produk: Merek, Mutu Produk, Sifat Produk, Kemasan, Label.</li>
+            <li>Isi label (9 item): nama produk; komposisi/ingredient; berat/netto; nama dan alamat pabrik; no. pendaftaran; kode produksi; tanggal kadaluarsa; petunjuk/cara penyimpanan; cara penggunaan.</li>
+            <li>Contoh label krim: tiap 1 gram mengandung Kloramfenikol 20 mg. <strong>ED</strong> = tanggal kadaluarsa sebelum kemasan primer dibuka. <strong>BUD</strong> = batas pakai setelah kemasan primer dibuka — untuk krim: <strong>90 hari / 3 bulan</strong>.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p3">
+          <p class="meta">Pertemuan 3</p>
+          <h3>Titik Kritis Bahan Baku Obat (CMA)</h3>
+          <h4>Apa itu CMA</h4>
+          <ul>
+            <li><strong>CMA (Critical Material Attribute)</strong> = karakteristik/properti fisik, kimia, mikrobiologi, atau biologis dari bahan yang harus berada dalam kisaran, batas, atau distribusi yang dapat diterima untuk memastikan kualitas yang diantisipasi.</li>
+            <li>CMA berdampak signifikan pada operasi unit farmasi, konsistensi proses, dan atribut mutu produk → harus <strong>ditentukan, dikendalikan, dan dilakukan pengujian</strong>.</li>
+            <li>Alur QbD: <strong>CMAs (input) → unit operation (CPPs) → CQAs (output)</strong>. Sifat fisiko-kimia yang berkaitan erat dengan CQA produk akhir disebut CMA.</li>
+          </ul>
+          <h4>6 CMA yang ditetapkan</h4>
+          <table class="mini-table">
+            <tr><th>CMA</th><th>Alat / catatan kunci</th></tr>
+            <tr><td>Distribusi ukuran partikel</td><td>Ayakan bertingkat (sieve shaker), sampel 25–100 g; sampel sedikit → mikroskop. Grafik 1 puncak = distribusi normal</td></tr>
+            <tr><td>Bulk density</td><td>Kerapatan = bobot/volume; tapped density tester (USP method 1); 1250 hentakan</td></tr>
+            <tr><td>Specific gravity / BJ</td><td>Piknometer; BJ air = 1 (= 1 g/mL)</td></tr>
+            <tr><td>Solubility</td><td>Dipengaruhi ukuran partikel, suhu, pengadukan</td></tr>
+            <tr><td>Suhu transisi gelas (Tg)</td><td>DSC — suhu saat polimer berubah dari liquid menjadi solid</td></tr>
+            <tr><td>Presence of polymorphs</td><td>PXRD untuk melihat amorf/kristal</td></tr>
+          </table>
+          <div class="formula">Kompresibilitas = (kerapatan mampat − kerapatan nyata) / kerapatan mampat × 100% &nbsp;·&nbsp; % rendah = paling baik</div>
+          <ul>
+            <li>Laju alir bagus: partikel besar, ±10 gram/detik (flow tester); sudut istirahat landai = paling bagus.</li>
+            <li>Kecepatan kelarutan: partikel makin halus → permukaan kontak makin luas → makin cepat larut; suhu naik → kelarutan umumnya naik; pengadukan mempercepat (tidak berpengaruh bila larutan sudah jenuh).</li>
+            <li>Peristiwa pada termogram DSC: glass transition, crystallisation, melting, cross-linking (cure), oxidation.</li>
+          </ul>
+          <h4>Polimorfisme</h4>
+          <ul>
+            <li>Padatan farmasi dapat berada dalam lebih dari satu bentuk kristal (polimorf: A, B… / α, β, γ…). Padatan yang mengandung molekul pelarut dalam kisi kristal = <strong>solvat (pseudopolimorf)</strong>.</li>
+            <li>Kloramfenikol palmitat: form B bioavailability-nya lebih besar; bioavailability campuran sebanding dengan jumlah Form B.</li>
+            <li>Aztreonam: bentuk α (jarum) mudah hidrolisis β-laktam (waktu paruh 6 jam pada 37 °C/75% RH); bentuk β (sferis) stabil bertahun-tahun.</li>
+            <li>Transformasi polimorfik dapat terjadi selama grinding, granulasi, pengeringan, dan compression.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p4">
+          <p class="meta">Pertemuan 4</p>
+          <h3>Quality Risk Management (QRM)</h3>
+          <h4>Definisi &amp; prinsip (ICH Q9)</h4>
+          <ul>
+            <li><strong>QRM</strong> = proses sistematis untuk mengkontrol, mengkomunikasikan, menilai, dan mengkaji risiko terhadap kualitas produk obat selama siklus hidup produk.</li>
+            <li>Prinsip 1: evaluasi risiko berdasarkan pengetahuan ilmiah dan dikaitkan dengan <strong>perlindungan pasien sebagai tujuan akhir</strong>. Prinsip 2: tingkat usaha, formalitas, dan dokumentasi setara dengan tingkat risiko.</li>
+            <li>QRM adalah proses <strong>berulang</strong>, bukan satu kali. Risiko tidak hilang — risiko dapat diprediksi, dicegah, dan dikendalikan.</li>
+            <li>Risiko = kombinasi probabilitas terjadinya harm dan severity-nya. Harm = kerusakan terhadap kesehatan, termasuk dari hilangnya kualitas/ketersediaan produk.</li>
+          </ul>
+          <h4>Alur proses QRM</h4>
+          <ul>
+            <li><strong>Penilaian Risiko</strong> (identifikasi → analisis → evaluasi) → <strong>Pengendalian Risiko</strong> (pengurangan risiko → penerimaan risiko) → hasil → <strong>Tinjauan Risiko</strong>; diapit komunikasi risiko dan perangkat manajemen risiko.</li>
+            <li>3 pertanyaan mendasar: Apa yang mungkin salah? Apa kemungkinan itu akan salah? Apa konsekuensinya (keparahan)?</li>
+            <li><strong>Pengurangan Risiko (Risk Reduction)</strong> = tindakan mengurangi probabilitas terjadinya kerusakan dan keparahan yang merugikan. <strong>Penerimaan Risiko</strong> = keputusan untuk menerima risiko.</li>
+            <li>7 bidang integrasi QRM: pengembangan produk; fasilitas/peralatan/sarana; manajemen bahan; produksi; pengujian lab &amp; stabilitas; pengemasan &amp; pelabelan; distribusi &amp; transportasi.</li>
+          </ul>
+          <h4>Diagram Ishikawa — 5 kategori penyebab</h4>
+          <table class="mini-table">
+            <tr><th>Kategori</th><th>Contoh pertanyaan akar masalah</th></tr>
+            <tr><td>MAN</td><td>Operator sudah terlatih? Menjalankan SOP dengan benar? Sudah terkualifikasi?</td></tr>
+            <tr><td>METHODE</td><td>Proses/metode analisa sudah tervalidasi? Sesuai protap yang disetujui?</td></tr>
+            <tr><td>ENVIRONMENT</td><td>Suhu, RH, partikel, mikroba memenuhi syarat? HVAC berfungsi &amp; terkualifikasi?</td></tr>
+            <tr><td>MATERIAL</td><td>Penanganan bahan sesuai prosedur? Supplier terkualifikasi? Bahan tidak kedaluwarsa? Sesuai CoA?</td></tr>
+            <tr><td>MACHINE</td><td>Perawatan, kualifikasi, dan pembersihan mesin sesuai SOP?</td></tr>
+          </table>
+          <h4>FMEA &amp; RPN</h4>
+          <div class="formula">RPN = Severity × Occurrence × Detection</div>
+          <table class="mini-table">
+            <tr><th>Kategori (POPP CPOB)</th><th>RPN</th><th>Prioritas perbaikan</th></tr>
+            <tr><td>Minor</td><td>≤ 4</td><td>Rendah</td></tr>
+            <tr><td>Mayor</td><td>≤ 8</td><td>Sedang</td></tr>
+            <tr><td>Kritikal</td><td>≥ 20</td><td>Tinggi</td></tr>
+          </table>
+          <ul>
+            <li>Skala Severity: 1 Minor, 2 Sedang, 3 Mayor, 4 Severe/Parah. Skala Detection: 1 Tinggi, 2 Sedang, 3 Rendah.</li>
+            <li>Contoh formulir (penimbangan): O=2, S=5, D=2 → RPN 20 (Kritikal); setelah tindakan perbaikan O=1, S=2, D=2 → RPN 4 (Minor).</li>
+          </ul>
+          <h4>5 pilar mutu produk (CPOB)</h4>
+          <ul>
+            <li>(1) Bahan Awal dan Bahan Pengemas; (2) Mesin dan Peralatan; (3) Bangunan/sarana produksi; (4) Proses Pembuatan dan Pengawasan Mutu; (5) Personalia.</li>
+            <li><strong>Sales &amp; Marketing BUKAN pilar mutu</strong> — ia hanya ada di diagram siklus industri farmasi. Mutu harus dibangun ke dalam (built in) produk, tidak cukup lulus pengujian.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p5">
+          <p class="meta">Pertemuan 5</p>
+          <h3>Pengujian Mutu Bahan Baku</h3>
+          <h4>Tujuan &amp; 5 tahapan</h4>
+          <ul>
+            <li>Tujuan: memastikan hanya bahan yang memenuhi kriteria kualitas yang ditetapkan yang digunakan dalam produksi, sehingga keamanan, khasiat, dan kualitas produk akhir terjaga.</li>
+            <li>Tahapan: (1) Menentukan Spesifikasi Bahan Baku → (2) Evaluasi dan Kualifikasi Supplier → (3) Inspeksi Kedatangan Bahan Baku → (4) Pengujian Analisis Bahan Baku → (5) Dokumentasi dan Pencatatan.</li>
+            <li>Bahan baku farmasi terdiri dari Bahan Aktif Farmasi, Eksipien, dan Kemasan. Standar bahan baku obat = <strong>Pharmaceutical Grade</strong>.</li>
+          </ul>
+          <h4>Sumber &amp; kriteria bahan</h4>
+          <ul>
+            <li>5 sumber bahan baku obat: sintesis kimiawi, ekstrak tanaman, ekstrak hewan, pertambangan (mineral), produk bioteknologi.</li>
+            <li>Kriteria Bahan Aktif Obat: Aman, Berkhasiat, Bermutu. Kriteria eksipien: Aman; Tidak berlebihan; Tidak mengurangi ketersediaan hayati dan efek terapi; <strong>Tidak mengganggu pengujian dan penetapan kadar obat</strong>; Bermutu.</li>
+            <li>7 pertimbangan memilih sumber: kelengkapan CoA, harga, MOQ, dokumen DMF &amp; GMP, shelf life, dokumen halal, dan TKDN.</li>
+            <li>Standar pengujian mengikuti kompendial (FI, FHI, USP, BP, EP) dengan baku pembanding dan instrumen seperti HPLC, spektrofotometri, GC.</li>
+            <li>Material existing/alternate source → ditangani QC; material baru → R&amp;D. Kualifikasi R&amp;D: minimal 3 source, biasanya 3 batch berbeda, oleh Analytical Development (AnDev).</li>
+          </ul>
+          <h4>Alur penerimaan oleh QC &amp; label status</h4>
+          <ul>
+            <li>Periksa surat jalan &amp; kesesuaian pesanan → periksa label, kemasan, ED → periksa kelengkapan CoA → simpan di ruang karantina + label karantina → informasikan ke QC untuk sampling → keputusan Release/Reject + penempelan label. Release → gudang bahan baku; Reject → dikembalikan ke supplier.</li>
+          </ul>
+          <table class="mini-table">
+            <tr><th>Status</th><th>Warna label</th></tr>
+            <tr><td>Diluluskan (Release)</td><td>Hijau</td></tr>
+            <tr><td>Karantina</td><td>Kuning</td></tr>
+            <tr><td>Ditolak (Reject)</td><td>Merah</td></tr>
+          </table>
+          <h4>Pola sampling (N = jumlah wadah dalam satu bets)</h4>
+          <div class="formula">Pola n = 1 + √N &nbsp;·&nbsp; Pola p = 0,4√N &nbsp;·&nbsp; Pola r = 1,5√N</div>
+          <ul>
+            <li><strong>n</strong>: bahan homogen dari pemasok terkualifikasi (uji identitas tiap wadah). <strong>p</strong>: bahan homogen dari pemasok terpercaya, pemeriksaan rutin. <strong>r</strong>: bahan belum homogen, pemasok baru/belum terkualifikasi, atau bahan herbal.</li>
+            <li>Sampling oleh personel terkualifikasi, APD lengkap, di ruang sampling RLA dengan udara terkontrol, mengikuti SOP.</li>
+          </ul>
+          <h4>Contoh CoA — Ondansetron HCl Dihydrate (USP)</h4>
+          <ul>
+            <li>Identifikasi: A) IR — spektrum serapan IR sampel maksimum pada panjang gelombang yang sama dengan standar kerja; B) Chloride Test.</li>
+            <li>Assay (HPLC): 98,0–102,0% w/w. Kadar air (KF): 9,0–10,5% w/w. Metanol residual (GC): ≤ 500 ppm. Total impurities: ≤ 0,50%. Endotoksin bakteri: ≤ 6,8 EU/mg. Ukuran partikel: D(0,10) 5,04 µm; D(0,50) 36,33 µm; D(0,90) 128,0 µm.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p6">
+          <p class="meta">Pertemuan 6</p>
+          <h3>Manufacturing Process Development</h3>
+          <h4>Alur pengembangan sediaan</h4>
+          <div class="formula">Bahan Baku Obat → Preformulasi → Lab Trial → Pilot Trial → Registrasi → Product Launch</div>
+          <h4>Lab Trial</h4>
+          <ul>
+            <li>Tujuan: indikasi awal apakah produk dapat diproduksi. Skala kecil: sediaan solid 100–1000 tablet; liquid 100–1000 mL.</li>
+            <li>Termasuk trial rasa (patient compliance), penentuan spesifikasi awal (in-house specification), dan acuan perhitungan COGs. Bisa sampai ratusan formulasi.</li>
+            <li><strong>Data stabilitas formula Lab Trial menjadi acuan formula yang dipilih untuk dilanjutkan ke Pilot Trial.</strong></li>
+          </ul>
+          <h4>Pilot Trial</h4>
+          <ul>
+            <li>Tujuan: mereproduksi hasil skala lab pada skala lebih besar dengan peralatan yang mirip fasilitas produksi.</li>
+          </ul>
+          <div class="formula">Ukuran batch pilot = 10% skala produksi atau 100.000 unit — mana yang LEBIH BESAR</div>
+          <ul>
+            <li>Data stabilitas sampel Pilot Trial minimal <strong>2 batch</strong> dipakai untuk registrasi → Approvable Letter → NIE.</li>
+          </ul>
+          <h4>QbD di pengembangan proses — 7 elemen program</h4>
+          <ul>
+            <li>Penetapan QTPP; identifikasi CMA; pelaksanaan manajemen risiko (risk assessment); penetapan CQA dan CPP; penetapan design space; identifikasi control strategy; perbaikan berkelanjutan (continual improvement).</li>
+            <li>5 manfaat QbD: efisiensi proses (biaya, limbah, waktu siklus turun); konsistensi kualitas naik; kepercayaan regulator naik; kepuasan konsumen naik (keamanan &amp; khasiat); adaptif terhadap perubahan pasar/regulasi/teknologi.</li>
+            <li>Contoh QTPP sediaan oral padat immediate release: karakteristik tablet, identitas, assay &amp; uniformity, purity/impurity, stabilitas, dissolution.</li>
+          </ul>
+          <h4>CMA, CPP, CQA</h4>
+          <ul>
+            <li><strong>CMA</strong>: karakteristik bahan awal (input) — fisik, kimia, biologi, mikrobiologi — dalam batas/rentang/distribusi yang sesuai.</li>
+            <li><strong>CPP</strong>: parameter proses yang variabilitasnya berdampak pada CQA, sehingga harus dipantau/dikendalikan.</li>
+            <li><strong>CQA</strong>: karakteristik produk jadi (output) dalam batas/rentang/distribusi yang sesuai untuk memastikan kualitas yang dikehendaki.</li>
+            <li>Unit operasi yang dibahas di slide: wet granulation, drying, tableting, pan coating. Catatan dosen: friabilitas tablet pada proses coating seharusnya masuk <em>input material attribute</em>, bukan quality attribute.</li>
+          </ul>
+          <h4>Design Space, Control Strategy, Continual Improvement</h4>
+          <ul>
+            <li><strong>Design Space</strong>: kombinasi multidimensi dan interaksi variabel awal (CMA) dan parameter proses yang ditetapkan untuk memberikan jaminan kualitas.</li>
+            <li><strong>Control Strategy</strong>: pengendalian terencana dari pemahaman produk dan proses yang menjamin kinerja proses dan kualitas produk.</li>
+            <li><strong>Continual Improvement</strong>: 5 fase — tentukan masalah &amp; tujuan; perkirakan aspek kunci proses &amp; kumpulkan data; analisis hubungan sebab-akibat; tingkatkan/optimalkan proses; kontrol keadaan masa depan.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p7">
+          <p class="meta">Pertemuan 7</p>
+          <h3>Atribut Mikrobiologi Produk</h3>
+          <h4>Kerangka evaluasi</h4>
+          <ul>
+            <li>3 pilar: <strong>Rasionalitas Pengujian</strong> (justifikasi ilmiah uji batas mikroba rutin), <strong>Efektivitas Pengawet</strong> (jenis &amp; konsentrasi optimal), <strong>Integritas Wadah</strong> (CCIT menjaga sterilitas selama masa simpan). Atribut mikrobiologi adalah bagian integral dari QbD.</li>
+            <li>Sediaan non-steril: batas mikroba (MLT), aktivitas air (a<sub>w</sub>), sistem pengawet untuk dosis ganda cair/semisolid. Sediaan steril: uji sterilitas, CCIT, beban endotoksin.</li>
+          </ul>
+          <h4>Aktivitas air (a<sub>w</sub>) — ambang kunci</h4>
+          <table class="mini-table">
+            <tr><th>Nilai a<sub>w</sub></th><th>Artinya</th></tr>
+            <tr><td>&lt; 0,60</td><td>Batas mutlak: mikroba tidak dapat tumbuh → justifikasi bebas MLT rutin (padat kering)</td></tr>
+            <tr><td>&lt; 0,75</td><td>Menekan pertumbuhan mayoritas mikroorganisme (sifat inheren)</td></tr>
+            <tr><td>0,60–0,85</td><td>Khamir &amp; kapang: perlu evaluasi spesifik per jenis mikroba</td></tr>
+            <tr><td>&gt; 0,90</td><td>Cairan oral (sirup): MLT wajib</td></tr>
+            <tr><td>&gt; 0,91</td><td>Mendukung bakteri Gram Negatif → MLT lengkap + sistem pengawet</td></tr>
+          </table>
+          <ul>
+            <li>Sifat antimikroba inheren lain: pH ekstrem (&lt; 3 atau &gt; 9) menginaktivasi sel mikroba; alkohol/glikol tinggi bersifat bakterisidal alami. Sebaliknya pH netral 5–8 + fase air tinggi = lingkungan suportif (ideal bagi bakteri).</li>
+          </ul>
+          <h4>ICH Q6A Decision Tree #8 — skip-testing MLT</h4>
+          <ul>
+            <li>Langkah: (1) evaluasi sifat fisikokimia (padat kering/anhidrat, pH ekstrem); (2) ukur a<sub>w</sub> (&lt; 0,60 konsisten); (3) verifikasi kontrol bahan baku &amp; proses (bioburden rendah, tervalidasi, monitoring lingkungan).</li>
+            <li>Kesimpulan: MLT rutin pada spesifikasi rilis dapat ditiadakan; justifikasi ditulis dalam dokumen <strong>CTD 3.2.P.2.5</strong>. Strategi pengganti: skip-lot testing.</li>
+            <li>MLT tetap <strong>wajib</strong> untuk cairan berbasis air, krim/emulsi/gel, dan transdermal patch.</li>
+          </ul>
+          <h4>Komponen MLT rutin (USP &lt;61&gt; &amp; &lt;62&gt;, kriteria USP &lt;1111&gt;)</h4>
+          <ul>
+            <li>Kuantitatif: TAMC (total bakteri aerobik) dan TYMC (total kapang &amp; khamir).</li>
+            <li>Kualitatif — mikroba spesifik yang wajib absent per rute: oral → <em>E. coli</em>; topikal/mukosa → <em>P. aeruginosa</em> + <em>S. aureus</em>; vagina → <em>C. albicans</em>; bahan alam/oral tertentu → <em>Salmonella</em> spp.</li>
+          </ul>
+          <h4>Uji efektivitas pengawet (AET) — USP &lt;51&gt;</h4>
+          <ul>
+            <li>Kompendia: USP &lt;51&gt; (Ph. Eur. 5.1.3). Meliputi penetapan konsentrasi minimum efektif pengawet, <strong>challenge test</strong> (inokulasi bakteri, kamir, kapang; evaluasi penurunan Log selama <strong>28 hari</strong>), dan pemeriksaan stabilitas pengawet sampai akhir masa simpan.</li>
+          </ul>
+          <h4>CCIT — integritas wadah (USP &lt;1207&gt;)</h4>
+          <ul>
+            <li>CCIT memastikan kemasan primer (vial, ampul, syringe, botol) mempertahankan segel utuh: mencegah masuknya mikroba, keluar-masuknya gas, dan kebocoran isi selama masa simpan.</li>
+            <li><strong>Deterministik</strong> (kuantitatif, non-destruktif): HVLD, Vacuum/Pressure Decay, Headspace Gas Analysis (laser/FMS), Mass Extraction.</li>
+            <li><strong>Probabilistik</strong> (kualitatif, destruktif): Microbial Ingress dan Dye Ingress.</li>
+            <li>Pada studi stabilitas, CCIT fisik non-destruktif direkomendasikan menggantikan uji sterilitas destruktif: hasil lebih obyektif dan akurat, tidak rentan false positive akibat kontaminasi saat pengujian. Interval contoh: bulan ke-0, 12, 24, 36.</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- ================= LATIHAN ================= -->
+      <section class="panel" id="panel-latihan">
+        <h2>Latihan Soal — 50 Soal</h2>
+        <p class="sub">Sesuai blueprint Sumatif 1. Saring per pertemuan dan per level, kerjakan dengan santai — jawabanmu tersimpan selama berpindah soal, baru dinilai di layar hasil.</p>
+
+        <div id="quiz-view">
+          <div class="filter-block">
+            <p class="filter-label">Pertemuan</p>
+            <div class="fchips" id="filter-p"></div>
+          </div>
+          <div class="filter-block">
+            <p class="filter-label">Level kognitif</p>
+            <div class="fchips" id="filter-l"></div>
+          </div>
+          <div class="quiz-meta">
+            <span class="count" id="quiz-count"></span>
+            <span class="count" id="quiz-progress-label"></span>
+          </div>
+          <div class="progress" aria-hidden="true"><div id="progress-bar"></div></div>
+          <div id="quiz-area"></div>
+          <div class="numgrid" id="numgrid" aria-label="Lompat ke nomor soal"></div>
+          <div class="qnav">
+            <button class="btn primary grow" id="btn-finish">Selesai — Lihat Hasil</button>
+          </div>
+        </div>
+
+        <div id="result-view" hidden>
+          <div class="score-card">
+            <div class="score-big" id="score-big">0%</div>
+            <p id="score-line"></p>
+            <p id="score-love"></p>
+          </div>
+          <div class="breakdown">
+            <div class="bd-card"><h4>Per level kognitif</h4><div id="bd-level"></div></div>
+            <div class="bd-card"><h4>Per pertemuan</h4><div id="bd-pertemuan"></div></div>
+          </div>
+          <div class="qnav">
+            <button class="btn grow" id="btn-back">Kembali ke Soal</button>
+            <button class="btn grow" id="btn-reset">Ulangi — Hapus Jawaban</button>
+          </div>
+          <div class="review">
+            <h3 class="serif" style="font-size:1.3rem;margin:6px 0 10px;">Telaah per soal</h3>
+            <div id="review-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= KARTU KILAT ================= -->
+      <section class="panel" id="panel-kilat">
+        <h2>Kartu Kilat</h2>
+        <p class="sub">Ketuk kartunya untuk membalik dan melihat jawaban. Cocok buat pengulangan cepat sebelum masuk ruang ujian.</p>
+        <div class="flash-wrap">
+          <button class="flash" id="flash" aria-label="Kartu kilat — ketuk untuk membalik">
+            <span class="flash-face flash-front">
+              <span class="tag" id="flash-tag-front">Kartu Kilat</span>
+              <span class="big" id="flash-front-text"></span>
+              <span class="small">Ketuk untuk melihat jawaban</span>
+            </span>
+            <span class="flash-face flash-back">
+              <span class="tag">Jawaban</span>
+              <span class="big" id="flash-back-text"></span>
+              <span class="small">Ketuk untuk kembali</span>
+            </span>
+          </button>
+        </div>
+        <div class="flash-nav">
+          <button class="btn" id="flash-prev">← Sebelumnya</button>
+          <span class="ctr" id="flash-ctr"></span>
+          <button class="btn" id="flash-next">Berikutnya →</button>
+          <button class="btn" id="flash-shuffle">Acak kartu</button>
+        </div>
+      </section>
+
+      <!-- ================= ANGKA KUNCI ================= -->
+      <section class="panel" id="panel-angka">
+        <h2>Angka Kunci</h2>
+        <p class="sub">Semua angka, rumus, dan ambang batas yang paling sering keluar — dirangkum dari slide P1–P7.</p>
+        <table class="angka-table">
+          <tbody>
+            <tr><td>Pedoman QbD</td><td>ICH Q8 (R2)</td><td>P1 hlm. 10</td></tr>
+            <tr><td>Pedoman QRM</td><td>ICH Q9</td><td>P4 hlm. 3</td></tr>
+            <tr><td>Elemen QbD (P1) / elemen program QbD (P6)</td><td>6 elemen / 7 elemen</td><td>P1 hlm. 12 · P6 hlm. 8</td></tr>
+            <tr><td>Hierarki mutu produk ideal</td><td>Aman → Berkhasiat → Nyaman</td><td>P2 hlm. 8</td></tr>
+            <tr><td>Isi label produk</td><td>9 item</td><td>P2 hlm. 18</td></tr>
+            <tr><td>BUD sediaan krim setelah dibuka</td><td>90 hari / 3 bulan</td><td>P2 hlm. 20</td></tr>
+            <tr><td>Contoh komposisi krim</td><td>Kloramfenikol 20 mg per 1 gram</td><td>P2 hlm. 20</td></tr>
+            <tr><td>Sampel ayakan (PSA)</td><td>25–100 g</td><td>P3 hlm. 5</td></tr>
+            <tr><td>Hentakan tapped density</td><td>1250 hentakan</td><td>P3 hlm. 5</td></tr>
+            <tr><td>Rumus kompresibilitas</td><td>(mampat − nyata) / mampat × 100%</td><td>P3 hlm. 7</td></tr>
+            <tr><td>Berat jenis air</td><td>1 (= 1 g/mL), alat piknometer</td><td>P3 hlm. 5, 8</td></tr>
+            <tr><td>Laju alir serbuk yang bagus</td><td>±10 gram/detik</td><td>P3 hlm. 5</td></tr>
+            <tr><td>Aztreonam α pada 37 °C/75% RH</td><td>Hidrolisis, waktu paruh 6 jam</td><td>P3 hlm. 12</td></tr>
+            <tr><td>Rumus RPN</td><td>Severity × Occurrence × Detection</td><td>P4 hlm. 10</td></tr>
+            <tr><td>RPN Minor / Mayor / Kritikal</td><td>≤ 4 Rendah · ≤ 8 Sedang · ≥ 20 Tinggi</td><td>P4 hlm. 11</td></tr>
+            <tr><td>Skala Severity</td><td>1 Minor, 2 Sedang, 3 Mayor, 4 Severe</td><td>P4 hlm. 11</td></tr>
+            <tr><td>Skala Detection</td><td>1 Tinggi, 2 Sedang, 3 Rendah</td><td>P4 hlm. 12</td></tr>
+            <tr><td>Contoh RPN penimbangan</td><td>2 × 5 × 2 = 20 → sesudah tindakan 1 × 2 × 2 = 4</td><td>P4 hlm. 13</td></tr>
+            <tr><td>Label status gudang</td><td>Hijau lulus · Kuning karantina · Merah ditolak</td><td>P5 hlm. 11</td></tr>
+            <tr><td>Pola sampling n / p / r</td><td>1 + √N · 0,4√N · 1,5√N</td><td>P5 hlm. 12</td></tr>
+            <tr><td>Kualifikasi bahan baku oleh R&amp;D</td><td>Minimal 3 source, biasanya 3 batch</td><td>P5 hlm. 13</td></tr>
+            <tr><td>Assay Ondansetron HCl (HPLC)</td><td>98,0–102,0% w/w</td><td>P5 hlm. 16–17</td></tr>
+            <tr><td>Kadar air Ondansetron (KF)</td><td>9,0–10,5% w/w</td><td>P5 hlm. 16–17</td></tr>
+            <tr><td>Metanol residual Ondansetron (GC)</td><td>≤ 500 ppm</td><td>P5 hlm. 16–17</td></tr>
+            <tr><td>Total impurities Ondansetron</td><td>≤ 0,50%</td><td>P5 hlm. 16–17</td></tr>
+            <tr><td>Endotoksin Ondansetron / NaOH</td><td>≤ 6,8 EU/mg / ≤ 2,5 EU/mg</td><td>P5 hlm. 16, 18</td></tr>
+            <tr><td>Ukuran partikel Ondansetron</td><td>D10 5,04 µm · D50 36,33 µm · D90 128,0 µm</td><td>P5 hlm. 17</td></tr>
+            <tr><td>Skala Lab Trial</td><td>Solid 100–1000 tablet · Liquid 100–1000 mL</td><td>P6 hlm. 3</td></tr>
+            <tr><td>Batch Pilot Trial</td><td>10% skala produksi atau 100.000 unit, mana lebih besar</td><td>P6 hlm. 4</td></tr>
+            <tr><td>Data stabilitas Pilot Trial untuk registrasi</td><td>Minimal 2 batch → Approvable Letter → NIE</td><td>P6 hlm. 4</td></tr>
+            <tr><td>Batas mutlak pertumbuhan mikroba</td><td>a<sub>w</sub> &lt; 0,60</td><td>P7 hlm. 12</td></tr>
+            <tr><td>a<sub>w</sub> bakteri Gram Negatif</td><td>&gt; 0,91 → MLT lengkap + pengawet</td><td>P7 hlm. 12</td></tr>
+            <tr><td>a<sub>w</sub> khamir &amp; kapang</td><td>0,60–0,85 → evaluasi spesifik</td><td>P7 hlm. 12</td></tr>
+            <tr><td>pH inaktif bagi mikroba / ideal bagi bakteri</td><td>&lt; 3 atau &gt; 9 / 5–8</td><td>P7 hlm. 11, 15</td></tr>
+            <tr><td>Durasi challenge test AET (USP &lt;51&gt;)</td><td>28 hari</td><td>P7 hlm. 6</td></tr>
+            <tr><td>Interval CCIT studi stabilitas</td><td>Bulan ke-0, 12, 24, 36</td><td>P7 hlm. 10</td></tr>
+            <tr><td>Justifikasi skip MLT ditulis di</td><td>CTD 3.2.P.2.5 (ICH Q6A DT #8)</td><td>P7 hlm. 18</td></tr>
+            <tr><td>Suhu cold chain vaksin/biologi</td><td>2 °C–8 °C</td><td>Suplemen</td></tr>
+            <tr><td>Eliksir antimikroba sendiri</td><td>Etanol ≥ 15–20%</td><td>Suplemen</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================= JEBAKAN ================= -->
+      <section class="panel" id="panel-jebakan">
+        <h2>Jebakan UTS</h2>
+        <p class="sub">Hal-hal yang kelihatan sepele tapi paling sering menjebak — termasuk beberapa inkonsistensi di slide sendiri. Baca ini terakhir sebelum ujian.</p>
+        <div class="trap">
+          <h4>1. Contoh RPN granulasi di slide salah hitung</h4>
+          <p>Di formulir P4 hlm. 13 tertulis O=4, S=3, D=3 → RPN 24. Padahal 4 × 3 × 3 = <strong>36</strong>. Jangan hafalkan angka slide-nya; hafalkan rumusnya: RPN = S × O × D. Contoh penimbangan (2 × 5 × 2 = 20) adalah yang benar.</p>
+        </div>
+        <div class="trap">
+          <h4>2. Dye Ingress: deterministik atau probabilistik?</h4>
+          <p>P7 hlm. 7 menyebut Dye Ingress sebagai metode deterministik, tapi hlm. 9 dan USP &lt;1207&gt; mengklasifikasikannya sebagai <strong>probabilistik</strong> (kualitatif/destruktif). Ikuti hlm. 9 — itu yang dipakai di soal 44.</p>
+        </div>
+        <div class="trap">
+          <h4>3. Dua ambang a<sub>w</sub> yang mudah tertukar</h4>
+          <p>a<sub>w</sub> &lt; 0,75 hanya <em>menekan mayoritas</em> mikroba; batas mutlak tidak ada pertumbuhan sama sekali adalah a<sub>w</sub> &lt; 0,60. Syarat skip-testing ICH Q6A DT #8 memakai angka 0,60.</p>
+        </div>
+        <div class="trap">
+          <h4>4. Sirup: &gt; 0,90 atau &gt; 0,91?</h4>
+          <p>Matriks sediaan (hlm. 20) menulis cairan oral a<sub>w</sub> &gt; 0,90 wajib MLT; halaman ambang (hlm. 12) menulis &gt; 0,91 untuk bakteri Gram Negatif. Keduanya menunjuk kesimpulan sama: sirup wajib MLT lengkap + sistem pengawet.</p>
+        </div>
+        <div class="trap">
+          <h4>5. RPN 9–19 tidak punya kategori di slide</h4>
+          <p>Tabel POPP CPOB melompat dari Mayor (≤ 8) langsung ke Kritikal (≥ 20). Kalau soal menanyakan RPN 20, jawabannya pasti Kritikal — prioritas Tinggi.</p>
+        </div>
+        <div class="trap">
+          <h4>6. Patogen topikal: satu atau dua?</h4>
+          <p>P7 hlm. 16 hanya menyebut <em>P. aeruginosa</em> untuk topikal, tetapi hlm. 21 mewajibkan pasangan lengkap <em>P. aeruginosa</em> + <em>S. aureus</em> sesuai USP &lt;1111&gt;. Jawaban soal 45 mengikuti hlm. 21.</p>
+        </div>
+        <div class="trap">
+          <h4>7. Warna label karantina itu kuning</h4>
+          <p>Sering tertukar dengan merah. Ingat urutannya: hijau = diluluskan, <strong>kuning = karantina</strong>, merah = ditolak.</p>
+        </div>
+        <div class="trap">
+          <h4>8. Pilot trial: ambil yang LEBIH BESAR</h4>
+          <p>Batch pilot = 10% skala produksi <em>atau</em> 100.000 unit, mana yang lebih besar. Contoh soal 30: 10% × 800.000 = 80.000 &lt; 100.000, jadi jawabannya 100.000 unit — bukan 80.000.</p>
+        </div>
+        <div class="trap">
+          <h4>9. Kekerasan tablet itu CQA, bukan CMA</h4>
+          <p>CMA adalah atribut <em>bahan</em> (input); kekerasan tablet adalah atribut <em>produk jadi</em> (output = CQA). Ini pengecoh di soal 7.</p>
+        </div>
+        <div class="trap">
+          <h4>10. QTPP &amp; QbD tidak mengurus harga dan pemasaran</h4>
+          <p>Pengecoh soal 3 dan 5 selalu berbau uang: "penetapan harga jual", "biaya produksi", "margin keuntungan". Framework QbD dan dokumen QTPP hanya berisi karakteristik mutu produk.</p>
+        </div>
+        <div class="trap">
+          <h4>11. Friabilitas pada pan coating</h4>
+          <p>Catatan dosen di P6 hlm. 13: friabilitas tablet pada proses coating seharusnya masuk <em>input material attribute</em> tablet, bukan quality attribute — berlawanan dengan posisi kolomnya di tabel slide.</p>
+        </div>
+        <div class="trap">
+          <h4>12. Angka TAMC/TYMC tidak ada di slide</h4>
+          <p>Seluruh slide P7 tidak memuat satu pun angka batas kuantitatif USP &lt;1111&gt;. Soal 45 dan 50 hanya menguji patogen spesifiknya — jangan mengarang angka batas saat menjawab soal lain.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>Ruang Belajar RKPO · Sumatif 1 · Farmasi UNJANI Semester 7<br />Dibuat dengan <span class="heart">♥</span> untuk menemani belajar — semoga ujiannya lancar.</p>
+      </footer>
+    </div>
+
+    <script>
+      /* ================= DATA SOAL (dari file latihan, apa adanya) ================= */
+      const SOAL = [{"n": 1, "p": 1, "level": "C2", "src": "P1 hlm. 10", "q": "Quality by Design (QbD) didefinisikan dalam pedoman ICH Q8 sebagai pendekatan sistematik dalam pengembangan produk farmasi. Pernyataan berikut yang paling tepat menggambarkan pendekatan QbD adalah …", "options": [{"k": "A", "t": "Pendekatan yang menguji mutu produk hanya pada produk jadi di akhir produksi dan menolak batch yang gagal memenuhi spesifikasi"}, {"k": "B", "t": "Pendekatan sistematik dalam pengembangan yang dimulai dengan tujuan yang telah ditentukan sebelumnya dan menekankan pemahaman produk dan proses, serta pengendalian proses, berdasarkan ilmu pengetahuan yang baik dan manajemen risiko kualitas"}, {"k": "C", "t": "Pendekatan yang mengandalkan sepenuhnya pada pengujian produk jadi untuk menjamin mutu tanpa memahami proses produksi"}, {"k": "D", "t": "Pendekatan yang memproduksi obat semata-mata untuk memenuhi uji kualitas dalam spesifikasi produk"}, {"k": "E", "t": "Pendekatan yang mengganti seluruh pengujian mutu dengan inspeksi visual produk jadi"}], "ans": "B", "expl": "QbD adalah pendekatan baru dalam pembuatan produk farmasi yang membutuhkan pemahaman menyeluruh tentang atribut dan proses kualitas produk. Konsep QbD didefinisikan dalam ICH Q8 — Pharmaceutical Development (R2) sebagai pendekatan sistematik yang dimulai dengan tujuan yang telah ditentukan sebelumnya dan menekankan pemahaman produk dan proses serta pengendalian proses berdasarkan ilmu pengetahuan yang baik dan manajemen risiko kualitas. Pilihan A, C, dan D menggambarkan pendekatan tradisional (hlm. 9), bukan QbD."}, {"n": 2, "p": 1, "level": "C1", "src": "P1 hlm. 10", "q": "Pedoman ICH yang secara spesifik mengatur pengembangan produk farmasi berbasis Quality by Design (QbD) adalah …", "options": [{"k": "A", "t": "ICH Q1A — Stability Testing"}, {"k": "B", "t": "ICH Q6A — Specifications"}, {"k": "C", "t": "ICH Q8 — Pharmaceutical Development (R2)"}, {"k": "D", "t": "ICH Q9 — Quality Risk Management"}, {"k": "E", "t": "ICH Q10 — Pharmaceutical Quality System"}], "ans": "C", "expl": "Konsep QbD didefinisikan dalam ICH regulatory guideline Q8 — Pharmaceutical Development (R2). ICH Q9 mengatur Quality Risk Management (QRM), bukan QbD."}, {"n": 3, "p": 1, "level": "C2", "src": "P1 hlm. 12", "q": "Framework Quality by Design (QbD) terdiri atas 6 elemen utama: profil kualitas produk target (QTPP), atribut kualitas kritis (CQA), penilaian risiko, ruang desain (design space), strategi kontrol, dan manajemen siklus hidup produk. Elemen berikut yang **tidak** termasuk komponen penentu mutu produk berbasis kerangka kerja QbD adalah …", "options": [{"k": "A", "t": "Profil kualitas produk target (QTPP)"}, {"k": "B", "t": "Atribut kualitas kritis (CQA)"}, {"k": "C", "t": "Ruang desain (design space)"}, {"k": "D", "t": "Strategi kontrol (control strategy)"}, {"k": "E", "t": "Penetapan harga jual dan strategi pemasaran produk"}], "ans": "E", "expl": "Keenam elemen QbD menurut slide adalah QTPP, CQA, penilaian risiko, ruang desain, strategi kontrol, dan manajemen siklus hidup produk (hlm. 12). Penetapan harga jual dan strategi pemasaran bukan bagian dari framework QbD — QbD berfokus pada mutu produk, proses, dan pengendalian risiko."}, {"n": 4, "p": 1, "level": "C4", "src": "P1 hlm. 9–11", "q": "Pernyataan berikut yang **tidak** termasuk prinsip utama pendekatan Quality by Design (QbD) dalam pengembangan produk farmasi adalah …", "options": [{"k": "A", "t": "Pemahaman produk dan proses secara mendalam, termasuk karakteristik zat aktif, eksipien, dan produk akhir yang diinginkan"}, {"k": "B", "t": "Identifikasi Critical Quality Attributes (CQA) dan Critical Process Parameters (CPP) yang harus dikendalikan"}, {"k": "C", "t": "Penilaian risiko (risk assessment) untuk memprioritaskan area yang memerlukan pengendalian ketat"}, {"k": "D", "t": "Penetapan ruang desain (design space) sebagai batas operasional yang aman bagi parameter proses"}, {"k": "E", "t": "Mutu produk dijamin semata-mata dengan menguji produk jadi di akhir produksi; batch yang gagal memenuhi spesifikasi ditolak atau diproses ulang"}], "ans": "E", "expl": "Enam prinsip kunci QbD adalah pemahaman produk dan proses, identifikasi CQA, identifikasi CPP, risk assessment, design space, dan control strategy (hlm. 11–12). Pilihan E justru menggambarkan pendekatan tradisional (hlm. 9): produk diproduksi untuk memenuhi uji kualitas dalam spesifikasi, dan batch yang gagal ditolak/direject atau diproses ulang — kebalikan dari filosofi QbD yang membangun mutu ke dalam produk sejak perancangan."}, {"n": 5, "p": 1, "level": "C2", "src": "P1 hlm. 13–14", "q": "Quality Target Product Profile (QTPP) adalah ringkasan prospektif karakteristik mutu produk obat yang idealnya akan dicapai untuk memastikan mutu yang diinginkan, dengan mempertimbangkan keamanan dan kemanjuran produk obat. Komponen berikut yang **tidak** termasuk dalam penyusunan dokumen QTPP sediaan obat adalah …", "options": [{"k": "A", "t": "Karakteristik kualitas yang diperlukan, seperti sterilitas dan kemurnian"}, {"k": "B", "t": "Karakteristik farmakokinetik, seperti disolusi, serta efek terapeutik"}, {"k": "C", "t": "Target populasi pasien dan umur simpan produk"}, {"k": "D", "t": "Bentuk sediaan, rute pemberian, dan kemasan primer/sekunder"}, {"k": "E", "t": "Biaya produksi dan margin keuntungan penjualan produk"}], "ans": "E", "expl": "QTPP mencakup elemen yang diperlukan (karakteristik kualitas seperti sterilitas dan kemurnian, karakteristik farmakokinetik seperti disolusi, efek terapeutik, target populasi pasien, umur simpan) dan elemen yang diinginkan (bentuk sediaan, rute pemberian, pengaturan klinis, kemasan primer/sekunder) (hlm. 14). Biaya produksi dan margin keuntungan bukan komponen QTPP — QTPP hanya berisi karakteristik mutu produk."}, {"n": 6, "p": 3, "level": "C1", "src": "P3 hlm. 1–2", "q": "Bahan baku obat yang digunakan dalam produksi sediaan farmasi harus memenuhi standar mutu tertentu agar kualitas produk akhir dapat terjamin. Standar kualifikasi mutu bahan baku farmasi tersebut disebut …", "options": [{"k": "A", "t": "Food Grade"}, {"k": "B", "t": "Technical Grade"}, {"k": "C", "t": "Pharmaceutical Grade"}, {"k": "D", "t": "Cosmetic Grade"}, {"k": "E", "t": "Industrial Grade"}], "ans": "C", "expl": "Bahan baku harus sesuai standar (catatan dosen, P3 hlm. 1), dan karakteristik atau properti fisik, kimia, mikrobiologi, atau biologis dari bahan (CMA) harus berada dalam kisaran, batas, atau distribusi yang dapat diterima untuk memastikan kualitas yang diantisipasi (P3 hlm. 2). Bahan baku farmasi yang memenuhi persyaratan monografi farmakope disebut Pharmaceutical Grade — berbeda dari Food Grade, Technical Grade, Cosmetic Grade, atau Industrial Grade yang standarnya tidak diperuntukkan bagi obat."}, {"n": 7, "p": 3, "level": "C2", "src": "P3 hlm. 5", "q": "Berikut ini adalah parameter yang termasuk dalam pengujian atribut bahan kritis (CMA) zat aktif, **kecuali** …", "options": [{"k": "A", "t": "Distribusi ukuran partikel"}, {"k": "B", "t": "Bulk density (kerapatan nyata dan kerapatan mampat)"}, {"k": "C", "t": "Specific gravity / berat jenis (BJ)"}, {"k": "D", "t": "Suhu transisi gelas (Tg) dan keberadaan polimorf (presence of polymorphs)"}, {"k": "E", "t": "Kekerasan tablet"}], "ans": "E", "expl": "Enam CMA yang ditetapkan pada slide adalah distribusi ukuran partikel, bulk density, specific gravity/BJ, solubility, suhu transisi gelas, dan presence of polymorphs (P3 hlm. 5). Kekerasan tablet bukan CMA — kekerasan tablet adalah contoh Critical Quality Attribute (CQA) produk jadi (P1 hlm. 11)."}, {"n": 8, "p": 3, "level": "C3", "src": "P3 hlm. 9", "q": "Suatu zat aktif akan diformulasikan dalam sediaan cair dan kecepatan kelarutannya perlu ditingkatkan. Kombinasi faktor fisikokimia yang paling tepat untuk mempercepat kecepatan kelarutan zat aktif tersebut adalah …", "options": [{"k": "A", "t": "Memperbesar ukuran partikel, menurunkan suhu, dan tidak mengaduk larutan"}, {"k": "B", "t": "Memperkecil ukuran partikel, menaikkan suhu, dan mengaduk larutan"}, {"k": "C", "t": "Memperkecil ukuran partikel, menurunkan suhu, dan menghentikan pengadukan"}, {"k": "D", "t": "Memperbesar ukuran partikel, menaikkan suhu, dan mengaduk larutan"}, {"k": "E", "t": "Memperkecil ukuran partikel, menaikkan suhu, dan membiarkan larutan jenuh tanpa pengadukan"}], "ans": "B", "expl": "Kecepatan kelarutan dipengaruhi oleh ukuran partikel (makin halus solute, makin luas permukaan yang kontak dengan solvent, makin cepat larut), suhu (pada umumnya kenaikan suhu menambah kelarutan solute), dan pengadukan (mempercepat pelarutan; pengadukan tidak berpengaruh jika larutan sudah jenuh) (P3 hlm. 9). Jadi kombinasi yang tepat adalah partikel diperkecil, suhu dinaikkan, dan larutan diaduk."}, {"n": 9, "p": 3, "level": "C3", "src": "P3 hlm. 7", "q": "Untuk menghitung indeks Carr (Carr's Index) suatu serbuk, perlu ditetapkan kerapatan mampat (tap density) serbuk tersebut. Instrumen/pengujian yang tepat untuk penetapan kerapatan mampat adalah …", "options": [{"k": "A", "t": "Sieve shaker (ayakan bertingkat)"}, {"k": "B", "t": "Piknometer"}, {"k": "C", "t": "Differential Scanning Calorimetry (DSC)"}, {"k": "D", "t": "Tapped density tester (alat uji kerapatan mampat, USP method 1)"}, {"k": "E", "t": "Particle Size Analyzer (PSA)"}], "ans": "D", "expl": "Kerapatan mampat ditetapkan dengan tapped density tester — pada slide ditampilkan alat SVM dengan keterangan \"Tapped density testing according to USP method 1\" (P3 hlm. 7). Sieve shaker dipakai untuk distribusi ukuran partikel, piknometer untuk berat jenis, DSC untuk suhu transisi gelas, dan PSA untuk memastikan ukuran partikel."}, {"n": 10, "p": 3, "level": "C3", "src": "P3 hlm. 7", "q": "Rumus matematis yang benar untuk menghitung nilai persentase kompresibilitas serbuk berdasarkan kerapatan mampat dan kerapatan nyata adalah …", "options": [{"k": "A", "t": "Kompresibilitas = (kerapatan mampat − kerapatan nyata) / kerapatan mampat × 100%"}, {"k": "B", "t": "Kompresibilitas = (kerapatan nyata − kerapatan mampat) / kerapatan nyata × 100%"}, {"k": "C", "t": "Kompresibilitas = (kerapatan mampat + kerapatan nyata) / kerapatan mampat × 100%"}, {"k": "D", "t": "Kompresibilitas = kerapatan mampat / kerapatan nyata × 100%"}, {"k": "E", "t": "Kompresibilitas = (kerapatan mampat − kerapatan nyata) / kerapatan nyata × 100%"}], "ans": "A", "expl": "Rumus yang tercetak di slide adalah Kompresibilitas = (kerapatan mampat − kerapatan nyata) / kerapatan mampat × 100% (P3 hlm. 7). Pada slide juga dicatat bahwa nilai % kompresibilitas yang rendah = paling baik (P3 hlm. 5)."}, {"n": 11, "p": 3, "level": "C2", "src": "P3 hlm. 10", "q": "Pada analisis termal suatu polimer, termogram menunjukkan peristiwa perubahan dari bentuk liquid (yang mengalir, walaupun mungkin sangat lambat) menjadi bentuk solid tanpa disertai peleburan. Instrumen analisis termal yang digunakan untuk menentukan suhu transisi gelas (Tg) tersebut adalah …", "options": [{"k": "A", "t": "Sieve shaker"}, {"k": "B", "t": "Tapped density tester"}, {"k": "C", "t": "Piknometer"}, {"k": "D", "t": "Differential Scanning Calorimetry (DSC)"}, {"k": "E", "t": "Homogenizer"}], "ans": "D", "expl": "Suhu transisi gelas adalah suhu di mana suatu polimer mengalami perubahan dari liquid menjadi bentuk solid, dan instrumennya adalah DSC Thermogram (P3 hlm. 10). Peristiwa lain yang tampak pada termogram DSC antara lain Glass Transition, Crystallisation, Melting, Cross-Linking (Cure), dan Oxidation."}, {"n": 12, "p": 3, "level": "C2", "src": "P3 hlm. 2, 4", "q": "Agar konsistensi proses dan mutu sediaan terjamin, langkah esensial yang harus dilakukan terhadap parameter Critical Material Attribute (CMA) adalah …", "options": [{"k": "A", "t": "Membiarkan CMA bervariasi bebas selama produk jadi masih lolos uji spesifikasi"}, {"k": "B", "t": "Menentukan, mengendalikan, dan melakukan pengujian CMA agar berada dalam kisaran, batas, atau distribusi yang dapat diterima"}, {"k": "C", "t": "Menguji CMA hanya sekali di awal pengembangan, tanpa pengendalian selama produksi"}, {"k": "D", "t": "Mengganti bahan baku dengan bahan lain tanpa menguji CMA-nya, selama harganya lebih murah"}, {"k": "E", "t": "Mengabaikan CMA karena yang menentukan mutu produk hanyalah parameter proses (CPP)"}], "ans": "B", "expl": "CMA dapat berdampak signifikan pada operasi unit farmasi, konsistensi proses, dan atribut mutu produk, sehingga perlu ditentukan, dikendalikan, dan dilakukan pengujian (P3 hlm. 2). Sifat fisiko-kimia yang berkaitan erat dengan CQA produk akhir disebut CMA, dan strategi pengendalian ditetapkan agar masing-masing CMA dapat diterima (P3 hlm. 4)."}, {"n": 13, "p": 3, "level": "C2", "src": "P3 hlm. 5–6", "q": "Untuk pengujian distribusi ukuran partikel serbuk bahan baku, alat yang tepat digunakan adalah …", "options": [{"k": "A", "t": "Piknometer 50 ml"}, {"k": "B", "t": "Tapped density tester SVM"}, {"k": "C", "t": "Ayakan bertingkat (sieve shaker)"}, {"k": "D", "t": "Differential Scanning Calorimetry (DSC)"}, {"k": "E", "t": "Homogenizer dan sonikator"}], "ans": "C", "expl": "Distribusi ukuran partikel ditetapkan menggunakan ayakan (mesh), yaitu sieve shaker; sampel yang digunakan 25 g–100 g, sedangkan untuk jumlah sampel yang sedikit dipakai mikroskop (dihitung manual) (P3 hlm. 5–6). Pada grafik distribusi, jika puncaknya 1, distribusi terdistribusi normal."}, {"n": 14, "p": 2, "level": "C1", "src": "P2 hlm. 8", "q": "Urutan hierarki parameter mutu produk obat yang ideal adalah …", "options": [{"k": "A", "t": "Nyaman → Berkhasiat → Aman"}, {"k": "B", "t": "Berkhasiat → Aman → Nyaman"}, {"k": "C", "t": "Aman → Berkhasiat → Nyaman"}, {"k": "D", "t": "Aman → Nyaman → Berkhasiat"}, {"k": "E", "t": "Nyaman → Aman → Berkhasiat"}], "ans": "C", "expl": "Hierarki mutu produk obat ideal menurut slide adalah 1. SAFE (AMAN) — tidak menimbulkan efek samping yang tidak dikehendaki pada pemberian dosis terapeutik; 2. EFFECTIVE (BERKHASIAT) — menimbulkan efek farmakologis pada hewan atau manusia; 3. ACCEPTABLE (NYAMAN) — dapat diterima oleh pasien (P2 hlm. 8). Jadi urutannya Aman → Berkhasiat → Nyaman."}, {"n": 15, "p": 2, "level": "C2", "src": "P2 hlm. 9, 12", "q": "In-Process Control (IPC) merupakan bagian dari upaya membangun mutu ke dalam produk. Cakupan tindakan pengawasan mutu (IPC) dalam manufaktur sediaan obat yang benar adalah …", "options": [{"k": "A", "t": "Kontrol hanya sesudah fabrikasi: keseragaman bobot tablet, kekerasan, dan kerapuhan"}, {"k": "B", "t": "Kontrol sebelum, selama, dan sesudah fabrikasi"}, {"k": "C", "t": "Kontrol hanya sebelum fabrikasi: ukuran partikel, bentuk partikel, dan kelarutan dalam solven"}, {"k": "D", "t": "Kontrol hanya selama fabrikasi: homogenitas campuran dan kadar air dalam granul"}, {"k": "E", "t": "Kontrol hanya pada produk jadi di laboratorium kendali mutu setelah produksi selesai"}], "ans": "B", "expl": "Mutu harus dibangun dengan melakukan kontrol sebelum, selama, dan sesudah fabrikasi (P2 hlm. 9). Sebelum fabrikasi: ukuran partikel, bentuk partikel, kelarutan dalam solven; selama fabrikasi: kontrol homogenitas campuran, kadar air dalam granul; sesudah fabrikasi: kontrol keseragaman bobot tablet, kekerasan, kerapuhan, waktu hancur tablet, dan kontrol kandungan zat aktif (P2 hlm. 12)."}, {"n": 16, "p": 2, "level": "C3", "src": "Di luar slide — suplemen", "q": "Pada kemasan sekunder sediaan obat, komposisi bahan aktif ditulis mengikuti aturan baku penulisan urutan komposisi. Aturan penulisan urutan komposisi tersebut adalah …", "options": [{"k": "A", "t": "Ditulis berdasarkan urutan abjad nama bahan aktif"}, {"k": "B", "t": "Ditulis dari kadar terbesar ke kadar terkecil"}, {"k": "C", "t": "Ditulis dari kadar terkecil ke kadar terbesar"}, {"k": "D", "t": "Ditulis berdasarkan urutan bahan yang pertama kali ditambahkan dalam formula"}, {"k": "E", "t": "Ditulis secara acak, karena urutan komposisi tidak diatur"}], "ans": "B", "expl": "Pada penulisan komposisi sediaan obat, bahan-bahan ditulis secara berurutan dari kadar (jumlah) terbesar ke kadar terkecil, sehingga bahan aktif dengan jumlah terbanyak tercantum pertama. Aturan ini tidak ada di slide P1–P2 (slide hanya memuat daftar isi label dan contoh komposisi krim, P2 hlm. 18 dan 20), sehingga soal ini dibuat sebagai suplemen."}, {"n": 17, "p": 2, "level": "C2", "src": "Di luar slide — suplemen", "q": "Vaksin dan sediaan biologi harus disimpan dan didistribusikan dalam rantai dingin (cold chain) agar potensi dan mutunya tetap terjaga. Rentang suhu penyimpanan yang tepat untuk sediaan biologi/vaksin tersebut adalah …", "options": [{"k": "A", "t": "Suhu ruang (15°C–25°C)"}, {"k": "B", "t": "Suhu dingin 2°C–8°C"}, {"k": "C", "t": "Suhu beku −20°C sampai −15°C"}, {"k": "D", "t": "Suhu sangat dingin −70°C sampai −80°C"}, {"k": "E", "t": "Suhu panas 30°C–40°C"}], "ans": "B", "expl": "Sediaan biologi dan vaksin disimpan pada suhu dingin 2°C–8°C (cold chain) untuk menjaga stabilitas dan potensi produk selama penyimpanan dan distribusi. Suhu ruang, suhu beku, maupun suhu sangat dingin bukan rentang standar penyimpanan vaksin pada umumnya. Ketentuan suhu penyimpanan ini tidak dibahas di slide P1–P2, sehingga soal ini dibuat sebagai suplemen."}, {"n": 18, "p": 2, "level": "C2", "src": "P2 hlm. 4", "q": "Menurut Kotler (2008), unsur-unsur yang menentukan atribut produk farmasi adalah …", "options": [{"k": "A", "t": "Merek, mutu produk, sifat produk, kemasan, dan label"}, {"k": "B", "t": "Kualitas produk, fitur produk, dan desain produk"}, {"k": "C", "t": "Harga, tempat distribusi, dan promosi"}, {"k": "D", "t": "Bahan aktif, eksipien, dan bahan pengemas"}, {"k": "E", "t": "Sterilitas, kemurnian, dan disolusi"}], "ans": "B", "expl": "Unsur atribut produk menurut Kotler 2008 adalah (1) Kualitas Produk (Product Quality), (2) Fitur Produk (Product Features), dan (3) Desain Produk (Product Design) (P2 hlm. 4). Pilihan A adalah komponen pokok atribut produk (hlm. 17), sedangkan pilihan D adalah penentu mutu obat menurut diagram mutu (P1 hlm. 5) — keduanya bukan unsur atribut produk menurut Kotler."}, {"n": 19, "p": 2, "level": "C2", "src": "Di luar slide — suplemen", "q": "Pada kemasan blister suatu obat tertulis \"Amoxicillin 500 mg\". Angka kekuatan/kadar sediaan yang tertera pada kemasan blister tersebut bermakna …", "options": [{"k": "A", "t": "Berat total seluruh blister beserta kemasannya adalah 500 mg"}, {"k": "B", "t": "Setiap satuan sediaan (tiap tablet/kapsul) mengandung amoksisilin 500 mg"}, {"k": "C", "t": "Jumlah total amoksisilin dalam satu strip blister adalah 500 mg"}, {"k": "D", "t": "Dosis harian maksimum yang boleh diminum pasien adalah 500 mg"}, {"k": "E", "t": "Berat satu strip blister kosong adalah 500 mg"}], "ans": "B", "expl": "Angka kekuatan yang tertera pada kemasan blister menyatakan kadar zat aktif per satuan sediaan — \"Amoxicillin 500 mg\" berarti tiap tablet/kapsul mengandung amoksisilin 500 mg, bukan berat total blister, bukan jumlah total dalam satu strip, dan bukan dosis harian maksimum. Contoh angka kekuatan pada blister tidak ada di slide P1–P2 (blister hanya disebut sebagai contoh kemasan sekunder, P1 hlm. 14), sehingga soal ini dibuat sebagai suplemen."}, {"n": 20, "p": 2, "level": "C2", "src": "P2 hlm. 16", "q": "Dalam merancang desain produk farmasi yang bernilai tambah, faktor-faktor utama yang harus dipertimbangkan adalah …", "options": [{"k": "A", "t": "Merek, kemasan, dan label"}, {"k": "B", "t": "Harga, promosi, dan distribusi"}, {"k": "C", "t": "Estetika, ekonomis, dan bahan"}, {"k": "D", "t": "Sterilitas, kemurnian, dan disolusi"}, {"k": "E", "t": "Kekerasan, kerapuhan, dan disintegrasi"}], "ans": "C", "expl": "Faktor-faktor yang harus dipertimbangkan dalam desain produk adalah estetika, ekonomis, dan bahan (P2 hlm. 16). Desain merupakan cara lain untuk menambah nilai pelanggan melalui rancangan produk yang berbeda dari produk lain."}, {"n": 21, "p": 4, "level": "C2", "src": "P4 hlm. 3", "q": "Quality Risk Management (QRM) menurut ICH Q9 adalah suatu proses sistematis untuk … terhadap kualitas produk obat selama siklus hidup produk tersebut.", "options": [{"k": "A", "t": "menguji, menolak, dan memproses ulang batch yang tidak memenuhi spesifikasi"}, {"k": "B", "t": "mengkontrol, mengkomunikasikan, menilai, dan mengkaji risiko"}, {"k": "C", "t": "menetapkan spesifikasi, menguji produk jadi, dan mendokumentasikan hasil uji"}, {"k": "D", "t": "merancang formula, memvalidasi proses, dan meluncurkan produk ke pasar"}, {"k": "E", "t": "mengendalikan harga, memasarkan, dan mendistribusikan produk obat"}], "ans": "B", "expl": "QRM didefinisikan sebagai \"sebuah proses sistematis untuk mengkontrol, mengkomunikasikan, menilai, dan mengkaji resiko terhadap kualitas produk obat selama siklus hidup produk tersebut\" (ICH Q9). QRM juga merupakan proses yang mendukung pengambilan keputusan berbasis ilmu pengetahuan dan pengetahuan praktis yang diintegrasikan ke dalam sistem mutu."}, {"n": 22, "p": 4, "level": "C4", "src": "P4 hlm. 4, 6", "q": "Dalam penerapan Quality Risk Management (QRM), seorang penjamin mutu mengevaluasi risiko kontaminasi silang pada suatu lini produksi. Sesuai prinsip QRM, evaluasi risiko tersebut hendaklah …", "options": [{"k": "A", "t": "dilakukan satu kali saja pada awal pengembangan produk"}, {"k": "B", "t": "bertujuan menghilangkan seluruh risiko hingga nol"}, {"k": "C", "t": "didasarkan pada pengetahuan ilmiah dan dikaitkan dengan perlindungan pasien sebagai tujuan akhir"}, {"k": "D", "t": "dilakukan dengan tingkat usaha, formalitas, dan dokumentasi yang sama untuk semua tingkat risiko"}, {"k": "E", "t": "didasarkan semata-mata pada pertimbangan biaya produksi yang paling murah"}], "ans": "C", "expl": "Prinsip QRM (P4 hlm. 4): (1) evaluasi risiko terhadap mutu hendaklah berdasarkan pengetahuan ilmiah dan dikaitkan dengan perlindungan pasien sebagai tujuan akhir; (2) tingkat usaha, formalitas, dan dokumentasi proses pengkajian risiko mutu hendaklah setara dengan tingkat risiko yang ditimbulkan. QRM merupakan proses berulang dan bukan aktivitas satu kali saja, serta risiko tidak hilang — risiko dapat diprediksi, dicegah, dan dikendalikan. Perlindungan pasien dengan mengelola risiko mutu harus dipertimbangkan menjadi kepentingan yang utama (P4 hlm. 6)."}, {"n": 23, "p": 4, "level": "C3", "src": "P4 hlm. 9", "q": "Saat investigasi penyimpangan, ditemukan bahwa operator belum mendapatkan pelatihan yang memadai, tidak menjalankan SOP dengan benar, dan belum terkualifikasi dengan baik. Dalam diagram Ishikawa (fishbone), akar penyebab tersebut masuk ke dalam kategori …", "options": [{"k": "A", "t": "METHODE"}, {"k": "B", "t": "ENVIRONMENT"}, {"k": "C", "t": "MATERIAL"}, {"k": "D", "t": "MACHINE"}, {"k": "E", "t": "MAN"}], "ans": "E", "expl": "Diagram Ishikawa P4 hlm. 9 membagi penyebab ketidaksesuaian menjadi 5 kategori: MAN, METHODE, ENVIRONMENT, MATERIAL, MACHINE. Kategori MAN menanyakan: apakah operator sudah mendapatkan pelatihan yang memadai, apakah operator sudah menjalankan prosedur (SOP) dengan benar, dan apakah operator sudah terkualifikasi dengan baik. METHODE berkaitan dengan validasi proses/metode analisa; ENVIRONMENT dengan suhu, RH, partikel, mikroba, dan HVAC; MATERIAL dengan penanganan bahan, supplier, kadaluarsa, dan CoA; MACHINE dengan perawatan, kualifikasi, dan pembersihan mesin."}, {"n": 24, "p": 4, "level": "C3", "src": "P4 hlm. 10, 13", "q": "Dalam analisis FMEA pada tahap penimbangan, diperoleh nilai Severity (S) = 5, Occurrence (O) = 2, dan Detection (D) = 2. Berapakah nilai Risk Priority Number (RPN) dari mode kegagalan tersebut?", "options": [{"k": "A", "t": "9"}, {"k": "B", "t": "10"}, {"k": "C", "t": "20"}, {"k": "D", "t": "25"}, {"k": "E", "t": "40"}], "ans": "C", "expl": "Rumus RPN = Severity × Occurrence × Detection (P4 hlm. 10). Maka RPN = 5 × 2 × 2 = 20. Ini sesuai contoh kerja Penimbangan pada formulir evaluasi risiko mutu (POPP CPOB) di P4 hlm. 13: O=2, S=5, D=2 → RPN=20 (Kritikal → prioritas Tinggi)."}, {"n": 25, "p": 4, "level": "C3", "src": "P4 hlm. 8", "q": "Untuk mengurangi risiko paparan debu bahan aktif kepada operator, perusahaan memasang sistem ventilasi (sarana teknis/engineering control) dan mewajibkan penggunaan APD berupa masker dan sarung tangan. Tindakan tersebut merupakan contoh dari …", "options": [{"k": "A", "t": "Identifikasi Risiko"}, {"k": "B", "t": "Pengurangan Risiko (Risk Reduction)"}, {"k": "C", "t": "Penerimaan Risiko (Risk Acceptance)"}, {"k": "D", "t": "Evaluasi Risiko"}, {"k": "E", "t": "Tinjauan Risiko"}], "ans": "B", "expl": "Pengendalian risiko bertujuan untuk mengurangi risiko ke tingkat yang dapat diterima. Pengurangan Risiko (Risk Reduction) adalah tindakan yang diambil untuk mengurangi probabilitas terjadinya kerusakan dan keparahan yang merugikan (P4 hlm. 8). Pemasangan sarana teknis dan penggunaan APD merupakan bentuk tindakan pengurangan risiko tersebut. Penerimaan Risiko adalah keputusan untuk menerima risiko, bukan menguranginya."}, {"n": 26, "p": 4, "level": "C2", "src": "P4 hlm. 2", "q": "Manakah di bawah ini yang BUKAN merupakan salah satu dari 5 pilar mutu produk menurut CPOB?", "options": [{"k": "A", "t": "Bahan Awal dan Bahan Pengemas"}, {"k": "B", "t": "Mesin dan Peralatan"}, {"k": "C", "t": "Bangunan/sarana produksi"}, {"k": "D", "t": "Proses Pembuatan dan Pengawasan Mutu"}, {"k": "E", "t": "Sales & Marketing"}], "ans": "E", "expl": "5 pilar Mutu Produk (P4 hlm. 2): (1) Bahan Awal dan Bahan Pengemas; (2) Mesin dan Peralatan; (3) Bangunan/sarana produksi; (4) Proses Pembuatan dan Pengawasan Mutu; (5) Personalia. Sales & Marketing hanya muncul dalam diagram Siklus Industri Farmasi (CUSTOMER → Sales & Marketing → R&D → Quality Assurance), tetapi bukan salah satu pilar mutu produk. Mutu produk harus dibentuk ke dalam (built in) produk, tidak cukup hanya lulus dari serangkaian pengujian."}, {"n": 27, "p": 4, "level": "C4", "src": "P4 hlm. 11, 13", "q": "Suatu temuan ketidaksesuaian pada proses produksi memperoleh nilai RPN = 20 berdasarkan tabel prioritas penyelesaian tindakan perbaikan POPP CPOB. Bagaimana kategori risiko dan prioritas penyelesaian tindakan perbaikannya?", "options": [{"k": "A", "t": "Minor — prioritas Rendah"}, {"k": "B", "t": "Mayor — prioritas Sedang"}, {"k": "C", "t": "Kritikal — prioritas Tinggi"}, {"k": "D", "t": "Minor — prioritas Tinggi"}, {"k": "E", "t": "Mayor — prioritas Rendah"}], "ans": "C", "expl": "Prioritas penyelesaian tindakan perbaikan berdasarkan nilai RPN (POPP CPOB, P4 hlm. 11): Minor RPN ≤ 4 → prioritas Rendah; Mayor RPN ≤ 8 → prioritas Sedang; Kritikal RPN ≥ 20 → prioritas Tinggi. RPN = 20 termasuk kategori Kritikal dengan prioritas Tinggi; catatan tangan pada baris Kritikal: \"tidak bisa melanjutkan proses produksi\". Contohnya pada formulir evaluasi risiko mutu (P4 hlm. 13): tahap Penimbangan O=2, S=5, D=2 → RPN=20 (Kritikal → prioritas Tinggi)."}, {"n": 28, "p": 6, "level": "C2", "src": "P6 hlm. 2–3", "q": "Dalam alur pengembangan sediaan farmasi, tahap manakah yang dilakukan tepat sebelum Pilot Trial?", "options": [{"k": "A", "t": "Registrasi"}, {"k": "B", "t": "Preformulasi"}, {"k": "C", "t": "Lab Trial"}, {"k": "D", "t": "Product Launch"}, {"k": "E", "t": "Bahan Baku Obat"}], "ans": "C", "expl": "Alur pengembangan sediaan adalah Bahan Baku Obat → Preformulasi → Lab Trial → Pilot Trial → Registrasi → Product Launch, sehingga tahap tepat sebelum Pilot Trial adalah Lab Trial."}, {"n": 29, "p": 6, "level": "C2", "src": "P6 hlm. 3–4", "q": "Apakah fungsi data stabilitas formula yang diperoleh pada tahap Lab Trial?", "options": [{"k": "A", "t": "Menjadi syarat pengajuan NIE ke Badan POM"}, {"k": "B", "t": "Menjadi acuan formula yang dipilih untuk dilanjutkan ke tahap Pilot Trial"}, {"k": "C", "t": "Menentukan harga jual produk (COGs)"}, {"k": "D", "t": "Menggantikan uji stabilitas pada Pilot Trial"}, {"k": "E", "t": "Menentukan tanggal kedaluwarsa produk jadi"}], "ans": "B", "expl": "Hasil data stabilitas formula Lab Trial menjadi acuan formula yang dipilih untuk dilanjutkan ke tahap Pilot Trial. Data stabilitas untuk registrasi sendiri baru diambil dari sampel Pilot Trial (minimal 2 batch)."}, {"n": 30, "p": 6, "level": "C3", "src": "P6 hlm. 4", "q": "Suatu industri akan memproduksi tablet dengan skala produksi 800.000 tablet per batch. Berapakah ukuran batch Pilot Trial yang harus dibuat?", "options": [{"k": "A", "t": "8.000 tablet"}, {"k": "B", "t": "10.000 tablet"}, {"k": "C", "t": "80.000 tablet"}, {"k": "D", "t": "100.000 tablet"}, {"k": "E", "t": "800.000 tablet"}], "ans": "D", "expl": "Ukuran umum batch Pilot Trial adalah 10% dari skala produksi atau 100.000 unit, mana yang lebih besar. 10% × 800.000 = 80.000 unit, lebih kecil dari 100.000 unit, sehingga batch pilot yang dibuat adalah 100.000 unit."}, {"n": 31, "p": 6, "level": "C2", "src": "P6 hlm. 7", "q": "Manakah pernyataan yang paling tepat tentang Quality by Design (QbD) dalam pengembangan formulasi?", "options": [{"k": "A", "t": "QbD adalah pengujian mutu produk jadi di akhir produksi"}, {"k": "B", "t": "QbD adalah pendekatan sistematik pada pengembangan produk farmasi yang diawali dengan penentuan tujuan dan pemahaman terhadap produk dan proses serta kontrol proses, berdasarkan ilmu pengetahuan dan manajemen risiko kualitas"}, {"k": "C", "t": "QbD adalah metode sampling bahan baku berdasarkan pola n, p, dan r"}, {"k": "D", "t": "QbD adalah dokumen ringkasan prospektif karakteristik mutu produk obat ideal"}, {"k": "E", "t": "QbD adalah strategi pemasaran produk obat baru"}], "ans": "B", "expl": "QbD adalah pendekatan sistematik pada pengembangan produk farmasi yang diawali dengan penentuan tujuan dan pemahaman terhadap produk dan proses serta kontrol proses, berdasarkan ilmu pengetahuan dan kualitas manajemen risiko. Manfaatnya antara lain meningkatkan efektivitas dan efisiensi proses produksi serta konsistensi kualitas produk."}, {"n": 32, "p": 6, "level": "C2", "src": "P6 hlm. 9", "q": "Dokumen yang berisi ringkasan prospektif dari karakteristik mutu suatu produk obat yang idealnya akan tercapai, dengan mempertimbangkan keamanan dan keefektifan produk obat, disebut…", "options": [{"k": "A", "t": "Certificate of Analysis (CoA)"}, {"k": "B", "t": "Design Space"}, {"k": "C", "t": "Control Strategy"}, {"k": "D", "t": "Quality Target Product Profile (QTPP)"}, {"k": "E", "t": "Risk Assessment"}], "ans": "D", "expl": "QTPP adalah ringkasan prospektif dari karakteristik mutu suatu produk obat yang idealnya akan tercapai dengan memastikan kualitas yang dikehendaki, dengan mempertimbangkan keamanan dan keefektifan produk obat. Contoh QTPP pada sediaan oral padat immediate release antara lain karakteristik tablet, identitas, assay dan uniformity, purity/impurity, stabilitas, dan dissolution."}, {"n": 33, "p": 6, "level": "C3", "src": "P6 hlm. 10 (definisi CPP)", "q": "Manakah yang merupakan Critical Process Parameter (CPP) pada pembuatan sediaan semisolid/krim?", "options": [{"k": "A", "t": "Kekerasan tablet"}, {"k": "B", "t": "Waktu disintegrasi tablet"}, {"k": "C", "t": "Kecepatan dan suhu pencampuran serta homogenisasi"}, {"k": "D", "t": "Kadar air granul"}, {"k": "E", "t": "Kerapuhan (friabilitas) tablet"}], "ans": "C", "expl": "CPP adalah parameter proses yang variabilitasnya berdampak pada atribut kualitas kritis sehingga harus dipantau atau dikendalikan. Pada pembuatan krim/semisolid, kecepatan dan suhu pencampuran serta proses homogenisasi menentukan keseragaman dan konsistensi sediaan. Pilihan A, B, D, dan E adalah atribut kualitas sediaan padat (tablet/granul), bukan parameter proses pembuatan krim."}, {"n": 34, "p": 6, "level": "C3", "src": "P6 hlm. 10 (definisi CQA)", "q": "Manakah berikut ini yang BUKAN termasuk Critical Quality Attribute (CQA) sediaan suspensi?", "options": [{"k": "A", "t": "Kadar zat aktif"}, {"k": "B", "t": "Viskositas"}, {"k": "C", "t": "Ukuran partikel"}, {"k": "D", "t": "Kelarutan zat aktif"}, {"k": "E", "t": "Keseragaman dosis"}], "ans": "D", "expl": "CQA adalah karakteristik produk jadi (output) yang harus berada dalam batas atau rentang yang sesuai untuk memastikan kualitas obat yang dikehendaki. Pada suspensi, CQA meliputi kadar zat aktif, viskositas, ukuran partikel, pH, dan keseragaman dosis. Kelarutan zat aktif adalah sifat fisikokimia bahan aktif, bukan atribut kualitas kritis produk jadi suspensi."}, {"n": 35, "p": 5, "level": "C2", "src": "P5 hlm. 3", "q": "Apakah tujuan pengujian mutu bahan baku dalam industri farmasi?", "options": [{"k": "A", "t": "Menentukan harga beli bahan baku yang paling murah"}, {"k": "B", "t": "Memastikan hanya bahan yang memenuhi kriteria kualitas yang telah ditetapkan yang digunakan dalam produksi, sehingga menjaga keamanan, khasiat, dan kualitas produk akhir"}, {"k": "C", "t": "Mempercepat proses registrasi produk ke Badan POM"}, {"k": "D", "t": "Menentukan jumlah bahan baku yang harus dipesan dari supplier"}, {"k": "E", "t": "Menggantikan pengujian mutu produk jadi"}], "ans": "B", "expl": "Tujuan pengujian mutu bahan baku adalah memastikan bahwa hanya bahan yang memenuhi kriteria kualitas yang telah ditetapkan yang digunakan dalam produksi, sehingga menjaga keamanan, khasiat, dan kualitas produk akhir."}, {"n": 36, "p": 5, "level": "C3", "src": "P5 hlm. 3", "q": "Manakah urutan tahapan pengujian mutu bahan baku yang benar?", "options": [{"k": "A", "t": "Pengujian Analisis → Menentukan Spesifikasi → Evaluasi Supplier → Inspeksi Kedatangan → Dokumentasi"}, {"k": "B", "t": "Menentukan Spesifikasi Bahan Baku → Evaluasi dan Kualifikasi Supplier → Inspeksi Kedatangan Bahan Baku → Pengujian Analisis Bahan Baku → Dokumentasi dan Pencatatan"}, {"k": "C", "t": "Inspeksi Kedatangan → Menentukan Spesifikasi → Pengujian Analisis → Evaluasi Supplier → Dokumentasi"}, {"k": "D", "t": "Evaluasi Supplier → Dokumentasi → Menentukan Spesifikasi → Inspeksi Kedatangan → Pengujian Analisis"}, {"k": "E", "t": "Dokumentasi → Menentukan Spesifikasi → Evaluasi Supplier → Inspeksi Kedatangan → Pengujian Analisis"}], "ans": "B", "expl": "Lima tahapan pengujian mutu bahan baku adalah: (1) Menentukan Spesifikasi Bahan Baku, (2) Evaluasi dan Kualifikasi Supplier, (3) Inspeksi Kedatangan Bahan Baku, (4) Pengujian Analisis Bahan Baku, dan (5) Dokumentasi dan Pencatatan."}, {"n": 37, "p": 5, "level": "C2", "src": "P5 hlm. 7", "q": "Manakah berikut ini yang termasuk kriteria mutu bahan tambahan (eksipien)?", "options": [{"k": "A", "t": "Meningkatkan kadar zat aktif dalam sediaan"}, {"k": "B", "t": "Memberikan warna dan rasa yang menarik pada produk"}, {"k": "C", "t": "Tidak mengganggu dalam pengujian dan penetapan kadar obat"}, {"k": "D", "t": "Mempercepat laju produksi di lini manufaktur"}, {"k": "E", "t": "Menurunkan biaya produksi (COGs)"}], "ans": "C", "expl": "Kriteria mutu Bahan Tambahan (eksipien) adalah: Aman; Tidak berlebihan; Tidak mengurangi ketersediaan hayati dan efek terapi obat; Tidak mengganggu dalam pengujian dan penetapan kadar obat; dan Bermutu."}, {"n": 38, "p": 5, "level": "C1", "src": "P5 hlm. 11", "q": "Bahan baku yang masih dalam masa karantina di gudang diberi label berwarna…", "options": [{"k": "A", "t": "Hijau"}, {"k": "B", "t": "Biru"}, {"k": "C", "t": "Kuning"}, {"k": "D", "t": "Merah"}, {"k": "E", "t": "Putih"}], "ans": "C", "expl": "Kode warna label gudang: DILULUSKAN (Release) berwarna Hijau, KARANTINA berwarna Kuning, dan DITOLAK (Reject) berwarna Merah."}, {"n": 39, "p": 5, "level": "C2", "src": "P5 hlm. 16–17", "q": "Pada Certificate of Analysis (CoA) Ondansetron HCl Dihydrate, pengujian identifikasi dilakukan dengan metode…", "options": [{"k": "A", "t": "HPLC dan Karl Fischer"}, {"k": "B", "t": "Spektrofotometri UV dan uji klorida"}, {"k": "C", "t": "IR (infrared) dan Chloride Test"}, {"k": "D", "t": "Kromatografi lapis tipis (TLC) dan uji pirogen"}, {"k": "E", "t": "GC dan uji endotoksin bakteri"}], "ans": "C", "expl": "Pada CoA Ondansetron HCl, identifikasi terdiri dari: A) IR — spektrum serapan inframerah sampel menunjukkan maksimum pada panjang gelombang yang sama dengan standar kerja; B) Chloride Test — harus memenuhi uji. Adapun kadar (assay) 98,0–102,0% ditetapkan dengan HPLC."}, {"n": 40, "p": 5, "level": "C2", "src": "P5 hlm. 4", "q": "Bahan aktif obat yang berasal dari mRNA bakteri termasuk dalam sumber bahan baku obat golongan…", "options": [{"k": "A", "t": "Sintesis kimiawi"}, {"k": "B", "t": "Ekstrak tanaman"}, {"k": "C", "t": "Ekstrak hewan"}, {"k": "D", "t": "Pertambangan (mineral)"}, {"k": "E", "t": "Produk bioteknologi"}], "ans": "E", "expl": "Lima sumber bahan baku obat adalah sintesis kimiawi, ekstrak tanaman, ekstrak hewan, pertambangan (mineral), dan produk bioteknologi. Bahan aktif berbasis mRNA yang dihasilkan melalui proses bioteknologi termasuk dalam golongan produk bioteknologi."}, {"n": 41, "p": 5, "level": "C2", "src": "P5 hlm. 4 (Ekstrak Tanaman sebagai salah satu sumber bahan baku obat)", "q": "Pewarna karoten yang digunakan dalam sediaan farmasi umumnya diperoleh dari sumber bahan baku…", "options": [{"k": "A", "t": "Sintesis kimiawi"}, {"k": "B", "t": "Ekstrak tanaman"}, {"k": "C", "t": "Ekstrak hewan"}, {"k": "D", "t": "Pertambangan (mineral)"}, {"k": "E", "t": "Produk bioteknologi"}], "ans": "B", "expl": "Karoten (misalnya beta-karoten) adalah pigmen alami berwarna kuning-oranye yang terdapat pada tumbuhan, misalnya wortel, dan diperoleh sebagai ekstrak tanaman untuk digunakan sebagai pewarna alami dalam sediaan farmasi dan pangan."}, {"n": 42, "p": 5, "level": "C3", "src": "P5 hlm. 12", "q": "Suatu bets bahan baku diterima dalam 100 wadah. Bahan diperkirakan belum homogen dan berasal dari pemasok baru yang belum terkualifikasi. Berapa jumlah wadah yang harus diambil sampelnya menurut pola sampling yang sesuai?", "options": [{"k": "A", "t": "4 wadah"}, {"k": "B", "t": "10 wadah"}, {"k": "C", "t": "11 wadah"}, {"k": "D", "t": "15 wadah"}, {"k": "E", "t": "40 wadah"}], "ans": "D", "expl": "Untuk bahan yang diperkirakan belum homogen, dari pemasok baru/belum terkualifikasi, atau bahan herbal digunakan Pola r: r = 1,5√N. Dengan N = 100 wadah, r = 1,5 × √100 = 1,5 × 10 = 15 wadah. (Bandingkan: Pola n = 1 + √N untuk bahan homogen dari pemasok terkualifikasi, dan Pola p = 0,4√N untuk pemeriksaan rutin bahan homogen dari pemasok terpercaya.)"}, {"n": 43, "p": 7, "level": "C4", "src": "P7 hlm. 12, hlm. 20, hlm. 22", "q": "Sebuah industri farmasi mengembangkan sirup oral non-steril berbasis air dengan nilai aktivitas air (a_w) terukur 0,95. Tim QA harus menetapkan spesifikasi rilis uji batas mikroba (MLT) untuk produk ini. Analisis penetapan spesifikasi yang PALING tepat berdasarkan ICH Q6A dan data a_w adalah …", "options": [{"k": "A", "t": "MLT rutin dapat ditiadakan karena sirup oral bukan sediaan steril"}, {"k": "B", "t": "MLT rutin wajib dilakukan lengkap disertai sistem pengawet, karena a_w > 0,91 mendukung pertumbuhan bakteri Gram Negatif"}, {"k": "C", "t": "MLT rutin dapat diganti dengan skip-lot testing karena sirup termasuk sediaan cair oral yang stabil"}, {"k": "D", "t": "MLT cukup dilakukan sekali saat validasi proses, karena a_w tinggi justru menghambat pertumbuhan mikroba"}, {"k": "E", "t": "MLT tidak diperlukan bila pH sirup netral, karena pH netral bukan kondisi ideal pertumbuhan bakteri"}], "ans": "B", "expl": "Nilai a_w 0,95 berada di atas ambang a_w > 0,91, yaitu rentang yang mendukung pertumbuhan bakteri Gram Negatif sehingga membutuhkan pengujian MLT lengkap dan sistem pengawet (hlm. 12). Matriks sediaan hlm. 20 menegaskan cairan oral (sirup) dengan a_w > 0,90 wajib diuji MLT karena fase airnya tinggi dan menjadi media tumbuh ideal. Hlm. 22 menambahkan MLT rutin wajib bila produk berpotensi mendukung pertumbuhan mikroba (sediaan cair berbasis air, a_w > 0,60). Pilihan A salah — non-steril bukan alasan meniadakan MLT. Pilihan C salah — skip-lot testing hanya untuk produk anhidrat a_w < 0,60. Pilihan D salah — a_w tinggi justru mendukung, bukan menghambat, pertumbuhan. Pilihan E salah — pH netral (5–8) justru kondisi ideal pertumbuhan bakteri (hlm. 15)."}, {"n": 44, "p": 7, "level": "C3", "src": "P7 hlm. 9, hlm. 7", "q": "Seorang analis QC diminta memilih metode Container Closure Integrity Testing (CCIT) untuk menguji integritas wadah vial injeksi secara non-destruktif, kuantitatif, dan deterministik sesuai USP <1207>. Metode yang PALING tepat adalah …", "options": [{"k": "A", "t": "Dye Ingress Testing, karena pewarna methylene blue mudah terdeteksi secara visual"}, {"k": "B", "t": "Microbial Ingress Testing, karena merendam wadah dalam suspensi bakteri langsung membuktikan tidak ada kebocoran"}, {"k": "C", "t": "High Voltage Leak Detection (HVLD) atau Vacuum/Pressure Decay, karena keduanya mengukur parameter fisik secara langsung tanpa merusak wadah"}, {"k": "D", "t": "Uji sterilitas konvensional, karena merupakan metode deterministik yang paling sensitif untuk vial injeksi"}, {"k": "E", "t": "Headspace Gas Analysis saja, karena metode deterministik lain tidak tercantum dalam USP <1207>"}], "ans": "C", "expl": "USP <1207> membagi metode CCIT menjadi deterministik (kuantitatif & non-destruktif) dan probabilistik (kualitatif/destruktif) (hlm. 9). Metode deterministik meliputi High Voltage Leak Detection (HVLD) — arus tegangan tinggi mendeteksi celah mikro pada wadah non-konduktif — dan Vacuum/Pressure Decay — mengukur penurunan tekanan/vakum akibat kebocoran gas; keduanya mengukur parameter fisik secara langsung tanpa merusak wadah. Pilihan A dan B salah — Dye Ingress dan Microbial Ingress adalah metode probabilistik/destruktif (hlm. 9). Pilihan D salah — uji sterilitas bukan metode CCIT. Pilihan E salah — Headspace Gas Analysis dan Mass Extraction juga termasuk metode deterministik menurut hlm. 9, jadi bukan satu-satunya. **Catatan jebakan:** hlm. 7 menyebut \"Dye Ingress\" sebagai metode deterministik — ini bertentangan dengan hlm. 9 dan dengan USP <1207>; yang benar menurut USP <1207> adalah Dye Ingress = probabilistik."}, {"n": 45, "p": 7, "level": "C2", "src": "P7 hlm. 21", "q": "Menurut kriteria keberterimaan mikrobiologi sediaan non-steril (USP <1111>), mikroba patogen spesifik yang wajib TIDAK ADA (absent) pada sediaan topikal adalah …", "options": [{"k": "A", "t": "*Escherichia coli* dan *Salmonella* spp."}, {"k": "B", "t": "*Pseudomonas aeruginosa* dan *Staphylococcus aureus*"}, {"k": "C", "t": "*Candida albicans* dan *Aspergillus brasiliensis*"}, {"k": "D", "t": "*Escherichia coli* saja"}, {"k": "E", "t": "*Pseudomonas aeruginosa* saja"}], "ans": "B", "expl": "Komponen MLT rutin (hlm. 21) menetapkan mikroba spesifik yang wajib absent sesuai rute pemberian: *Escherichia coli* (sediaan oral), *Pseudomonas aeruginosa* dan *Staphylococcus aureus* (sediaan topikal/mukosa), *Candida albicans* (sediaan vagina), dan *Salmonella* spp. (sediaan bahan alam/oral tertentu). Jadi pasangan patogen untuk sediaan topikal adalah *P. aeruginosa* + *S. aureus*."}, {"n": 46, "p": 7, "level": "C4", "src": "Di luar slide — suplemen", "q": "Sebuah eliksir mengandung etanol 20% sebagai pelarut. Tim formulasi mempertimbangkan apakah perlu menambahkan pengawet sintetis ke dalam formula tersebut. Analisis kebutuhan pengawet yang PALING tepat adalah …", "options": [{"k": "A", "t": "Pengawet sintetis tetap wajib ditambahkan pada kadar maksimum, karena etanol tidak memiliki aktivitas antimikroba"}, {"k": "B", "t": "Pengawet sintetis tidak diperlukan, karena formulasi hidroalkohol dengan kadar etanol tinggi (≥15–20%) bersifat antimikroba sendiri sehingga mampu menekan pertumbuhan mikroba tanpa pengawet tambahan"}, {"k": "C", "t": "Pengawet sintetis harus diganti dengan pengawet alami, karena etanol 20% merusak semua jenis pengawet sintetis"}, {"k": "D", "t": "Pengawet sintetis hanya diperlukan bila eliksir dikemas dalam wadah dosis ganda, karena etanol menguap dari wadah dosis tunggal"}, {"k": "E", "t": "Pengawet sintetis tidak diperlukan, karena semua sediaan cair oral otomatis bebas dari persyaratan sistem pengawet"}], "ans": "B", "expl": "**Catatan: Di luar slide — suplemen.** Slide P7 hlm. 11 hanya menyebut \"kandungan alkohol atau glikol tinggi bersifat bakterisidal alami\" sebagai sifat antimikroba inheren — tanpa angka kadar etanol 15–20%, tanpa kata \"eliksir\", dan tanpa pernyataan bahwa pengawet sintetis tidak diperlukan. Secara farmasetika, formulasi hidroalkohol dengan kadar etanol ≥15–20% bersifat antimikroba sendiri (etanol mendenaturasi protein dan merusak membran sel mikroba), sehingga pengawet sintetis tambahan tidak diperlukan — prinsip inilah yang mendasari sediaan eliksir dan tinctura yang umumnya tidak mengandung pengawet. Pilihan A salah — etanol justru bersifat antimikroba. Pilihan C salah — tidak ada keterangan etanol merusak pengawet sintetis. Pilihan D salah — kebutuhan pengawet ditentukan oleh sifat formulasi, bukan semata jenis wadah. Pilihan E salah — sediaan cair oral berbasis air justru wajib MLT dan sistem pengawet (hlm. 12, 20)."}, {"n": 47, "p": 7, "level": "C2", "src": "P7 hlm. 6 (prinsip AET); sebagian suplemen", "q": "Seorang formulator mengembangkan sediaan tetes mata dosis ganda yang memerlukan sistem pengawet. Untuk membuktikan pengawet yang dipilih efektif melindungi sediaan selama masa simpan, pengujian yang harus dilakukan dan prinsip dasarnya adalah …", "options": [{"k": "A", "t": "Uji sterilitas, dengan prinsip memastikan tidak ada mikroorganisme hidup dalam sediaan"}, {"k": "B", "t": "Antimicrobial Effectiveness Testing (AET, USP <51>), dengan prinsip challenge test: menginokulasi mikroba uji (bakteri, kamir, kapang) ke dalam sediaan dan mengevaluasi penurunan Log jumlah mikroba selama 28 hari"}, {"k": "C", "t": "Microbial Limits Testing (MLT), dengan prinsip menghitung TAMC dan TYMC pada akhir masa simpan"}, {"k": "D", "t": "Container Closure Integrity Testing (CCIT), dengan prinsip mengukur kebocoran wadah tetes mata secara deterministik"}, {"k": "E", "t": "Uji endotoksin (LAL), dengan prinsip mendeteksi pirogen dalam sediaan tetes mata"}], "ans": "B", "expl": "Pengujian Efektivitas Pengawet (AET) menurut USP <51> (Ph. Eur. 5.1.3) adalah uji yang tepat: penetapan konsentrasi minimum efektif pengawet, challenge test dengan inokulasi mikroba uji (bakteri, kamir, kapang), evaluasi penurunan Log dalam 28 hari, serta pemeriksaan stabilitas pengawet hingga akhir masa simpan (hlm. 6). **Catatan: Di luar slide — suplemen (sebagian).** Slide hlm. 6 tidak menyebut tetes mata secara khusus, tidak menyebut organisme uji spesifik (mis. *S. aureus*, *P. aeruginosa*, *E. coli*, *C. albicans*, *A. brasiliensis*), dan tidak memuat kriteria penurunan log per kategori sediaan USP <51> — detail kriteria kategori (mis. target penurunan log untuk sediaan kategori 1) berasal dari kompendia USP <51>, bukan dari slide. Pilihan A, C, D, dan E adalah pengujian yang berbeda tujuannya: uji sterilitas (jaminan bebas mikroba hidup), MLT (batas mikroba produk), CCIT (integritas wadah), dan uji endotoksin (pirogen parenteral) — bukan uji efektivitas pengawet."}, {"n": 48, "p": 7, "level": "C4", "src": "P7 hlm. 8", "q": "Selama studi stabilitas berkala sediaan injeksi steril, tim QC mempertimbangkan untuk mengganti uji sterilitas destruktif dengan metode CCIT fisik non-destruktif (USP <1207>). Alasan pemilihan CCIT fisik yang PALING tepat adalah …", "options": [{"k": "A", "t": "CCIT fisik lebih murah karena tidak memerlukan alat khusus dan dapat dilakukan oleh operator tanpa pelatihan"}, {"k": "B", "t": "CCIT fisik non-destruktif direkomendasikan menggantikan uji sterilitas destruktif selama studi stabilitas karena hasilnya lebih obyektif dan akurat, serta tidak rentan terhadap false positive akibat kontaminasi saat pengujian"}, {"k": "C", "t": "Uji sterilitas destruktif sudah tidak diakui lagi oleh USP <1207> untuk semua tahap siklus hidup produk"}, {"k": "D", "t": "CCIT fisik dapat menggantikan seluruh pengujian mikrobiologi lain, termasuk MLT dan AET, pada sediaan steril"}, {"k": "E", "t": "CCIT fisik dipilih karena wadah yang diuji dapat langsung dijual kembali setelah pengujian"}], "ans": "B", "expl": "Menurut hlm. 8, berdasarkan USP <1207>, CCIT fisik non-destruktif kini sangat direkomendasikan untuk menggantikan uji sterilitas destruktif selama studi stabilitas berkala, karena memberikan hasil yang lebih obyektif dan akurat, serta tidak rentan terhadap *false positive* akibat kontaminasi saat pengujian. Selain itu CCIT memastikan tidak ada celah mikro sebagai rute masuk mikroorganisme dan menjaga mutu fisikokimia produk (mencegah penguapan dan paparan oksigen/kelembapan). Pilihan A salah — metode deterministik seperti HVLD justru memerlukan alat khusus. Pilihan C salah — uji sterilitas tetap diakui; yang digantikan adalah penggunaannya pada pemantauan stabilitas berkala. Pilihan D salah — CCIT hanya menguji integritas wadah, tidak menggantikan MLT/AET. Pilihan E salah — \"dapat dijual kembali\" bukan alasan regulatori yang tercantum di slide."}, {"n": 49, "p": 7, "level": "C4", "src": "P7 hlm. 5, hlm. 17, hlm. 18, hlm. 19, hlm. 22", "q": "Sebuah perusahaan mengajukan registrasi variasi untuk tablet kering (anhidrat) dengan data aktivitas air a_w < 0,60 yang konsisten, data historis bioburden bahan baku dan eksipien yang rendah, serta proses granulasi kering dan kompresi yang tervalidasi. Perusahaan memohon agar pengujian MLT rutin pada spesifikasi rilis dapat ditiadakan (skip-testing). Analisis persyaratan dokumen dan data pendukung permohonan ini yang PALING tepat adalah …", "options": [{"k": "A", "t": "Permohonan ditolak, karena ICH Q6A Decision Tree #8 hanya berlaku untuk sediaan steril"}, {"k": "B", "t": "Permohonan dapat diterima dengan justifikasi ilmiah dalam dokumen CTD 3.2.P.2.5, karena produk bersifat inherently hostile (anhidrat, a_w < 0,60) dan didukung kontrol bahan baku, validasi manufaktur, serta monitoring lingkungan"}, {"k": "C", "t": "Permohonan dapat diterima tanpa dokumen pendukung apa pun, karena a_w < 0,60 saja sudah cukup sebagai bukti"}, {"k": "D", "t": "Permohonan ditolak, karena tablet kering tetap wajib MLT rutin setiap bets tanpa pengecualian"}, {"k": "E", "t": "Permohonan dapat diterima bila perusahaan mengganti granulasi kering dengan granulasi basah agar kadar air produk lebih tinggi"}], "ans": "B", "expl": "Alur ICH Q6A Decision Tree #8 (hlm. 5, versi kedua di hlm. 18) terdiri dari 3 langkah: evaluasi sifat fisikokimia formulasi (padat kering/anhidrat), pengukuran a_w (< 0,60 secara konsisten mencegah perkembangbiakan mikroba), dan verifikasi kontrol proses & bahan baku — dengan kesimpulan pengujian MLT rutin pada spesifikasi rilis dapat ditiadakan dan justifikasi dicantumkan dalam dokumen CTD 3.2.P.2.5. Hlm. 17 menegaskan tablet & kapsul kering memiliki lingkungan *inherently hostile* (mikroba mati/inaktif bertahap selama penyimpanan) dan dapat mengajukan peniadaan MLT dengan strategi *skip-lot testing*. Hlm. 19 menambahkan elemen pendukung: kontrol bahan baku (spesifikasi bioburden ketat), validasi manufaktur (proses pengeringan konsisten menekan kadar air), dan monitoring lingkungan. Hlm. 22 merangkum syaratnya: produk terbukti *inherently hostile* (a_w < 0,60, pH ekstrem, atau kadar alkohol tinggi) dan data historis validasi/kontrol konsisten menunjukkan tidak ada risiko kontaminasi. Pilihan A salah — DT #8 justru untuk sediaan non-steril. Pilihan C salah — justifikasi CTD dan data pendukung tetap wajib. Pilihan D salah — peniadaan dimungkinkan dengan justifikasi. Pilihan E salah — granulasi basah justru menambah risiko mikroba."}, {"n": 50, "p": 7, "level": "C2", "src": "P7 hlm. 21", "q": "Seorang analis QC menyusun spesifikasi mikrobiologi sediaan vagina (krim vagina) sesuai USP <1111>. Mikroba patogen spesifik yang wajib TIDAK ADA (absent) pada sediaan vagina adalah …", "options": [{"k": "A", "t": "*Escherichia coli*"}, {"k": "B", "t": "*Pseudomonas aeruginosa* dan *Staphylococcus aureus*"}, {"k": "C", "t": "*Candida albicans*"}, {"k": "D", "t": "*Salmonella* spp."}, {"k": "E", "t": "*Pseudomonas aeruginosa* saja"}], "ans": "C", "expl": "Komponen MLT rutin (hlm. 21) menetapkan mikroba spesifik yang wajib absent sesuai rute pemberian: *Escherichia coli* (sediaan oral), *Pseudomonas aeruginosa* dan *Staphylococcus aureus* (sediaan topikal/mukosa), *Candida albicans* (sediaan vagina), dan *Salmonella* spp. (sediaan bahan alam/oral tertentu). Jadi patogen spesifik untuk sediaan vagina adalah *C. albicans* — jamur yang memang menjadi penyebab tersering kandidiasis vagina, sehingga keberadaannya harus dipastikan tidak ada dalam sediaan vagina."}];
+
+      const SUPLEMEN = {16:1,17:1,19:1,25:1,33:1,34:1,40:1,41:1,46:1,47:1};
+      const PERTEMUAN_LABEL = {1:"P1",2:"P2",3:"P3",4:"P4",5:"P5",6:"P6",7:"P7"};
+
+      /* ================= TAB ================= */
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      tabBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          tabBtns.forEach(function (b) { b.setAttribute("aria-selected", "false"); });
+          btn.setAttribute("aria-selected", "true");
+          document.querySelectorAll(".panel").forEach(function (p) { p.classList.remove("active"); });
+          document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+
+      /* ================= UTIL ================= */
+      function esc(s) {
+        return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      function fmt(s) {
+        let t = esc(s);
+        t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        t = t.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+        return t;
+      }
+
+      /* ================= LATIHAN ================= */
+      const state = {
+        fp: "all",        // filter pertemuan
+        fl: "all",        // filter level
+        idx: 0,           // posisi dalam daftar tersaring
+        answers: {}       // {nomorSoal: "A".."E"} — tersimpan selama sesi
+      };
+
+      const fpWrap = document.getElementById("filter-p");
+      const flWrap = document.getElementById("filter-l");
+      function buildFilters() {
+        const pOpts = [["all", "Semua"], ["1","P1"],["2","P2"],["3","P3"],["4","P4"],["5","P5"],["6","P6"],["7","P7"]];
+        const lOpts = [["all", "Semua"], ["C1","C1"],["C2","C2"],["C3","C3"],["C4","C4"]];
+        fpWrap.innerHTML = pOpts.map(function (o) {
+          return '<button class="fchip" data-fp="' + o[0] + '" aria-pressed="' + (state.fp === o[0]) + '">' + o[1] + "</button>";
+        }).join("");
+        flWrap.innerHTML = lOpts.map(function (o) {
+          return '<button class="fchip" data-fl="' + o[0] + '" aria-pressed="' + (state.fl === o[0]) + '">' + o[1] + "</button>";
+        }).join("");
+        fpWrap.querySelectorAll("button").forEach(function (b) {
+          b.addEventListener("click", function () {
+            state.fp = b.dataset.fp; state.idx = 0; buildFilters(); renderQuiz();
+          });
+        });
+        flWrap.querySelectorAll("button").forEach(function (b) {
+          b.addEventListener("click", function () {
+            state.fl = b.dataset.fl; state.idx = 0; buildFilters(); renderQuiz();
+          });
+        });
+      }
+
+      function filtered() {
+        return SOAL.filter(function (q) {
+          return (state.fp === "all" || q.p === Number(state.fp)) &&
+                 (state.fl === "all" || q.level === state.fl);
+        });
+      }
+
+      const quizArea = document.getElementById("quiz-area");
+      const numGrid = document.getElementById("numgrid");
+
+      function renderQuiz() {
+        const list = filtered();
+        const totalAnswered = SOAL.filter(function (q) { return state.answers[q.n]; }).length;
+        document.getElementById("quiz-count").textContent =
+          list.length ? ("Soal " + (state.idx + 1) + " dari " + list.length + " pada saringan ini") : "Tidak ada soal pada saringan ini";
+        document.getElementById("quiz-progress-label").textContent =
+          "Terjawab " + totalAnswered + " dari " + SOAL.length + " soal";
+        document.getElementById("progress-bar").style.width =
+          (SOAL.length ? (totalAnswered / SOAL.length) * 100 : 0) + "%";
+
+        if (!list.length) {
+          quizArea.innerHTML = '<div class="empty-note">Tidak ada soal dengan kombinasi saringan ini. Coba longgarkan saringannya ya.</div>';
+          numGrid.innerHTML = "";
+          return;
+        }
+        if (state.idx >= list.length) state.idx = list.length - 1;
+        const q = list[state.idx];
+        const badges =
+          '<span class="badge">Soal ' + q.n + "</span>" +
+          '<span class="badge p">' + PERTEMUAN_LABEL[q.p] + "</span>" +
+          '<span class="badge lvl">Level ' + q.level + "</span>" +
+          (SUPLEMEN[q.n] ? '<span class="badge sup">Di luar slide — suplemen</span>' : "");
+        const opts = q.options.map(function (o) {
+          const sel = state.answers[q.n] === o.k;
+          return '<button class="opt" data-k="' + o.k + '" aria-pressed="' + sel + '">' +
+            '<span class="letter">' + o.k + "</span><span>" + fmt(o.t) + "</span></button>";
+        }).join("");
+        quizArea.innerHTML =
+          '<div class="qcard"><div class="qbadges">' + badges + "</div>" +
+          '<p class="qtext">' + fmt(q.q) + '</p><div class="opts">' + opts + "</div>" +
+          '<div class="qnav">' +
+          '<button class="btn" id="q-prev"' + (state.idx === 0 ? " disabled" : "") + ">← Sebelumnya</button>" +
+          '<button class="btn grow" id="q-next"' + (state.idx === list.length - 1 ? " disabled" : "") + ">Berikutnya →</button>" +
+          "</div></div>";
+        quizArea.querySelectorAll(".opt").forEach(function (b) {
+          b.addEventListener("click", function () {
+            state.answers[q.n] = b.dataset.k;
+            renderQuiz();
+          });
+        });
+        const prev = document.getElementById("q-prev");
+        const next = document.getElementById("q-next");
+        if (prev) prev.addEventListener("click", function () { if (state.idx > 0) { state.idx--; renderQuiz(); } });
+        if (next) next.addEventListener("click", function () { if (state.idx < list.length - 1) { state.idx++; renderQuiz(); } });
+
+        numGrid.innerHTML = list.map(function (item, i) {
+          const cls = (state.answers[item.n] ? "done" : "") + (i === state.idx ? " now" : "");
+          return '<button data-i="' + i + '" class="' + cls.trim() + '" aria-label="Ke soal ' + item.n + '">' + item.n + "</button>";
+        }).join("");
+        numGrid.querySelectorAll("button").forEach(function (b) {
+          b.addEventListener("click", function () { state.idx = Number(b.dataset.i); renderQuiz(); });
+        });
+      }
+
+      /* ================= HASIL ================= */
+      const quizView = document.getElementById("quiz-view");
+      const resultView = document.getElementById("result-view");
+
+      function showResults() {
+        const list = filtered().length ? filtered() : SOAL;
+        let benar = 0;
+        const perLevel = {}, perP = {};
+        list.forEach(function (q) {
+          const ok = state.answers[q.n] === q.ans;
+          if (ok) benar++;
+          perLevel[q.level] = perLevel[q.level] || [0, 0];
+          perLevel[q.level][1]++; if (ok) perLevel[q.level][0]++;
+          perP[q.p] = perP[q.p] || [0, 0];
+          perP[q.p][1]++; if (ok) perP[q.p][0]++;
+        });
+        const pct = list.length ? Math.round((benar / list.length) * 100) : 0;
+        document.getElementById("score-big").textContent = pct + "%";
+        document.getElementById("score-line").textContent =
+          "Benar " + benar + " dari " + list.length + " soal pada saringan saat ini.";
+        document.getElementById("score-love").textContent =
+          pct >= 80 ? "Kerja bagus — tinggal poles jebakan-jebakannya, kamu siap. ♥" :
+          pct >= 60 ? "Sudah lebih dari separuh jalan. Cek telaahnya pelan-pelan, ya. ♥" :
+                      "Tidak apa-apa, namanya juga latihan. Telaah di bawah ini teman terbaikmu sekarang. ♥";
+        document.getElementById("bd-level").innerHTML =
+          Object.keys(perLevel).sort().map(function (k) {
+            return '<div class="bd-row"><span>Level ' + k + '</span><b>' + perLevel[k][0] + " / " + perLevel[k][1] + "</b></div>";
+          }).join("");
+        document.getElementById("bd-pertemuan").innerHTML =
+          Object.keys(perP).sort().map(function (k) {
+            return '<div class="bd-row"><span>Pertemuan ' + PERTEMUAN_LABEL[k] + '</span><b>' + perP[k][0] + " / " + perP[k][1] + "</b></div>";
+          }).join("");
+        document.getElementById("review-list").innerHTML = list.map(function (q) {
+          const mine = state.answers[q.n];
+          const ok = mine === q.ans;
+          const cls = !mine ? "skip" : ok ? "ok" : "no";
+          const status = !mine ? "Belum dijawab" : ok ? "✓ Benar" : "✗ Kurang tepat";
+          const correctText = q.options.filter(function (o) { return o.k === q.ans; })[0];
+          const mineText = mine ? q.options.filter(function (o) { return o.k === mine; })[0] : null;
+          return '<div class="review-item ' + cls + '">' +
+            '<div class="qbadges"><span class="badge">Soal ' + q.n + '</span>' +
+            '<span class="badge p">' + PERTEMUAN_LABEL[q.p] + '</span>' +
+            '<span class="badge lvl">Level ' + q.level + "</span>" +
+            (SUPLEMEN[q.n] ? '<span class="badge sup">Di luar slide — suplemen</span>' : "") +
+            '<span class="status">' + status + "</span></div>" +
+            '<p class="rq">' + fmt(q.q) + "</p>" +
+            (mineText ? '<p class="ans">Jawabanmu: <b>' + mine + ".</b> " + fmt(mineText.t) + "</p>" : '<p class="ans">Jawabanmu: —</p>') +
+            '<p class="ans">Kunci: <b class="k">' + q.ans + ".</b> " + fmt(correctText.t) + "</p>" +
+            '<div class="expl"><b>Pembahasan:</b> ' + fmt(q.expl) + "</div>" +
+            '<p class="src">Sumber: ' + esc(q.src) + "</p></div>";
+        }).join("");
+        quizView.hidden = true;
+        resultView.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      document.getElementById("btn-finish").addEventListener("click", showResults);
+      document.getElementById("btn-back").addEventListener("click", function () {
+        resultView.hidden = true; quizView.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      document.getElementById("btn-reset").addEventListener("click", function () {
+        const list = filtered().length ? filtered() : SOAL;
+        list.forEach(function (q) { delete state.answers[q.n]; });
+        state.idx = 0;
+        resultView.hidden = true; quizView.hidden = false;
+        renderQuiz();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      buildFilters();
+      renderQuiz();
+
+      /* ================= KARTU KILAT ================= */
+      const KARTU = [
+        ["Pedoman ICH untuk QbD?", "ICH Q8 — Pharmaceutical Development (R2)"],
+        ["Pedoman ICH untuk QRM?", "ICH Q9 — Quality Risk Management"],
+        ["6 elemen QbD (prior knowledge)?", "QTPP, CQA, penilaian risiko, ruang desain, strategi kontrol, manajemen siklus hidup produk"],
+        ["Hierarki mutu produk ideal?", "Aman (Safe) → Berkhasiat (Effective) → Nyaman (Acceptable)"],
+        ["Unsur atribut produk menurut Kotler 2008?", "Kualitas Produk, Fitur Produk, Desain Produk"],
+        ["Faktor pertimbangan desain produk?", "Estetika, Ekonomis, Bahan"],
+        ["BUD sediaan krim setelah kemasan dibuka?", "90 hari / 3 bulan"],
+        ["Rumus kompresibilitas serbuk?", "(Kerapatan mampat − kerapatan nyata) / kerapatan mampat × 100% — % rendah paling baik"],
+        ["Alat penetapan kerapatan mampat (tap density)?", "Tapped density tester (USP method 1)"],
+        ["Alat distribusi ukuran partikel?", "Ayakan bertingkat (sieve shaker); sampel 25–100 g"],
+        ["Alat ukur berat jenis? BJ air?", "Piknometer; BJ air = 1 (1 g/mL)"],
+        ["Instrumen suhu transisi gelas (Tg)?", "DSC (Differential Scanning Calorimetry)"],
+        ["Rumus RPN pada FMEA?", "RPN = Severity × Occurrence × Detection"],
+        ["RPN 20 menurut POPP CPOB?", "Kritikal — prioritas perbaikan Tinggi"],
+        ["Operator belum terlatih & tidak menjalankan SOP — kategori Ishikawa?", "MAN"],
+        ["Yang BUKAN 5 pilar mutu produk CPOB?", "Sales & Marketing"],
+        ["Ukuran batch Pilot Trial?", "10% skala produksi atau 100.000 unit — mana yang lebih besar"],
+        ["Data stabilitas Pilot Trial untuk registrasi?", "Minimal 2 batch → Approvable Letter → NIE"],
+        ["Warna label karantina bahan baku?", "Kuning (hijau = lulus, merah = ditolak)"],
+        ["Rumus pola sampling r? Kapan dipakai?", "r = 1,5√N — bahan belum homogen / pemasok baru / bahan herbal"],
+        ["Rumus pola sampling n dan p?", "n = 1 + √N (homogen, pemasok terkualifikasi) · p = 0,4√N (rutin, pemasok terpercaya)"],
+        ["Uji identifikasi pada CoA Ondansetron HCl?", "IR (spektrum serapan) dan Chloride Test"],
+        ["Assay Ondansetron HCl (HPLC)?", "98,0–102,0% w/w"],
+        ["a_w bebas MLT rutin (skip-testing)?", "a_w < 0,60 — produk anhidrat, inherently hostile (ICH Q6A DT #8)"],
+        ["a_w yang mendukung bakteri Gram Negatif?", "a_w > 0,91 → MLT lengkap + sistem pengawet"],
+        ["Patogen spesifik wajib absent pada sediaan topikal?", "Pseudomonas aeruginosa dan Staphylococcus aureus"],
+        ["Patogen spesifik wajib absent pada sediaan vagina?", "Candida albicans"],
+        ["AET menurut kompendia apa, dan berapa lama challenge test-nya?", "USP <51> — inokulasi mikroba uji, penurunan Log dievaluasi 28 hari"],
+        ["Contoh metode CCIT deterministik?", "HVLD, Vacuum/Pressure Decay, Headspace Gas Analysis, Mass Extraction"],
+        ["Dye Ingress termasuk metode CCIT apa?", "Probabilistik (kualitatif/destruktif) menurut USP <1207>"],
+        ["Justifikasi peniadaan MLT rutin ditulis di dokumen?", "CTD 3.2.P.2.5"],
+        ["Suhu rantai dingin (cold chain) vaksin?", "2 °C–8 °C"],
+        ["Eliksir etanol berapa yang antimikroba sendiri?", "≥ 15–20% — pengawet sintetis tidak diperlukan"]
+      ];
+      let kartuOrder = KARTU.map(function (_, i) { return i; });
+      let kartuPos = 0;
+      let flipped = false;
+      const flashEl = document.getElementById("flash");
+      function renderKartu() {
+        const k = KARTU[kartuOrder[kartuPos]];
+        document.getElementById("flash-front-text").textContent = k[0];
+        document.getElementById("flash-back-text").textContent = k[1];
+        document.getElementById("flash-ctr").textContent = "Kartu " + (kartuPos + 1) + " / " + kartuOrder.length;
+        flipped = false;
+        flashEl.classList.remove("flipped");
+      }
+      flashEl.addEventListener("click", function () {
+        flipped = !flipped;
+        flashEl.classList.toggle("flipped", flipped);
+      });
+      document.getElementById("flash-prev").addEventListener("click", function () {
+        kartuPos = (kartuPos - 1 + kartuOrder.length) % kartuOrder.length; renderKartu();
+      });
+      document.getElementById("flash-next").addEventListener("click", function () {
+        kartuPos = (kartuPos + 1) % kartuOrder.length; renderKartu();
+      });
+      document.getElementById("flash-shuffle").addEventListener("click", function () {
+        for (let i = kartuOrder.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const t = kartuOrder[i]; kartuOrder[i] = kartuOrder[j]; kartuOrder[j] = t;
+        }
+        kartuPos = 0; renderKartu();
+      });
+      renderKartu();
+    </script>
+  </body>
+</html>
