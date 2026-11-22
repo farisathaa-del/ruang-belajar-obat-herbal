@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Ruang Belajar Etika dan Regulasi Farmasi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f6f7fd;
+        --bg-soft: #e9ebf8;
+        --surface: #ffffff;
+        --surface-2: #eef0fb;
+        --ink: #232742;
+        --muted: #5f6486;
+        --line: #dfe2f2;
+        --accent: #4658a8;
+        --accent-ink: #ffffff;
+        --accent-soft: #e4e8fb;
+        --terra: #6a6f9e;
+        --terra-soft: #e8eaf6;
+        --good: #1e7d4f;
+        --good-soft: #e2f3e8;
+        --bad: #b3261e;
+        --bad-soft: #fbe7e4;
+        --warn: #9a6a00;
+        --warn-soft: #fdf3d3;
+        --shadow: 0 10px 28px rgba(70, 88, 168, 0.12);
+        --radius: 16px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #161a2e;
+          --bg-soft: #1e2338;
+          --surface: #232842;
+          --surface-2: #2a2f4a;
+          --ink: #e9ebf7;
+          --muted: #b3b8d6;
+          --line: #3a4066;
+          --accent: #a8b4ea;
+          --accent-ink: #141a33;
+          --accent-soft: #2c3455;
+          --terra: #b3b8e0;
+          --terra-soft: #2c2f45;
+          --good: #6fd598;
+          --good-soft: #1e3a2a;
+          --bad: #ff9d94;
+          --bad-soft: #452622;
+          --warn: #f2cd72;
+          --warn-soft: #453a1c;
+          --shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+      h1, h2, h3, .serif { font-family: "Lora", Georgia, serif; }
+      button { font: inherit; cursor: pointer; }
+      button, [role="button"], select, summary { min-height: 2.5rem; }
+      .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px 64px; }
+
+      /* ---------- Hero ---------- */
+      .hero { padding: 30px 4px 8px; }
+      .hero .kicker {
+        color: var(--accent); font-weight: 800; letter-spacing: 0.14em;
+        font-size: 0.78rem; text-transform: uppercase; margin: 0 0 6px;
+      }
+      .hero h1 { font-size: clamp(1.9rem, 6vw, 2.7rem); line-height: 1.15; margin: 0 0 8px; font-weight: 700; }
+      .hero p.lede { color: var(--muted); font-size: 1.02rem; margin: 0 0 14px; max-width: 56ch; }
+      .hero p.lede em { color: var(--accent); font-family: "Lora", Georgia, serif; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+      .chip {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+        padding: 6px 12px; font-size: 0.85rem; font-weight: 700; color: var(--ink);
+      }
+      .chip b { color: var(--accent); }
+      .love-note {
+        margin-top: 16px; background: var(--accent-soft); border-radius: var(--radius);
+        padding: 14px 16px; font-size: 0.95rem;
+      }
+      .love-note .heart { color: var(--accent); }
+
+      /* ---------- Tabs ---------- */
+      .tabs {
+        position: sticky; top: 0; z-index: 20;
+        background: var(--bg); padding: 10px 0 8px;
+        display: flex; flex-wrap: wrap; gap: 8px;
+      }
+      .tab-btn {
+        flex: 0 0 auto; border: 1px solid var(--line); background: var(--surface);
+        color: var(--ink); border-radius: 999px; padding: 9px 16px; font-weight: 800; font-size: 0.92rem;
+      }
+      .tab-btn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .panel { display: none; }
+      .panel.active { display: block; }
+      .panel > h2 { font-size: 1.45rem; margin: 18px 0 4px; }
+      .panel > .sub { color: var(--muted); margin: 0 0 16px; font-size: 0.95rem; }
+
+      /* ---------- Materi ---------- */
+      .pnav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+      .pnav a {
+        display: inline-flex; align-items: center; min-height: 2.5rem;
+        text-decoration: none; color: var(--ink); background: var(--surface);
+        border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 0.9rem;
+      }
+      .materi-card {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 18px 18px 8px; margin-bottom: 16px; box-shadow: var(--shadow);
+      }
+      .materi-card h3 { margin: 0 0 2px; font-size: 1.22rem; }
+      .materi-card .meta { color: var(--accent); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 10px; }
+      .materi-card h4 { margin: 16px 0 4px; font-size: 1rem; color: var(--terra); font-family: "Nunito Sans", sans-serif; font-weight: 800; }
+      .materi-card ul { margin: 4px 0 12px; padding-left: 20px; }
+      .materi-card li { margin-bottom: 5px; }
+      .materi-card p { margin: 4px 0 12px; }
+      .formula {
+        background: var(--surface-2); border-radius: 10px; padding: 10px 14px;
+        font-weight: 700; margin: 8px 0 12px; overflow-x: auto;
+      }
+      .mini-table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 0.92rem; }
+      .mini-table th, .mini-table td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      .mini-table th { color: var(--accent); font-weight: 800; }
+
+      /* ---------- Latihan ---------- */
+      .filter-block { margin-bottom: 6px; }
+      .filter-label { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 12px 0 6px; }
+      .fchips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .fchip {
+        border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+        border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: 0.9rem; min-height: 2.5rem;
+      }
+      .fchip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .quiz-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 16px 0 6px; flex-wrap: wrap; }
+      .quiz-meta .count { color: var(--muted); font-size: 0.9rem; font-weight: 700; }
+      .progress { height: 9px; background: var(--surface-2); border-radius: 99px; overflow: hidden; border: 1px solid var(--line); }
+      .progress > div { height: 100%; background: var(--accent); width: 0%; transition: width 0.25s ease; }
+      .qcard {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 18px; margin-top: 14px; box-shadow: var(--shadow);
+      }
+      .qbadges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+      .badge { font-size: 0.75rem; font-weight: 800; border-radius: 999px; padding: 3px 10px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+      .badge.p { background: var(--terra-soft); color: var(--terra); border-color: transparent; }
+      .badge.lvl { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+      .badge.sup { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+      .qtext { font-size: 1.05rem; font-weight: 600; margin: 0 0 14px; }
+      .opts { display: grid; gap: 9px; }
+      .opt {
+        display: flex; gap: 11px; align-items: flex-start; text-align: left; width: 100%;
+        background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px;
+        padding: 12px 13px; color: var(--ink); min-height: 3rem;
+      }
+      .opt .letter {
+        flex: 0 0 auto; width: 27px; height: 27px; border-radius: 50%;
+        background: var(--surface-2); border: 1px solid var(--line);
+        display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;
+      }
+      .opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+      .opt[aria-pressed="true"] .letter { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+      .qnav { display: flex; gap: 9px; margin-top: 16px; flex-wrap: wrap; }
+      .btn {
+        border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+        border-radius: 12px; padding: 10px 18px; font-weight: 800; min-height: 2.75rem;
+      }
+      .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+      .btn.grow { flex: 1 1 auto; }
+      .numgrid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+      .numgrid button {
+        width: 40px; height: 40px; min-height: 40px; border-radius: 10px; border: 1px solid var(--line);
+        background: var(--surface); color: var(--ink); font-weight: 700; font-size: 0.88rem; padding: 0;
+      }
+      .numgrid button.done { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+      .numgrid button.now { outline: 2.5px solid var(--accent); outline-offset: 1px; }
+      .empty-note { background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); padding: 22px; text-align: center; color: var(--muted); margin-top: 14px; }
+
+      /* ---------- Hasil ---------- */
+      .score-card {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 22px 18px; text-align: center; box-shadow: var(--shadow); margin-top: 14px;
+      }
+      .score-big { font-family: "Lora", Georgia, serif; font-size: 3rem; font-weight: 700; color: var(--accent); line-height: 1; }
+      .score-card p { color: var(--muted); margin: 8px 0 0; }
+      .breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+      @media (max-width: 560px) { .breakdown { grid-template-columns: 1fr; } }
+      .bd-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+      .bd-card h4 { margin: 0 0 8px; font-size: 0.95rem; }
+      .bd-row { display: flex; justify-content: space-between; font-size: 0.92rem; padding: 3px 0; border-bottom: 1px dashed var(--line); }
+      .bd-row:last-child { border-bottom: none; }
+      .review { margin-top: 20px; }
+      .review-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px; }
+      .review-item.ok { border-top: 4px solid var(--good); }
+      .review-item.no { border-top: 4px solid var(--bad); }
+      .review-item.skip { border-top: 4px solid var(--warn); }
+      .review-item .status { font-weight: 800; font-size: 0.85rem; }
+      .review-item.ok .status { color: var(--good); }
+      .review-item.no .status { color: var(--bad); }
+      .review-item.skip .status { color: var(--warn); }
+      .review-item .rq { font-weight: 700; margin: 6px 0 8px; }
+      .review-item .ans { font-size: 0.93rem; margin: 3px 0; }
+      .review-item .ans b.k { color: var(--good); }
+      .review-item .expl { background: var(--surface-2); border-radius: 10px; padding: 10px 13px; font-size: 0.93rem; margin-top: 10px; }
+      .review-item .src { color: var(--muted); font-size: 0.85rem; margin-top: 8px; }
+
+      /* ---------- Kartu kilat ---------- */
+      .flash-wrap { perspective: 1200px; margin-top: 16px; }
+      .flash {
+        position: relative; width: 100%; min-height: 230px; border: none; background: transparent; padding: 0;
+        transform-style: preserve-3d; transition: transform 0.5s ease; display: block;
+      }
+      .flash.flipped { transform: rotateY(180deg); }
+      .flash-face {
+        position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        border-radius: var(--radius); padding: 24px 20px; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center; gap: 10px;
+        border: 1px solid var(--line); box-shadow: var(--shadow);
+      }
+      .flash-front { background: var(--surface); }
+      .flash-back { background: var(--accent-soft); transform: rotateY(180deg); }
+      .flash-face .tag { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+      .flash-face .big { font-family: "Lora", Georgia, serif; font-size: 1.3rem; font-weight: 600; line-height: 1.35; }
+      .flash-face .small { color: var(--muted); font-size: 0.85rem; }
+      .flash-nav { display: flex; gap: 9px; align-items: center; margin-top: 14px; flex-wrap: wrap; }
+      .flash-nav .ctr { font-weight: 800; color: var(--muted); }
+
+      /* ---------- Angka & jebakan ---------- */
+      .angka-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; font-size: 0.94rem; }
+      .angka-table th, .angka-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      .angka-table tr:last-child td { border-bottom: none; }
+      .angka-table td:first-child { font-weight: 700; }
+      .angka-table td:last-child { color: var(--muted); white-space: nowrap; font-size: 0.85rem; }
+      .trap {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 15px 17px; margin-bottom: 11px;
+      }
+      .trap h4 { margin: 0 0 4px; font-size: 1rem; color: var(--bad); font-family: "Nunito Sans", sans-serif; font-weight: 800; }
+      .trap p { margin: 0; font-size: 0.95rem; }
+      footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 0.88rem; }
+      footer .heart { color: var(--accent); }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .flash { transition: none; }
+        .progress > div { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero">
+        <p class="kicker">♥ Ruang Belajar</p>
+        <h1>Etika dan<br />Regulasi Farmasi</h1>
+        <p class="lede">Persiapan Sumatif 1 — Farmasi UNJANI, Semester Ganjil 2025/2026. Belajar pelan-pelan dari materi P1–P7, lalu uji diri dengan 40 soal sesuai blueprint. <em>Semangat ya, calon apoteker.</em></p>
+        <div class="chips">
+          <span class="chip"><b>40</b> soal latihan</span>
+          <span class="chip"><b>7</b> pertemuan (P1–P7)</span>
+          <span class="chip">C1 <b>2</b> · C2 <b>7</b> · C3 <b>2</b> · C4 <b>25</b> · C5 <b>4</b></span>
+          <span class="chip"><b>8</b> soal suplemen di luar slide</span>
+        </div>
+        <div class="love-note"><span class="heart">♥</span> Ruang kecil ini dibuat khusus buat kamu — biar belajar Etika dan Regulasi Farmasi-nya terasa lebih ringan. Kerjakan tanpa buru-buru; jawabanmu tersimpan selama kamu berpindah-pindah soal di sesi ini.</div>
+      </header>
+
+      <nav class="tabs" role="tablist" aria-label="Bagian ruang belajar">
+        <button class="tab-btn" role="tab" data-tab="materi" aria-selected="true">Materi</button>
+        <button class="tab-btn" role="tab" data-tab="latihan" aria-selected="false">Latihan Soal</button>
+        <button class="tab-btn" role="tab" data-tab="kilat" aria-selected="false">Kartu Kilat</button>
+        <button class="tab-btn" role="tab" data-tab="angka" aria-selected="false">Angka Kunci</button>
+        <button class="tab-btn" role="tab" data-tab="jebakan" aria-selected="false">Jebakan UTS</button>
+      </nav>
+
+      <!-- ================= MATERI ================= -->
+      <section class="panel active" id="panel-materi">
+        <h2>Materi P1–P7</h2>
+        <p class="sub">Ringkasan tiap pertemuan dari slide kuliah — baca dulu di sini, baru lanjut ke latihan soal.</p>
+        <div class="pnav">
+<a href="#materi-p1">P1 · Pendahuluan Etika</a>
+          <a href="#materi-p2">P2 · Hierarki Peraturan</a>
+          <a href="#materi-p3">P3 · UU 17/2023</a>
+          <a href="#materi-p4">P4 · PP 28/2024</a>
+          <a href="#materi-p5">P5 · Arsitektur Hukum</a>
+          <a href="#materi-p6">P6 · Etika Profesi</a>
+          <a href="#materi-p7">P7 · Penegakan Disiplin</a>
+        </div>
+
+<article class="materi-card" id="materi-p1">
+          <p class="meta">Pertemuan 1</p>
+          <h3>Pendahuluan Etika &amp; Regulasi Farmasi</h3>
+          <h4>Kerangka mata kuliah</h4>
+          <ul>
+            <li>Beban belajar <strong>1 SKS = 45 jam</strong> (13 jam Tatap Muka + 16 jam Tugas Terstruktur + 16 jam Belajar Mandiri); standar SN-Dikti 170 menit/minggu (50&prime; TM + 60&prime; TT + 60&prime; BM) selama 16 minggu (P1 hlm. 2).</li>
+            <li>CPL 2 Profesionalisme &amp; Moralitas Profesi; CPMK 2.5 Pengambilan Keputusan Etis &amp; Regulatif (P1 hlm. 3).</li>
+            <li>Tiga pilar regulasi terkini: <strong>UU 17/2023</strong> (Omnibus Law Kesehatan), <strong>PP 28/2024</strong> (petunjuk operasional teknis), dan <strong>Kode Etik Apoteker Indonesia</strong> (IAI) (P1 hlm. 4).</li>
+            <li>Target ketercapaian: nilai <strong>&gt; 60</strong> untuk dinyatakan lulus kompetensi etika profesi dan regulasi farmasi (P1 hlm. 7).</li>
+          </ul>
+          <table class="mini-table">
+            <tr><th>Sub-CPMK</th><th>Isi</th><th>Bobot</th></tr>
+            <tr><td>Sub-CPMK 1</td><td>Hierarki Peraturan</td><td>35%</td></tr>
+            <tr><td>Sub-CPMK 2</td><td>Kode Etik Profesi</td><td>15%</td></tr>
+            <tr><td>Sub-CPMK 3</td><td>Etika 5 Lini Praktik</td><td>35%</td></tr>
+            <tr><td>Sub-CPMK 4</td><td>Regulasi Produk</td><td>15%</td></tr>
+          </table>
+          <ul>
+            <li>Asesmen: Sumatif 1 (UTS CBT, Sub-CPMK 1 &amp; 2) 30%; Sumatif 2 (UAS CBT, Sub-CPMK 3 &amp; 4) 35%; Tugas Terstruktur (makalah analisis kasus riil) 20%; Belajar Mandiri (kuis formatif) 15% (P1 hlm. 7).</li>
+            <li>Lima tatanan simulasi praktik: riset farmasi, industri obat (CPOB), penyalur/PBF (CDOB), rumah sakit (formularium &amp; privasi resep), dan apotek (tanpa penyerahan liar, konseling rasional) (P1 hlm. 6).</li>
+          </ul>
+          <h4>Moral, norma, etika — definisi slide</h4>
+          <ul>
+            <li><strong>Moral:</strong> &ldquo;Prinsip dasar tentang benar dan salah yang berasal dari keyakinan individu atau budaya.&rdquo; (P1 hlm. 14)</li>
+            <li><strong>Norma:</strong> &ldquo;Aturan atau kebiasaan yang diterima oleh masyarakat atau komunitas.&rdquo; (P1 hlm. 14)</li>
+            <li><strong>Etika:</strong> &ldquo;Cabang dari moral yang lebih spesifik, mengatur perilaku profesional atau kelompok tertentu.&rdquo; (P1 hlm. 14)</li>
+          </ul>
+          <div class="formula">Moral → Etika → Norma Sosial → Hukum</div>
+          <ul>
+            <li>&ldquo;Moral adalah akar dari etika. Etika memengaruhi terbentuknya norma sosial. Norma bisa diadopsi menjadi hukum yang bersifat mengikat.&rdquo; (P1 hlm. 15)</li>
+            <li>Kesimpulan slide: &ldquo;Moral merupakan akar dari etika dan akan membentuk norma, dan norma dapat dijadikan salah satu dasar hukum.&rdquo; (P1 hlm. 23)</li>
+          </ul>
+          <h4>Tabel perbandingan moral, norma, etik, dan hukum</h4>
+          <table class="mini-table">
+            <tr><th>Aspek</th><th>Moral</th><th>Norma</th><th>Etik</th><th>Hukum</th></tr>
+            <tr><td>Definisi</td><td>Nilai pribadi/masyarakat tentang benar dan salah</td><td>Aturan yang diterima kelompok sosial</td><td>Prinsip/standar perilaku profesional</td><td>Aturan negara, bersifat mengikat</td></tr>
+            <tr><td>Sumber</td><td>Keyakinan individu/budaya</td><td>Tradisi, kebiasaan, konsensus sosial</td><td>Kode etik profesi/organisasi profesi</td><td>Peraturan pemerintah, UU, regulasi formal</td></tr>
+            <tr><td>Sifat</td><td>Subjektif</td><td>Kolektif</td><td>Spesifik (profesi/keahlian)</td><td>Objektif, wajib, ada sanksi formal</td></tr>
+            <tr><td>Sanksi</td><td>Rasa bersalah/malu</td><td>Dikucilkan/tidak diterima masyarakat</td><td>Peringatan atau pencabutan izin profesi</td><td>Denda, hukuman fisik, atau penjara</td></tr>
+            <tr><td>Contoh</td><td>Mahasiswa tidak mencontek karena merasa tidak benar</td><td>Memberi salam kepada dosen</td><td>Apoteker menjaga kerahasiaan pasien</td><td>Apoteker mematuhi UU Kesehatan</td></tr>
+          </table>
+          <ul>
+            <li>Catatan: rumusan sanksi etik &ldquo;pencabutan izin profesi&rdquo; (P1 hlm. 16) berbeda dengan P2 hlm. 16 (&ldquo;sanksi etik dan organisasi&rdquo;) — lihat Jebakan 9.</li>
+            <li>Catatan: sanksi hukum &ldquo;hukuman fisik&rdquo; pada baris sanksi tabel di atas tidak dikenal dalam hukum positif — lihat Jebakan 13.</li>
+          </ul>
+          <h4>Kasus Andi — antibiotik tanpa resep dokter</h4>
+          <ul>
+            <li>Andi, mahasiswa farmasi tingkat akhir yang praktik kerja di apotek, didesak pelanggan yang sakit untuk memberikan antibiotik tanpa resep (P1 hlm. 17).</li>
+            <li><strong>Moral:</strong> simpati pada pelanggan yang terlihat sangat membutuhkan antibiotik. <strong>Norma:</strong> kebiasaan membantu orang yang membutuhkan bantuan segera. <strong>Etik:</strong> &ldquo;secara etis ia harus mematuhi aturan yang berlaku. Dilarang menjual antibiotik tanpa resep.&rdquo;</li>
+            <li>Catatan penting: tabel jawaban slide hanya memuat moral, norma, dan etik — <strong>tidak ada baris hukum</strong>, padahal penyerahan antibiotik tanpa resep juga melanggar hukum; slide juga tidak menyebut pasal mana yang melarangnya (P1 hlm. 17).</li>
+            <li>Dua studi kasus lain tanpa kunci jawaban di slide: Budi dan Rina (mencontek saat ujian praktikum, P1 hlm. 18) serta apoteker yang menerima resep dengan dosis yang tampaknya terlalu tinggi (P1 hlm. 20).</li>
+          </ul>
+          <h4>Mengapa etika penting dalam farmasi</h4>
+          <ul>
+            <li>Etika adalah panduan moral menjalankan profesi secara bertanggung jawab; menjaga kepercayaan pasien, meminimalkan risiko malpraktik, dan melindungi integritas profesi (P1 hlm. 22).</li>
+            <li>Dosen pengampu: Dr. apt. Faizal Hermanto, M.Si. (Koordinator MK) dan Apt. Akhirul Kahfi Syam, M.Si. (P1 hlm. 10).</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p2">
+          <p class="meta">Pertemuan 2</p>
+          <h3>Hierarki Peraturan Perundang-undangan di Bidang Farmasi</h3>
+          <h4>Teori jenjang norma — Stufenbau (Hans Kelsen)</h4>
+          <table class="mini-table">
+            <tr><th>Istilah Jerman</th><th>Padanan di Indonesia (menurut slide)</th></tr>
+            <tr><td>Staatsfundamentalnorm</td><td>Pancasila</td></tr>
+            <tr><td>Staatsgrundgesetz</td><td>UUD NRI 1945, TAP MPR</td></tr>
+            <tr><td>Formell Gesetz</td><td>Undang-Undang</td></tr>
+            <tr><td>Verordnung &amp; Autonome Satzung</td><td>PP, Perpres, Perda dan peraturan pelaksana</td></tr>
+          </table>
+          <ul>
+            <li>Prinsip: &ldquo;Norma bersumber dari norma di atasnya, sehingga norma bawah tidak boleh bertentangan.&rdquo; (P2 hlm. 6)</li>
+          </ul>
+          <h4>Piramida hierarki — Pasal 7 ayat (1) UU 12/2011</h4>
+          <div class="formula">UUD NRI 1945 → TAP MPR → UU / Perppu → PP → Perpres → Perda Provinsi → Perda Kab/Kota</div>
+          <ul>
+            <li><strong>Pasal 7 ayat (2):</strong> &ldquo;Kekuatan hukum mengikuti hierarki. Makin ke atas, makin tinggi kekuatannya.&rdquo; (P2 hlm. 7)</li>
+            <li>Tiga unsur peraturan perundang-undangan (Pasal 1 angka 2 UU 12/2011): <strong>tertulis</strong>, <strong>mengikat umum</strong>, dan dibentuk oleh <strong>pejabat berwenang</strong> melalui prosedur yang ditetapkan (P2 hlm. 5). SOP internal apotek tidak memenuhi unsur mengikat umum dan pejabat berwenang.</li>
+          </ul>
+          <h4>Di luar hierarki: Pasal 8 ayat (2)</h4>
+          <ul>
+            <li>Peraturan Menteri (contoh: <strong>Permenkes</strong> standar pelayanan kefarmasian) dan peraturan lembaga/badan (contoh: <strong>Peraturan BPOM</strong> pengawasan obat dan makanan) — &ldquo;Diakui dan memiliki kekuatan hukum mengikat, tetapi tidak berada dalam urutan Pasal 7.&rdquo; (P2 hlm. 9)</li>
+            <li>Dua jalur keabsahan Permenkes dan Peraturan BPOM (P2 hlm. 10): <strong>Jalur A</strong> — diperintahkan peraturan yang lebih tinggi; <strong>Jalur B</strong> — dibentuk berdasarkan kewenangan. Keduanya bermuara pada: &ldquo;Diakui dan mengikat (Pasal 8 ayat 2).&rdquo; Cara cek: baca konsiderans &ldquo;mengingat&rdquo; dan pasal pendelegasian.</li>
+          </ul>
+          <h4>Pohon keputusan konflik norma — 3 asas</h4>
+          <ul>
+            <li>Tingkatannya berbeda? Ya → <strong>lex superior</strong>. Norma yang lebih tinggi dipakai.</li>
+            <li>Setara: mana yang lebih khusus? → <strong>lex specialis</strong>. Norma khusus dipakai.</li>
+            <li>Sama khusus: mana yang lebih baru? → <strong>lex posterior</strong>. Norma yang lebih baru dipakai. (P2 hlm. 12)</li>
+            <li>Frasa Latin lengkapnya (<em>lex superior derogat legi inferiori</em>, dst.) tidak tertulis di slide — hanya nama pendeknya.</li>
+          </ul>
+          <h4>Pengujian peraturan — Pasal 9</h4>
+          <table class="mini-table">
+            <tr><th>Lembaga</th><th>Wewenang</th></tr>
+            <tr><td>Mahkamah Konstitusi</td><td>Menguji UU terhadap UUD NRI 1945</td></tr>
+            <tr><td>Mahkamah Agung</td><td>Menguji peraturan di bawah UU terhadap UU</td></tr>
+          </table>
+          <ul>
+            <li>Contoh slide: &ldquo;Permenkes yang bertentangan dengan PP atau UU dapat diuji di Mahkamah Agung.&rdquo; (P2 hlm. 13)</li>
+            <li>Kasus pemantik: apotek menyusun SOP dengan merujuk <strong>PP 51/2009</strong>, padahal PP itu telah <strong>dicabut oleh PP 28/2024 yang berlaku sejak 26 Juli 2024</strong> (P2 hlm. 4, 14). Cek status peraturan: cari di JDIH/BPK, periksa status (berlaku/diubah/dicabut), baca ketentuan peralihan dan penutup, catat tanggal berlaku (P2 hlm. 15).</li>
+          </ul>
+          <h4>Posisi Kode Etik Apoteker</h4>
+          <table class="mini-table">
+            <tr><th>Aspek</th><th>Peraturan perundang-undangan</th><th>Kode Etik Apoteker</th></tr>
+            <tr><td>Pembentuk</td><td>Lembaga negara berwenang</td><td>Organisasi profesi (IAI)</td></tr>
+            <tr><td>Daya ikat</td><td>Mengikat umum</td><td>Mengikat anggota profesi</td></tr>
+            <tr><td>Sanksi</td><td>Administratif, perdata, pidana</td><td>Sanksi etik dan organisasi</td></tr>
+            <tr><td>Posisi</td><td>Hierarki atau Pasal 8</td><td>Norma etik, bukan peraturan perundang-undangan</td></tr>
+          </table>
+          <h4>Alur analisis 4 langkah &amp; contoh kasus</h4>
+          <ul>
+            <li><strong>1. Identifikasi</strong> (jenis peraturan dan pembentuknya) → <strong>2. Telusuri</strong> (perintah delegasi di konsiderans) → <strong>3. Uji</strong> (vertikal dahulu, lalu horizontal) → <strong>4. Tetapkan</strong> (norma, alasan, rekomendasi) (P2 hlm. 17).</li>
+            <li>Contoh: Permenkes menambah syarat izin di luar PP — PP tidak mendelegasikan syarat itu, jadi bertentangan dengan norma yang lebih tinggi (lex superior); <strong>PP dipakai; syarat tambahan tidak mengikat dan dapat diuji ke MA</strong> (P2 hlm. 18).</li>
+            <li>Miskonsepsi yang salah menurut slide (P2 hlm. 19): &ldquo;Permenkes lebih operasional, jadi menang atas PP&rdquo;; &ldquo;Kode Etik mengikat seperti UU&rdquo;; &ldquo;Peraturan baru selalu menang.&rdquo;</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p3">
+          <p class="meta">Pertemuan 3</p>
+          <h3>UU 17/2023 — Transformasi Kefarmasian Indonesia</h3>
+          <h4>Tiga pilar transformasi kefarmasian nasional</h4>
+          <ul>
+            <li><strong>1. Kesehatan Holistik &amp; Merata</strong> — fokus bergeser dari sekadar kuratif menjadi promotif, preventif, dan integrasi pelayanan berpusat pada Pasien (<em>Patient-Centered Care</em>).</li>
+            <li><strong>2. Ketahanan &amp; Kemandirian Industri</strong> — mandat strategis pelepasan ketergantungan impor melalui hilirisasi bahan baku lokal, insentif, dan produksi domestik dari hulu ke hilir.</li>
+            <li><strong>3. Presisi &amp; Integrasi Digital</strong> — legalisasi dan percepatan adopsi Telefarmasi, Biobank, serta pelayanan Kedokteran Presisi (genomik) yang didukung Sistem Informasi Nasional. (P3 slide 5, PDF hlm. 3)</li>
+          </ul>
+          <h4>Pengelompokan perbekalan kesehatan — Pasal 1 &amp; 142</h4>
+          <table class="mini-table">
+            <tr><th>Cabang</th><th>Isi</th></tr>
+            <tr><td>Alat Kesehatan</td><td>Instrumen, mesin, implan, reagen in vitro, perangkat lunak — <strong>tanpa aksi farmakologi utama</strong> (contoh: PCR)</td></tr>
+            <tr><td>PKRT</td><td>Perbekalan Kesehatan Rumah Tangga — bahan pemeliharaan/perawatan untuk rumah tangga/fasilitas umum</td></tr>
+            <tr><td>Sediaan Farmasi</td><td>Obat &amp; Bahan Obat; Obat Bahan Alam (OBA); Suplemen Kesehatan; Kosmetik; Obat Kuasi (contoh: minyak kayu putih)</td></tr>
+          </table>
+          <ul>
+            <li>Obat &amp; Bahan Obat: &ldquo;Mempengaruhi sistem fisiologi/patologi&rdquo; — inilah pembeda dari Alat Kesehatan (P3 slide 6, PDF hlm. 3).</li>
+          </ul>
+          <h4>Hak pasien &amp; 4 pengecualian kerahasiaan — Pasal 4</h4>
+          <ul>
+            <li>Hak fundamental pasien: pelayanan kefarmasian yang aman, bermutu, dan terjangkau; edukasi dan informasi yang seimbang &amp; bertanggung jawab; menentukan sendiri (mandiri) pelayanan yang diperlukan; &ldquo;Kerahasiaan Mutlak atas data dan informasi kesehatan pribadinya.&rdquo; (P3 slide 7, PDF hlm. 4)</li>
+            <li>Kerahasiaan data dapat dibuka dan hak mandiri gugur dalam 4 kondisi: <strong>(1)</strong> Keadaan Gawat Darurat (ancaman nyawa); <strong>(2)</strong> Penanggulangan KLB atau Wabah; <strong>(3)</strong> Pemenuhan permintaan aparat penegak hukum; <strong>(4)</strong> Kepentingan pendidikan/penelitian (dengan data agregat/tanpa identitas).</li>
+            <li>Kata &ldquo;mutlak&rdquo; di sini bermakna prinsip, bukan tanpa pengecualian — lihat Jebakan 4.</li>
+          </ul>
+          <h4>Hierarki tenaga kefarmasian</h4>
+          <div class="formula">Apoteker Spesialis (puncak) → Apoteker → Tenaga Vokasi Farmasi (dasar)</div>
+          <ul>
+            <li><strong>Apoteker Spesialis:</strong> kompetensi keahlian klinis tingkat lanjut untuk kasus spesifik dan kompleks. <strong>Apoteker:</strong> lulusan pendidikan profesi apoteker yang memegang kewenangan penuh atas praktik kefarmasian dan pengelolaan Sediaan Farmasi. <strong>Tenaga Vokasi Farmasi:</strong> lulusan pendidikan vokasi (mis. D3 Farmasi) yang membantu tugas teknis operasional di bawah supervisi. (P3 slide 9, PDF hlm. 5)</li>
+            <li>Tenaga Kesehatan dikelompokkan ke dalam 12 kelompok (a–l): psikologi klinis, keperawatan, kebidanan, kefarmasian, kesehatan masyarakat, kesehatan lingkungan, gizi, keterapian fisik, keteknisian medis, teknik biomedika, kesehatan tradisional, dan Tenaga Kesehatan lain yang ditetapkan Menteri — badan slide mengutipnya dari <strong>Pasal 197 huruf b</strong>, meski judul slide menulis &ldquo;Pasal 199&rdquo; (P3 slide 8, PDF hlm. 4; lihat Jebakan 2).</li>
+          </ul>
+          <h4>STR seumur hidup — Pasal 260</h4>
+          <ul>
+            <li>Sistem lama: masa berlaku dibatasi 5 tahun, wajib perpanjangan berkala. Sistem baru: <strong>STR berlaku SEUMUR HIDUP (Pasal 260 ayat 4)</strong>, diterbitkan oleh Konsil atas nama Menteri Kesehatan, syarat Ijazah Vokasi/Profesi + Sertifikat Kompetensi (P3 slide 10, PDF hlm. 5).</li>
+            <li>Anotasi tulisan tangan di slide yang sama: <strong>SKP harus dikumpulkan apoteker selama 5 tahun (sebanyak 50 SKP; caranya ikut webinar, pengmas)</strong> — angka ini hanya dari anotasi tangan, bukan teks cetak (lihat Jebakan 5).</li>
+          </ul>
+          <h4>Eksepsi wilayah terpencil — Pasal 286 ayat (3) &amp; Pasal 287</h4>
+          <ul>
+            <li>Jika Pemda menetapkan ketiadaan Apoteker, kewenangan penyerahan obat (dalam batas tertentu) dilimpahkan secara legal kepada <strong>Dokter, Perawat, Bidan, atau Tenaga Vokasi Farmasi</strong> (P3 slide 11, PDF hlm. 6).</li>
+            <li>Praktik kefarmasian mutlak (produksi, pengadaan, peracikan, penyerahan) wajib dilakukan oleh Tenaga Kefarmasian berizin; obat narkotika/psikotropika dilarang disalahgunakan (Pasal 139).</li>
+            <li>Koreksi: daftar penerima pelimpahan (Dokter, Perawat, Bidan, Tenaga Vokasi Farmasi) ada di <strong>Pasal 286 ayat (3)</strong>; Pasal 287 ayat (1) mengatur penetapan ketiadaan oleh Pemda dan ayat (2) kewajiban pelatihan — slide menyebut keseluruhannya sebagai &ldquo;Pasal 287&rdquo; (lihat Jebakan 3).</li>
+            <li>Judul slide juga menyebut Pasal 145, tetapi isinya tidak dibahas sama sekali di badan slide.</li>
+          </ul>
+          <h4>Matriks penggolongan obat modern — Pasal 320</h4>
+          <table class="mini-table">
+            <tr><th>Kategori</th><th>Penanda</th><th>Syarat Resep</th><th>Titik Distribusi</th></tr>
+            <tr><td>Obat Bebas</td><td>Lingkaran hijau</td><td>Tidak perlu</td><td>Apotek, toko obat, fasilitas lain (supermarket)</td></tr>
+            <tr><td>Obat Bebas Terbatas</td><td>Lingkaran biru</td><td>Tidak perlu</td><td>Apotek, toko obat berizin</td></tr>
+            <tr><td>Obat Keras</td><td>Huruf &ldquo;K&rdquo; merah dalam lingkaran</td><td>WAJIB (kecuali OWA)</td><td>Hanya apotek &amp; faskes</td></tr>
+            <tr><td>Psikotropika</td><td>Huruf &ldquo;K&rdquo; merah dalam lingkaran</td><td>WAJIB KETAT</td><td>Hanya apotek &amp; faskes khusus</td></tr>
+            <tr><td>Narkotika</td><td>Palang merah dalam lingkaran</td><td>WAJIB KETAT</td><td>Hanya apotek &amp; faskes khusus</td></tr>
+          </table>
+          <ul>
+            <li><strong>Obat Wajib Apotek (OWA):</strong> Obat Keras tertentu yang dapat diserahkan Apoteker tanpa resep dengan pembatasan indikasi/jumlah (Pasal 320 ayat 5) (P3 slide 12, PDF hlm. 6).</li>
+            <li>Psikotropika dan Obat Keras memakai penanda yang sama (huruf K merah) — pembedanya hanya kolom syarat resep dan titik distribusi.</li>
+          </ul>
+          <h4>Obat Bahan Alam — Jamu, OHT, Fitofarmaka (Pasal 321)</h4>
+          <table class="mini-table">
+            <tr><th>Tingkatan</th><th>Pembuktian</th><th>Bahan</th><th>Klaim</th></tr>
+            <tr><td>Jamu</td><td>Empiris / turun-temurun</td><td>Ramuan tradisional mentah atau olahan dasar</td><td>Pemeliharaan kesehatan tradisional</td></tr>
+            <tr><td>Obat Herbal Terstandar (OHT)</td><td>Uji praklinik (in vivo / in vitro)</td><td>Bahan baku aktif telah distandardisasi secara ilmiah</td><td>Pengobatan tingkat menengah, keamanan teruji</td></tr>
+            <tr><td>Fitofarmaka</td><td>Uji klinik penuh pada manusia</td><td>Bahan baku dan produk akhir berstandar setara obat modern</td><td>Pengobatan medis klinis bersertifikasi</td></tr>
+          </table>
+          <ul>
+            <li>Contoh Fitofarmaka menurut anotasi tangan: Stimuno. UU 17/2023 mewajibkan Obat Bahan Alam memenuhi Farmakope Herbal Indonesia (P3 slide 13, PDF hlm. 7).</li>
+            <li>Lainnya di P3: mandat obat generik hanya boleh dibuat industri dalam negeri (Pasal 326 ayat 5); insentif fiskal &amp; non-fiskal industri (Pasal 329 &amp; 331); telefarmasi (Pasal 25); genomik &amp; kedokteran presisi (Pasal 334 &amp; 338–339); protokol bencana &amp; KLB (Pasal 327, 332, 405).</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p4">
+          <p class="meta">Pertemuan 4</p>
+          <h3>PP 28/2024 — Peraturan Pelaksanaan UU 17/2023</h3>
+          <h4>PP 28/2024 sebagai jembatan implementasi</h4>
+          <ul>
+            <li>UU 17/2023 (Omnibus Law): transformasi dasar dan arsitektur sistem kesehatan nasional. PP 28/2024: peraturan pelaksanaan yang merinci teknis operasional dari hulu ke hilir (P4 slide 2, PDF hlm. 1).</li>
+            <li><strong>PP 51/2009 tentang Pekerjaan Kefarmasian dicabut melalui Pasal 1170 huruf j</strong> PP 28/2024 (P4 slide 4, PDF hlm. 2). PP 28/2024 mengintegrasikan Apoteker ke dalam sistem pelayanan kesehatan nasional, fokus pada peran klinis, transformasi digital, dan ketahanan sistem.</li>
+          </ul>
+          <h4>7 pilar praktik kefarmasian — Pasal 428</h4>
+          <ul>
+            <li>1. Produksi &amp; R&amp;D (Pengembangan Sediaan Farmasi); 2. Pengendalian Mutu (Quality Control); 3. Pengadaan (Sourcing); 4. Penyimpanan (Storage &amp; Keamanan); 5. Pendistribusian (Rantai Pasok); 6. Pengelolaan (Manajemen Stok); 7. Pelayanan Kefarmasian (Farmasi Klinis di Fasilitas &amp; Pasien). (P4 slide 5, PDF hlm. 3)</li>
+            <li>&ldquo;Hukum menetapkan bahwa seluruh rantai ini harus dilakukan oleh Tenaga Kefarmasian sesuai ketentuan.&rdquo;</li>
+            <li>Pengecualian terbatas — praktik kefarmasian oleh Dokter, Perawat, Bidan HANYA JIKA (Pasal 428 ayat 4–6): (1) ketiadaan tenaga kefarmasian di suatu wilayah; (2) kebutuhan program pemerintah; (3) penanganan kegawatdaruratan medis; (4) KLB, wabah, dan darurat bencana (P4 slide 12, PDF hlm. 6).</li>
+          </ul>
+          <h4>Rantai legalitas praktik apoteker</h4>
+          <div class="formula">Uji Kompetensi &amp; Sumpah Profesi (Pasal 593) → STR (Pasal 678) → SIP (Pasal 681)</div>
+          <ul>
+            <li>Sumpah kini dilaksanakan langsung oleh penyelenggara pendidikan tinggi (Universitas) dan menghasilkan Sertifikat Kompetensi (Pasal 593).</li>
+            <li><strong>STR (Pasal 678):</strong> bukti pencatatan resmi; membutuhkan Ijazah, Sertifikat Profesi, dan Sertifikat Kompetensi; diterbitkan Konsil atas nama Menteri Kesehatan.</li>
+            <li><strong>SIP (Pasal 681):</strong> tiket masuk untuk praktik aktif; membutuhkan STR aktif dan penetapan tempat praktik; diterbitkan Pemda setempat. (P4 slide 6, PDF hlm. 3)</li>
+          </ul>
+          <h4>STR seumur hidup — Pasal 677 ayat 3</h4>
+          <ul>
+            <li>&ldquo;STR bagi Tenaga Kefarmasian WNI kini berlaku <strong>Seumur Hidup (Pasal 677 ayat 3)</strong>.&rdquo; Pengecualian STR Sementara: Tenaga Kesehatan WNA; proses intensip/adaptasi; sedang menempuh pendidikan lanjutan (P4 slide 7, PDF hlm. 4).</li>
+            <li>Transisi (Pasal 1162): STR yang masih aktif saat ini dapat diajukan pembaharuannya menjadi STR seumur hidup.</li>
+          </ul>
+          <h4>SIP &amp; SKP — Pasal 682 &amp; 683</h4>
+          <ul>
+            <li><strong>SIP (Pasal 682):</strong> berlaku <strong>5 tahun</strong>; mengikat pada <strong>1 (satu) tempat praktik per SIP</strong>. Perpanjangan SIP membutuhkan kecukupan Satuan Kredit Profesi (SKP) (P4 slide 8, PDF hlm. 4).</li>
+            <li><strong>Total SKP 100</strong>, dengan 3 pilar (Pasal 683): (1) Pelatihan / Peningkatan Kompetensi (seminar, workshop); (2) Pelayanan (praktik klinis harian); (3) Pengabdian (edukasi masyarakat, baksos).</li>
+            <li>Pengelolaan SKP dalam Sistem <strong>SATUSEHAT SDMK</strong> (https://satusehat.kemkes.go.id/sdmk/). Slide P4 tidak memberi rincian proporsi per ranah/pilar dan tidak memakai istilah &ldquo;Pembelajaran&rdquo; atau &ldquo;Kompetensi&rdquo; sebagai nama ranah — soal tentang proporsi tertinggi SKP tidak bisa dibuat dari slide ini (P4 slide 9, PDF hlm. 5).</li>
+          </ul>
+          <h4>Telefarmasi — Pasal 561 &amp; 563</h4>
+          <ul>
+            <li>Enam komponen pelayanan telefarmasi: <strong>Pengkajian Resep; Dispensing; Konseling; Pemantauan Terapi Obat (PTO); Pelayanan Informasi Obat (PIO); Monitoring Efek Samping Obat (MESO)</strong> (P4 slide 16, PDF hlm. 8).</li>
+            <li>Penyelenggara telemedisin wajib memiliki STR dan SIP; standar etika dan mutu praktik online sama ketatnya dengan praktik offline; aplikasi wajib teregistrasi di Kementerian Kesehatan; penyelenggara bertanggung jawab penuh melindungi data medis pasien (P4 slide 16–17, PDF hlm. 8–9).</li>
+            <li>Peredaran Sediaan Farmasi secara sah dapat memanfaatkan sistem elektronik (Pasal 418–419) dengan syarat mutlak: wajib terintegrasi dengan Sistem Informasi Kesehatan Nasional (SATUSEHAT) dan penyelenggara wajib menjamin mutu (CPOB/CDOB elektronik).</li>
+          </ul>
+          <h4>Mutu, farmakovigilans, dan penarikan produk</h4>
+          <ul>
+            <li>Hulu (produksi): wajib CPOB, hanya oleh fasilitas berizin berusaha. Tengah (peredaran): distribusi wajib CDOB, wajib memiliki Izin Edar. Hilir (penyerahan): hanya oleh Fasilitas Pelayanan Kefarmasian sesuai standar (Apotek, RS, Puskesmas) (Pasal 407, 413–417; P4 slide 10, PDF hlm. 5).</li>
+            <li>Farmakovigilans (Pasal 408, 411, 412): <strong>Deteksi</strong> (efek samping/produk tidak memenuhi standar keamanan, khasiat, mutu) → <strong>Pelaporan</strong> (via Sistem Informasi Kesehatan terintegrasi nasional) → <strong>Tindakan</strong> (penarikan/recall dan pemusnahan untuk produk kedaluwarsa, dicabut izin edarnya, atau sub-standar).</li>
+            <li>Sanksi administratif (Pasal 426): kelalaian berakibat teguran, denda, penutupan akses, hingga pencabutan izin usaha (P4 slide 15, PDF hlm. 8).</li>
+            <li>Etika promosi (Pasal 424): informasi promosi wajib objektif, lengkap, dan tidak menyesatkan; promosi di media umum hanya untuk obat bebas/bebas terbatas; dilarang mengiklankan obat keras, obat bahan alam &amp; suplemen keperluan khusus, serta narkotika &amp; psikotropika di media umum (hanya boleh di media ilmiah khusus Tenaga Medis/Kesehatan).</li>
+          </ul>
+          <h4>Tata kelola darurat — Pasal 942–944</h4>
+          <ul>
+            <li>Pemerintah pusat berhak melakukan mitigasi risiko dan relaksasi regulasi standar secara terkoordinasi, meliputi: (1) Penerapan Persetujuan Penggunaan Darurat (<em>Emergency Use Authorization</em> / EUA); (2) Lisensi wajib atau pelaksanaan paten obat oleh pemerintah; (3) Pembatasan ekspor Sediaan Farmasi demi mengamankan pasokan domestik; (4) Alokasi pendanaan riset khusus dan jalur khusus untuk obat esensial (P4 slide 22, PDF hlm. 11).</li>
+            <li>Slide tidak merinci mekanisme, syarat, jangka waktu, atau pemegang kewenangan EUA — soal tentang mekanisme EUA tidak bisa dibuat dari slide ini.</li>
+          </ul>
+          <h4>Hak &amp; perlindungan hukum tenaga kefarmasian</h4>
+          <ul>
+            <li>Hak atas perlindungan hukum, K3, dan keamanan (bebas kekerasan/ancaman); hak menolak keinginan pasien/pihak lain yang bertentangan dengan standar profesi, etika, dan peraturan hukum; hak atas gaji/upah, imbalan jasa, dan tunjangan kinerja yang layak; hak imunitas profesi selama praktik sesuai SOP, Standar Profesi, dan Etika (Pasal 721, 728; P4 slide 19–20, PDF hlm. 10).</li>
+            <li>Kewajiban instansi (Pasal 296): faskes/apotek tempat bekerja WAJIB memberikan bantuan hukum (konsultasi &amp; pendampingan) jika terjadi sengketa.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p5">
+          <p class="meta">Pertemuan 5</p>
+          <h3>Arsitektur Hukum Kefarmasian Indonesia</h3>
+          <h4>Objektif regulasi &amp; piramida hukum</h4>
+          <ul>
+            <li>Praktik kefarmasian adalah <em>Regulated Profession</em>: diatur negara karena kompleksitas medis &amp; risiko berhadapan dengan standar kompetensi &amp; legalitas. <strong>Objektif utama regulasi: Patient Safety &amp; Patient Outcomes</strong> — keseimbangan kritis antara otonomi profesi dan hak keselamatan nyawa manusia (P5 hlm. 2).</li>
+            <li>Piramida 3 tingkat (penyederhanaan dari tata urutan lengkap UU 12/2011): <strong>Tingkat 1: UU 17/2023</strong> — Filosofi &amp; Mandat; <strong>Tingkat 2: PP 28/2024</strong> — Sistem &amp; Mekanisme; <strong>Tingkat 3: PMK</strong> — Standar Teknis &amp; Operasional. &ldquo;Hukum tertinggi mengesampingkan hukum yang lebih rendah&rdquo; (<em>lex superior derogat legi inferiori</em>) (P5 hlm. 3).</li>
+            <li>Transformasi UU 17/2023: melebur belasan UU sektoral (integrasi holistik); pergeseran paradigma dari kuratif menuju promotif-preventif; kepastian hukum dan pelindungan kuat bagi tenaga medis dan kesehatan (P5 hlm. 4–5).</li>
+          </ul>
+          <h4>STR vs SIP</h4>
+          <table class="mini-table">
+            <tr><th></th><th>STR (Surat Tanda Registrasi)</th><th>SIP (Surat Izin Praktik)</th></tr>
+            <tr><td>Status</td><td>Berlaku seumur hidup</td><td>Dievaluasi berkala — berlaku 5 tahun (P4 Pasal 682)</td></tr>
+            <tr><td>Esensi</td><td>Bukti registrasi dan kualifikasi profesi</td><td>Bukti kewenangan legal praktik</td></tr>
+            <tr><td>Syarat</td><td>Lulus uji kompetensi profesi</td><td>STR aktif + penetapan tempat praktik</td></tr>
+            <tr><td>Batasan</td><td>—</td><td>Maksimal di 3 (tiga) lokasi fasilitas kesehatan; 1 tempat praktik per SIP</td></tr>
+          </table>
+          <ul>
+            <li>Catatan: &ldquo;1 tempat praktik per SIP&rdquo; (P4) dan &ldquo;maksimal 3 lokasi&rdquo; (P5) keduanya benar sekaligus — satu SIP berlaku untuk satu tempat, dan seorang apoteker boleh memegang SIP di maksimal 3 lokasi; slide tidak menjelaskan rekonsiliasi ini (lihat Jebakan 6).</li>
+            <li>Peta jalan karier: Lulus Pendidikan Apoteker → Sumpah &amp; Uji Kompetensi → STR Seumur Hidup → Izin Faskes (PBBR) → Penerbitan SIP → Praktik Klinis (Standar PMK) (P5 hlm. 8).</li>
+          </ul>
+          <h4>Perizinan Berbasis Risiko (PBBR) &amp; OSS-RBA</h4>
+          <ul>
+            <li>Pergeseran fundamental dari izin berbasis administratif statis menjadi izin berbasis tingkat risiko kegiatan usaha. Kategori risiko: Rendah; Menengah Rendah; Menengah Tinggi; <strong>Tinggi</strong> (P5 hlm. 9).</li>
+            <li><strong>Klasifikasi: Apotek &amp; Klinik adalah Usaha Risiko Tinggi.</strong> Syarat mutlak: <strong>NIB + Sertifikat Standar Terverifikasi + Izin Final</strong>.</li>
+            <li>Alur OSS-RBA (<em>Online Single Submission</em>): Input Data Pelaku Usaha → Sistem OSS-RBA → Output <strong>NIB (Nomor Induk Berusaha)</strong> → Verifikasi Teknis Dinkes/Kemenkes (inspeksi bangunan, SDM, peralatan) → Sertifikat Standar &amp; Izin Operasional diterbitkan (P5 hlm. 10).</li>
+            <li>Timeline PMK standar usaha: <strong>PMK 14/2021</strong> (Fondasi Awal Standar Usaha); <strong>PMK 17/2024</strong> (Pembaruan Krusial Standar Apotek &amp; PBG); <strong>PMK 11/2025</strong> (Harmonisasi Sistem dengan PP 28/2024) (P5 hlm. 11). Slide tidak menjelaskan isi masing-masing PMK selain label di atas.</li>
+          </ul>
+          <h4>PSEF — Penyelenggara Sistem Elektronik Farmasi</h4>
+          <ul>
+            <li>Tiga isu kunci PSEF (jejaring O2O — <em>Offline to Online</em>): <strong>(1)</strong> Validasi Peresepan Elektronik; <strong>(2)</strong> Pelindungan Privasi Data Pasien; <strong>(3)</strong> Keamanan Rantai Pasok Obat (P5 hlm. 12). Slide ini tidak mengutip nomor peraturan/pasal.</li>
+          </ul>
+          <h4>Sanksi administratif — 4 tingkat eskalasi</h4>
+          <ul>
+            <li>1. Teguran / Peringatan Tertulis → 2. Denda Administratif → 3. Penghentian Sementara Kegiatan Usaha → 4. Pencabutan Perizinan Berusaha / SIP (P5 hlm. 13). Slide P5 tidak mengutip pasal; bandingkan P4 Pasal 426: &ldquo;teguran, denda, penutupan akses, hingga pencabutan izin usaha.&rdquo;</li>
+          </ul>
+          <h4>Standar pelayanan kefarmasian per faskes</h4>
+          <table class="mini-table">
+            <tr><th>Faskes</th><th>PMK (menurut slide)</th></tr>
+            <tr><td>Rumah Sakit</td><td>PMK No. 72/2016</td></tr>
+            <tr><td>Apotek</td><td>PMK No. 73/2016</td></tr>
+            <tr><td>Klinik</td><td>PMK No. 34/2021</td></tr>
+            <tr><td>Puskesmas</td><td>PMK No. 26/2020</td></tr>
+          </table>
+          <ul>
+            <li>Slide tidak menyebut judul/perihal masing-masing PMK — hanya nomor dan nama faskesnya (P5 hlm. 15).</li>
+            <li>Dua pilar standar pelayanan: <strong>Pilar Manajerial</strong> (pengelolaan sediaan, logistik, BMHP) dan <strong>Pilar Klinis</strong> (intervensi, konseling, pengkajian resep), di atas fondasi Kompetensi &amp; Etika Profesi, dengan atap Patient Outcomes &amp; Safety (P5 hlm. 14).</li>
+          </ul>
+          <h4>Studi kasus: Apotek Berjalan Tanpa Nakhoda</h4>
+          <ul>
+            <li>Sidak Dinkes ke Apotek X (operasional 24 jam): Apoteker Penanggung Jawab (APJ) sedang ibadah Umrah selama 2 minggu; tidak ada apoteker pengganti; apotek dijaga Tenaga Vokasi (TTK); pelayanan obat resep dokter terus berjalan normal tanpa supervisi (P5 hlm. 18).</li>
+            <li>Evaluasi: pelanggaran serius standar usaha (PMK 17/2024 &amp; PMK 11/2025) — <strong>apotek 24 jam wajib memiliki minimal 2 Apoteker ber-SIP di tempat</strong>; pelanggaran wewenang standar pelayanan klinis (PMK 73/2016) — screening resep dan dispensing mutlak harus disupervisi langsung oleh Apoteker; sanksi PBBR: potensi penangguhan Sertifikat Standar, denda administratif, hingga penutupan sementara (P5 hlm. 19).</li>
+            <li>Catatan: angka &ldquo;minimal 2 Apoteker&rdquo; adalah klaim slide tanpa kutipan pasal/ayat — belum terverifikasi dari teks PMK.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p6">
+          <p class="meta">Pertemuan 6</p>
+          <h3>Etika Profesi — Pengertiannya</h3>
+          <h4>Asal kata: ethos</h4>
+          <ul>
+            <li>Etika berasal dari dua kata Yunani yang hampir sama bunyinya namun berbeda artinya (P6 hlm. 2): pertama <strong>ethos</strong> yang berarti <strong>kebiasaan atau adat</strong>; kedua <strong>ethos</strong> yang artinya <strong>perasaan batin atau kecenderungan batin yang mendorong manusia dalam perilakunya</strong> — keduanya ditulis sama persis di slide (lihat Jebakan 8).</li>
+            <li>Menurut KBBI (Departemen P dan K, 1988), etika punya tiga arti: (1) ilmu tentang apa yang baik dan buruk serta hak dan kewajiban moral (akhlak); (2) kumpulan asas atau nilai yang berkenaan dengan akhlak; (3) nilai mengenai benar dan salah yang dianut suatu golongan/masyarakat.</li>
+            <li>Menurut Martin (1993), etika adalah <em>&ldquo;the discipline which can act as the performance index or reference for our control system&rdquo;</em> (P6 hlm. 4).</li>
+            <li><strong>Etika adalah refleksi dari &ldquo;self control&rdquo;</strong> — segala sesuatunya dibuat dan diterapkan dari dan untuk kepentingan kelompok sosial (profesi) itu sendiri (P6 hlm. 5).</li>
+          </ul>
+          <h4>Fungsi etika menurut Bertens (1994)</h4>
+          <ul>
+            <li>Kata etika bisa dipakai dalam tiga arti: (1) nilai-nilai dan norma-norma moral yang menjadi pegangan seseorang/suatu kelompok dalam mengatur perilakunya; (2) kumpulan asas atau nilai moral — yang dimaksud di sini adalah <strong>kode etik</strong>; (3) ilmu tentang yang baik atau yang buruk — sama artinya dengan <strong>filsafat moral</strong> (P6 hlm. 6).</li>
+          </ul>
+          <h4>Macam-macam etika &amp; pembagian umum/khusus</h4>
+          <ul>
+            <li><strong>Etika Deskriptif:</strong> meneropong secara kritis dan rasional sikap dan perilaku manusia dan apa yang dikejar manusia sebagai sesuatu yang bernilai; memberikan fakta sebagai dasar pengambilan keputusan (P6 hlm. 7).</li>
+            <li><strong>Etika Normatif:</strong> mengajarkan sikap dan pola perilaku ideal yang seharusnya dimiliki manusia; memberi penilaian sekaligus norma sebagai dasar dan kerangka tindakan (P6 hlm. 8).</li>
+            <li><strong>Etika Umum</strong> membahas prinsip-prinsip moral dasar; <strong>Etika Khusus</strong> menerapkan prinsip dasar pada masing-masing bidang kehidupan. Etika khusus dibagi menjadi <strong>etika individual</strong> (kewajiban terhadap diri sendiri) dan <strong>etika sosial</strong> (kewajiban sebagai anggota umat manusia) (P6 hlm. 9).</li>
+            <li>Etika sosial meliputi: sikap terhadap sesama; etika keluarga; <strong>etika profesi</strong>; etika politik; etika lingkungan; etika idiologi. Maka <strong>etika profesi merupakan bidang etika khusus atau terapan yang merupakan produk dari etika sosial</strong> (P6 hlm. 14).</li>
+          </ul>
+          <h4>Profesi luhur — officium nobile (Frans Magnis Suseno, 1991:70)</h4>
+          <ul>
+            <li>Profesi pada umumnya wajib menegakkan dua prinsip: menjalankan profesinya secara <strong>bertanggung jawab</strong> dan <strong>hormat terhadap hak-hak orang lain</strong> (P6 hlm. 16).</li>
+            <li>Dalam profesi yang luhur (<strong>officium nobile</strong>), <strong>motivasi utamanya bukan untuk memperoleh nafkah</strong>; dua prinsip penting: <strong>(1) mendahulukan kepentingan orang yang dibantu; (2) mengabdi pada tuntutan luhur profesi</strong> (P6 hlm. 17).</li>
+            <li>Tiga ciri moralitas yang tinggi bagi pelakunya: <strong>berani berbuat</strong> sesuai tuntutan profesi; <strong>sadar akan kewajibannya</strong>; <strong>memiliki idealisme yang tinggi</strong>.</li>
+          </ul>
+          <h4>Pengertian profesi, profesional, dan syarat Brandeis</h4>
+          <ul>
+            <li><strong>Profesi</strong> adalah pekerjaan yang berkaitan dengan <strong>keahlian khusus</strong>, didominasi pendidikan dan keahlian, diikuti pengalaman praktik kerja purna waktu (P6 hlm. 18).</li>
+            <li>Ciri-ciri <strong>profesional</strong> (9 butir, P6 hlm. 19), antara lain: memerlukan latihan khusus; hidup dari pekerjaan itu dengan keahlian tinggi; memiliki pendidikan khusus; memahami kaidah dan standar moral profesi serta etika profesi; <strong>mengutamakan kepentingan masyarakat</strong> di atas kepentingan pribadi; <strong>ada izin khusus dari instansi yang berwenang</strong>; <strong>terorganisir dalam suatu induk organisasi</strong> sebagai pengawasnya.</li>
+            <li>Menurut <strong>Brandeis</strong> (dikutip A. Pattern Jr.), pekerjaan disebut profesi bila mencerminkan: (1) ciri pengetahuan (<em>intellectual character</em>); (2) <strong>diabdikan untuk kepentingan orang lain</strong>; (3) <strong>keberhasilan bukan didasarkan pada keuntungan finansial</strong>; (4) didukung organisasi profesi (<em>association</em>) yang menentukan <strong>kode etik</strong> serta memajukan profesi; (5) adanya <strong>standard kualifikasi</strong> profesi (P6 hlm. 20).</li>
+          </ul>
+          <h4>Moral dan legalitas menurut Kant</h4>
+          <ul>
+            <li><strong>Legalitas</strong> (Kant, <em>Metaphysik der Sitten</em>, 1797): kesesuaian atau ketidaksesuaian semata-mata suatu tindakan dengan hukum atau norma lahiriah — pada dirinya sendiri <strong>belum bernilai moral</strong>, sebab dorongan batin (<em>triebfeder</em>) sama sekali tidak diperhatikan (P6 hlm. 29).</li>
+            <li><strong>Moralitas:</strong> kesesuaian sikap perbuatan dengan norma atau hukum batiniah, yakni apa yang kita pandang sebagai kewajiban kita. Moralitas tercapai bila kita menaati hukum bukan karena menguntungkan atau takut sanksi, melainkan karena menyadari hukum itu kewajiban yang harus ditaati.</li>
+            <li>&ldquo;Kesungguhan sikap moral baru tampak kalau kita bertindak <strong>demi kewajiban itu sendiri</strong>, kendati itu tidak mengenakkan kita.&rdquo; Belas kasihan dan iba hati memang &ldquo;patut dipuji&rdquo;, tetapi tidak mempunyai nilai moral (P6 hlm. 30). <strong>Kewajibanlah tolok ukur</strong> apakah tindakan boleh disebut tindakan moral.</li>
+            <li><strong>Moralitas Heteronom:</strong> kewajiban ditaati bukan karena kewajiban itu sendiri, melainkan karena sesuatu dari luar kehendak pelaku — mis. demi tujuan yang diinginkan atau takut pada penguasa. <strong>Moralitas Otonom:</strong> kewajiban ditaati karena diyakini sebagai hal yang baik dan dikehendaki sendiri — otonom kehendak (<em>autonomie des willens</em>), prinsip tertinggi moralitas (P6 hlm. 31).</li>
+          </ul>
+          <h4>Peranan etika dalam perkembangan IPTEK — 5 peranan</h4>
+          <ul>
+            <li>(a) Etika sebagai <strong>landasan berpikir dan berkarya</strong>; (b) etika sebagai <strong>pengendali</strong>; (c) etika sebagai <strong>pendorong</strong>; (d) etika sebagai <strong>penyeimbang</strong>; (e) etika sebagai <strong>norma-norma</strong> (P6 hlm. 34).</li>
+            <li>Situasi etis dunia modern: pluralisme moral; masalah etis baru yang tidak terduga; kepedulian etis yang universal (P6 hlm. 32). Contoh masalah etis baru biomedis: manipulasi genetis dengan gen-gen manusia; reproduksi artifisial seperti fertilisasi in vitro (dengan/tanpa donor, sewa rahim) (P6 hlm. 37).</li>
+            <li>Sikap ilmiah (P6 hlm. 33): tidak mengutamakan finansial; selektif-objektif; tidak skeptis; sikap kritis-konstruktif; transparan.</li>
+            <li>Prinsip-prinsip etika profesi (P6 hlm. 38): bertanggung jawab atas pelaksanaan pekerjaan dan hasil; bertanggung jawab atas dampak karya; bersikap seadil mungkin dan tidak memihak; memiliki daerah kerja tertentu dan diberi kebebasan dalam menjalankan profesinya.</li>
+          </ul>
+          <h4>Kode etik profesi &amp; 3 sanksinya</h4>
+          <ul>
+            <li><strong>Kode etik:</strong> norma atau azas yang diterima suatu kelompok tertentu sebagai landasan tingkah laku sehari-hari di masyarakat maupun di tempat kerja (P6 hlm. 43). Kode Etik Profesi menguraikan peraturan dasar perilaku yang dianggap perlu bagi anggota profesinya untuk melaksanakan fungsinya secara jujur dan menjaga kepercayaan masyarakat; aparatur tata tertib mengenakan sanksi atas pelanggaran.</li>
+            <li><strong>Sanksi pelanggaran kode etik (3):</strong> (1) Sanksi Moral; (2) Sanksi terhadap Tuhan YME; (3) Sanksi dijatuhkan dari organisasi yang bersangkutan (P6 hlm. 44). Tidak ada sanksi hukum/negara dalam daftar ini.</li>
+            <li>Kaidah hukum (P6 hlm. 39): berisi <em>das sollen</em> (apa yang seharusnya dilakukan), bukan <em>das sein</em> (kenyataan); dengan sanksi yang tegas dan konkret, kepentingan yang diatur etika dapat berlaku secara efektif.</li>
+            <li>Catatan: slide yang berjudul &ldquo;PERSAMAAN DAN PERBEDAAN ANTARA ETIKA DAN HUKUM&rdquo; (P6 hlm. 40) kosong — lihat Jebakan 7.</li>
+          </ul>
+        </article>
+
+        <article class="materi-card" id="materi-p7">
+          <p class="meta">Pertemuan 7</p>
+          <h3>Penegakan Disiplin Profesi Tenaga Medis &amp; Tenaga Kesehatan</h3>
+          <h4>Dasar hukum &amp; 17 jenis pelanggaran disiplin</h4>
+          <ul>
+            <li>PMK No. 3 Tahun 2025 tentang Penegakan Disiplin Profesi (ditetapkan 9 Mei 2025, diundangkan 19 Mei 2025, BN 2025 No. 342) — 11 Bab, 36 Pasal; dan KMK No. HK.01.07/MENKES/775/2025 (ditetapkan 20 Agustus 2025) yang menguraikan 17 jenis pelanggaran sebagai pedoman (P7a hlm. 2; P7b hlm. 16).</li>
+            <li>Pelanggaran Disiplin Profesi (Pasal 1 angka 5 PMK 3/2025): tindakan keprofesian yang tidak mematuhi kewajiban disiplin dalam pelayanan kesehatan, termasuk pelanggaran terhadap <strong>standar profesi, standar pelayanan, dan standar prosedur operasional</strong>.</li>
+          </ul>
+          <ul>
+            <li><strong>1.</strong> Melakukan praktik tidak kompeten — di luar batas kompetensi, atau tanpa pengetahuan/keterampilan/sikap sesuai keilmuannya.</li>
+            <li><strong>2.</strong> Tidak merujuk pasien kepada tenaga medis/kesehatan yang kompeten (boleh tidak merujuk bila: kondisi pasien tidak memungkinkan; nakes lain sulit dijangkau/didatangkan; atas kehendak pasien/keluarga).</li>
+            <li><strong>3.</strong> Merujuk pasien kepada tenaga medis/kesehatan yang tidak kompeten.</li>
+            <li><strong>4.</strong> Mengabaikan tanggung jawab profesi — diagnosis/penatalaksanaan tanpa pemeriksaan memadai; tidak menolong darurat padahal tidak membahayakan dirinya; tidak memantau pasca tindakan; terlambat/tidak hadir saat gawat darurat tanpa alasan.</li>
+            <li><strong>5.</strong> Menghentikan kehamilan yang tidak sesuai ketentuan peraturan perundang-undangan.</li>
+            <li><strong>6.</strong> Penyalahgunaan kewenangan profesi — melakukan yang seharusnya tidak dilakukan / tidak melakukan yang seharusnya; melampaui kewenangan.</li>
+            <li><strong>7.</strong> Penyalahgunaan alkohol, obat-obat terlarang, dan zat berbahaya saat praktik.</li>
+            <li><strong>8.</strong> Penipuan / tidak memberikan penjelasan yang jujur, etis, dan memadai (diagnosis, tata cara, tujuan, alternatif, risiko, komplikasi, prognosis).</li>
+            <li><strong>9.</strong> Membuka rahasia kesehatan pasien tanpa alasan pembenar (pembenar: permintaan MDP; permintaan majelis hakim; sesuai peraturan perundang-undangan).</li>
+            <li><strong>10.</strong> Perbuatan tidak patut / tidak pantas / seksual saat praktik.</li>
+            <li><strong>11.</strong> Menolak atau menghentikan tindakan tanpa alasan (termasuk karena keluhan pasien, finansial, suku, ras, gender, politik, agama, kepercayaan).</li>
+            <li><strong>12.</strong> Pemeriksaan atau pengobatan berlebihan — tidak sesuai kebutuhan/membahayakan; membebani biaya; untuk keuntungan finansial.</li>
+            <li><strong>13.</strong> Meresepkan/memberikan obat golongan yang tidak ditujukan untuk perawatan (narkotika/psikotropika/zat adiktif di luar indikasi; atau demi keuntungan finansial, termasuk kerja sama pihak ketiga).</li>
+            <li><strong>14.</strong> Tidak membuat atau tidak menyimpan rekam medis (termasuk tidak mencatat informasi/KIE; penyimpanan di faskes menjadi tanggung jawab faskes).</li>
+            <li><strong>15.</strong> Membuat keterangan medis yang tidak didasarkan pada hasil pemeriksaan.</li>
+            <li><strong>16.</strong> Turut serta melakukan penyiksaan atau perbuatan kejam (kecuali tindakan tertentu yang diperbolehkan dan diatur khusus, seperti kebiri kimia).</li>
+            <li><strong>17.</strong> Mengiklankan diri dan melakukan perang tarif — iklan berlebihan/tidak sesuai kompetensi; <em>kick back</em> atau <em>fee splitting</em>; informasi tidak sah, patut, jujur, akurat, dan dapat dipercaya.</li>
+          </ul>
+          <ul>
+            <li>Daftar 17 jenis ini tidak tertutup: Menteri dapat menetapkan jenis pelanggaran lain sesuai kebutuhan (Pasal 4 ayat (2) PMK 3/2025).</li>
+          </ul>
+          <h4>MDP — otonom &amp; independen</h4>
+          <ul>
+            <li><strong>Majelis Disiplin Profesi (MDP)</strong> adalah majelis yang dibentuk dalam rangka penegakan disiplin profesi untuk mendukung tugas dan fungsi Konsil Kesehatan Indonesia (Pasal 1 angka 1 PMK 3/2025).</li>
+            <li>&ldquo;MDP dalam menjalankan tugas dan fungsi <strong>bersifat otonom dan independen</strong>&rdquo; dan diberikan perlindungan hukum sepanjang dalam batas kewenangan dan sesuai ketentuan peraturan perundang-undangan (Pasal 3).</li>
+            <li>Tenaga medis dan tenaga kesehatan wajib mematuhi tiga standar: <strong>standar profesi; standar pelayanan; standar prosedur operasional</strong> (Pasal 2 ayat (1)).</li>
+          </ul>
+          <h4>Alur penegakan disiplin</h4>
+          <ul>
+            <li><strong>1. Pengaduan</strong> (Pasal 5–8): pasien dan/atau keluarga (suami, istri, saudara kandung, anak, orang tua) yang dirugikan mengadu ke MDP via SIKN atau manual. Syarat (Pasal 7): mencantumkan jenis pelanggaran; <strong>belum lewat 3 tahun</strong> sejak kasus terjadi; tidak pernah diadukan dan diputuskan sebelumnya; teradu punya hubungan pelayanan dengan pasien; teradu memiliki STR dan SIP.</li>
+            <li><strong>2. Verifikasi Panitera</strong> (Pasal 9): Panitera memverifikasi kesesuaian ketentuan dan dokumen administrasi → pengaduan ditolak, atau pengadu diberi kesempatan melengkapi, atau MDP bersurat kepada teradu untuk memberikan tanggapan.</li>
+            <li><strong>3. Tanggapan teradu</strong> (Pasal 10): paling lama <strong>5 hari kerja</strong> sejak surat MDP diterima; bila lewat, pemeriksaan tetap dilanjutkan.</li>
+            <li><strong>4. Tim Pemeriksa</strong> (Pasal 11–12): ditetapkan Ketua MDP; Tim Pemeriksa provinsi bersifat ad hoc, <strong>5 orang</strong> (2 dinkes, 1 profesi, 1 fasyankes, 1 masyarakat); Tim Pemeriksa per pemeriksaan paling banyak 5 orang (1 anggota MDP sebagai Ketua + Tim Pemeriksa provinsi). Syarat anggota provinsi: WNI, sehat jasmani-rohani, bertakwa dan berakhlak mulia, berkelakuan baik, usia paling tinggi 65 tahun, nakes berpengalaman praktik paling sedikit 10 tahun dan ber-STR, tidak pernah/sedang menjalani sanksi disiplin, etik, dan hukum, tidak rangkap jabatan berpotensi konflik kepentingan.</li>
+            <li><strong>5. Sidang pemeriksaan</strong> (Pasal 17–19): luring di kantor MDP atau dinkes provinsi/kabupaten/kota (daring bila kondisi tertentu); alat bukti 5 jenis — dokumen cetak/elektronik, barang bukti, keterangan saksi, keterangan ahli, keterangan teradu.</li>
+            <li><strong>6. Tanggapan akhir</strong> (Pasal 20): pengadu dan teradu dapat memberi tanggapan akhir tertulis paling lama <strong>2 hari kerja</strong> setelah pemeriksaan selesai.</li>
+            <li><strong>7. Putusan</strong> (Pasal 21–22): diambil secara musyawarah dalam rapat pleno MDP, dibacakan dalam sidang terbuka untuk umum; salinan disampaikan ke pengadu dan teradu; putusan dilaporkan ke Ketua KKI dan Menteri paling sedikit 1 kali dalam 3 bulan; <strong>putusan berlaku final dan mengikat apabila tidak ada Peninjauan Kembali</strong>.</li>
+            <li><strong>8. Batas waktu pemeriksaan &amp; putusan</strong> (Pasal 15 ayat (1)): paling lama <strong>60 hari kalender</strong> sejak Tim Pemeriksa melakukan pemeriksaan; bila belum diputuskan, Ketua MDP menetapkan Tim Pemeriksa pengganti.</li>
+          </ul>
+          <h4>Peninjauan Kembali (PK) — 10 hari kerja</h4>
+          <ul>
+            <li>Pengadu dan/atau teradu dapat mengajukan PK kepada Menteri paling lama <strong>10 hari kerja setelah putusan dibacakan</strong> (Pasal 23 ayat (1)); hanya <strong>1 kali</strong>; merupakan upaya terakhir.</li>
+            <li>Alasan PK: ditemukan bukti baru; dugaan kesalahan penerapan jenis pelanggaran; dugaan konflik kepentingan pada pemeriksa dan yang diperiksa.</li>
+            <li>Tim PK (Pasal 25): ASN Kemenkes paling banyak 5 orang (ahli hukum, ahli pelayanan kesehatan, ahli SDM kesehatan). Keputusan PK (Pasal 26): Dirjen atas nama Menteri menerbitkan keputusan paling lama <strong>14 hari kerja</strong> sejak permohonan diterima — membatalkan, mengubah, atau menguatkan putusan MDP; keputusan PK bersifat final dan mengikat.</li>
+          </ul>
+          <h4>4 sanksi disiplin — Pasal 28</h4>
+          <ul>
+            <li>(a) <strong>Peringatan tertulis</strong>; (b) <strong>kewajiban mengikuti pendidikan atau pelatihan</strong> di penyelenggara pendidikan bidang kesehatan atau rumah sakit pendidikan terdekat yang memiliki kompetensi; (c) <strong>penonaktifan surat tanda registrasi sementara waktu</strong>; dan/atau (d) <strong>rekomendasi pencabutan surat izin praktik</strong>. Nakes yang dikenai sanksi dicatat dalam SIKN (Pasal 28 ayat (2)).</li>
+          </ul>
+          <h4>Rekomendasi MDP — 14 hari kerja</h4>
+          <ul>
+            <li>Sebelum penyidikan pidana (dimohon PPNS/POLRI) dan sebelum pertanggungjawaban perdata (dimohon nakes/kuasanya), terlebih dahulu harus dimintakan <strong>Rekomendasi MDP</strong> — rekomendasi dapat/tidak dapat dilakukan penyidikan, atau praktik sesuai/tidak sesuai standar profesi, standar pelayanan, dan SPO (Pasal 29).</li>
+            <li>Rekomendasi diberikan paling lama <strong>14 hari kerja</strong> sejak permohonan diterima; bila MDP tidak memberi rekomendasi setelah 14 hari kerja, MDP dianggap telah memberikan rekomendasi untuk dapat melakukan penyidikan (Pasal 29 ayat (7)–(8)).</li>
+            <li>Perhatian: &ldquo;14 hari kerja&rdquo; ini berbeda dengan 14 hari kerja keputusan PK (Pasal 26) — lihat Jebakan 12.</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- ================= LATIHAN ================= -->
+      <section class="panel" id="panel-latihan">
+        <h2>Latihan Soal — 40 Soal</h2>
+        <p class="sub">Sesuai blueprint Sumatif 1 (Sub-CPMK 1 &amp; 2). Saring per pertemuan dan per level, kerjakan dengan santai — jawabanmu tersimpan selama berpindah soal, baru dinilai di layar hasil.</p>
+
+        <div id="quiz-view">
+          <div class="filter-block">
+            <p class="filter-label">Pertemuan</p>
+            <div class="fchips" id="filter-p"></div>
+          </div>
+          <div class="filter-block">
+            <p class="filter-label">Level kognitif</p>
+            <div class="fchips" id="filter-l"></div>
+          </div>
+          <div class="quiz-meta">
+            <span class="count" id="quiz-count"></span>
+            <span class="count" id="quiz-progress-label"></span>
+          </div>
+          <div class="progress" aria-hidden="true"><div id="progress-bar"></div></div>
+          <div id="quiz-area"></div>
+          <div class="numgrid" id="numgrid" aria-label="Lompat ke nomor soal"></div>
+          <div class="qnav">
+            <button class="btn primary grow" id="btn-finish">Selesai — Lihat Hasil</button>
+          </div>
+        </div>
+
+        <div id="result-view" hidden>
+          <div class="score-card">
+            <div class="score-big" id="score-big">0%</div>
+            <p id="score-line"></p>
+            <p id="score-love"></p>
+          </div>
+          <div class="breakdown">
+            <div class="bd-card"><h4>Per level kognitif</h4><div id="bd-level"></div></div>
+            <div class="bd-card"><h4>Per pertemuan</h4><div id="bd-pertemuan"></div></div>
+          </div>
+          <div class="qnav">
+            <button class="btn grow" id="btn-back">Kembali ke Soal</button>
+            <button class="btn grow" id="btn-reset">Ulangi — Hapus Jawaban</button>
+          </div>
+          <div class="review">
+            <h3 class="serif" style="font-size:1.3rem;margin:6px 0 10px;">Telaah per soal</h3>
+            <div id="review-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= KARTU KILAT ================= -->
+      <section class="panel" id="panel-kilat">
+        <h2>Kartu Kilat</h2>
+        <p class="sub">Ketuk kartunya untuk membalik dan melihat jawaban. Cocok buat pengulangan cepat sebelum masuk ruang ujian.</p>
+        <div class="flash-wrap">
+          <button class="flash" id="flash" aria-label="Kartu kilat — ketuk untuk membalik">
+            <span class="flash-face flash-front">
+              <span class="tag" id="flash-tag-front">Kartu Kilat</span>
+              <span class="big" id="flash-front-text"></span>
+              <span class="small">Ketuk untuk melihat jawaban</span>
+            </span>
+            <span class="flash-face flash-back">
+              <span class="tag">Jawaban</span>
+              <span class="big" id="flash-back-text"></span>
+              <span class="small">Ketuk untuk kembali</span>
+            </span>
+          </button>
+        </div>
+        <div class="flash-nav">
+          <button class="btn" id="flash-prev">← Sebelumnya</button>
+          <span class="ctr" id="flash-ctr"></span>
+          <button class="btn" id="flash-next">Berikutnya →</button>
+          <button class="btn" id="flash-shuffle">Acak kartu</button>
+        </div>
+      </section>
+
+      <!-- ================= ANGKA KUNCI ================= -->
+      <section class="panel" id="panel-angka">
+        <h2>Angka Kunci</h2>
+        <p class="sub">Semua angka, rumus, dan ambang batas yang paling sering keluar — dirangkum dari slide P1–P7.</p>
+<table class="angka-table">
+          <tbody>
+            <tr><td>Beban belajar 1 SKS</td><td>45 jam (13 TM + 16 TT + 16 BM)</td><td>P1 hlm. 2</td></tr>
+            <tr><td>Bobot Sub-CPMK 1–4</td><td>Hierarki 35%; Kode Etik 15%; Etika 5 Lini 35%; Regulasi Produk 15%</td><td>P1 hlm. 5</td></tr>
+            <tr><td>Bobot asesmen</td><td>Sumatif 1 (UTS) 30%; Sumatif 2 (UAS) 35%; Tugas Terstruktur 20%; Belajar Mandiri 15%</td><td>P1 hlm. 7</td></tr>
+            <tr><td>Nilai lulus CPMK 2.5</td><td>&gt; 60</td><td>P1 hlm. 7</td></tr>
+            <tr><td>Hierarki Pasal 7 ayat (1)</td><td>7 tingkat: UUD → TAP MPR → UU/Perppu → PP → Perpres → Perda Prov → Perda Kab/Kota</td><td>P2 hlm. 7</td></tr>
+            <tr><td>PP 51/2009 dicabut</td><td>Oleh PP 28/2024, berlaku 26 Juli 2024</td><td>P2 hlm. 4, 14</td></tr>
+            <tr><td>STR sistem lama</td><td>Masa berlaku 5 tahun, wajib perpanjangan berkala</td><td>P3 slide 10</td></tr>
+            <tr><td>STR sistem baru</td><td>Seumur hidup (Pasal 260 ayat 4)</td><td>P3 slide 10</td></tr>
+            <tr><td>SKP (anotasi tulisan tangan di slide)</td><td>50 SKP — KELIRU; yang benar 100 SKP/5 tahun (KMK 1561/2024); lihat Jebakan 5</td><td>P3 slide 10</td></tr>
+            <tr><td>Pengecualian kerahasiaan medis</td><td>4 kondisi (Pasal 4)</td><td>P3 slide 7</td></tr>
+            <tr><td>Hierarki tenaga kefarmasian</td><td>3 tingkat: Spesialis — Apoteker — Vokasi</td><td>P3 slide 9</td></tr>
+            <tr><td>Penggolongan obat modern</td><td>5 kategori (Pasal 320)</td><td>P3 slide 12</td></tr>
+            <tr><td>Tingkatan Obat Bahan Alam</td><td>3: Jamu — OHT — Fitofarmaka (Pasal 321)</td><td>P3 slide 13</td></tr>
+            <tr><td>7 pilar praktik kefarmasian</td><td>Pasal 428 PP 28/2024</td><td>P4 slide 5</td></tr>
+            <tr><td>Pengecualian praktik oleh profesi lain</td><td>4 kondisi (Pasal 428 ayat 4–6)</td><td>P4 slide 12</td></tr>
+            <tr><td>STR seumur hidup (PP 28/2024)</td><td>Pasal 677 ayat 3; transisi Pasal 1162</td><td>P4 slide 7</td></tr>
+            <tr><td>SIP</td><td>5 tahun; 1 tempat praktik per SIP (Pasal 682)</td><td>P4 slide 8</td></tr>
+            <tr><td>SIP — batas lokasi</td><td>Maksimal 3 lokasi faskes</td><td>P5 hlm. 6</td></tr>
+            <tr><td>Total SKP</td><td>100; 3 pilar (Pasal 683)</td><td>P4 slide 8–9</td></tr>
+            <tr><td>Proporsi SKP per ranah</td><td>Tidak ada di slide (gap soal 22)</td><td>P4 slide 8–9</td></tr>
+            <tr><td>Telefarmasi</td><td>6 komponen (Pasal 561 &amp; 563)</td><td>P4 slide 16–17</td></tr>
+            <tr><td>EUA / tata kelola darurat</td><td>Pasal 942–944; EUA 1 dari 4 instrumen</td><td>P4 slide 22</td></tr>
+            <tr><td>Sanksi administratif (Pasal 426)</td><td>Teguran, denda, penutupan akses, pencabutan izin usaha</td><td>P4 slide 15</td></tr>
+            <tr><td>Apotek 24 jam</td><td>Minimal 2 Apoteker ber-SIP (klaim slide, tanpa pasal)</td><td>P5 hlm. 19</td></tr>
+            <tr><td>PMK per faskes</td><td>RS 72/2016; Apotek 73/2016; Klinik 34/2021; Puskesmas 26/2020</td><td>P5 hlm. 15</td></tr>
+            <tr><td>PBBR — apotek &amp; klinik</td><td>Risiko Tinggi; NIB + Sertifikat Standar + Izin Final</td><td>P5 hlm. 9</td></tr>
+            <tr><td>Peranan etika dalam IPTEK</td><td>5 peranan</td><td>P6 hlm. 34</td></tr>
+            <tr><td>Sanksi pelanggaran kode etik</td><td>3: moral; Tuhan YME; organisasi</td><td>P6 hlm. 44</td></tr>
+            <tr><td>Jenis pelanggaran disiplin</td><td>17 jenis (KMK 775/2025; Pasal 4 PMK 3/2025)</td><td>P7a; P7b hlm. 4</td></tr>
+            <tr><td>Batas waktu pengaduan</td><td>Belum lewat 3 tahun sejak kasus terjadi</td><td>P7b Pasal 7</td></tr>
+            <tr><td>Tanggapan teradu</td><td>Paling lama 5 hari kerja</td><td>P7b Pasal 10</td></tr>
+            <tr><td>Tim Pemeriksa provinsi</td><td>5 orang: 2 dinkes, 1 profesi, 1 fasyankes, 1 masyarakat</td><td>P7b Pasal 11</td></tr>
+            <tr><td>Batas pemeriksaan &amp; putusan</td><td>Paling lama 60 hari kalender</td><td>P7b Pasal 15</td></tr>
+            <tr><td>Peninjauan Kembali (PK)</td><td>10 hari kerja setelah putusan; 1×; keputusan 14 hari kerja</td><td>P7b Pasal 23, 26</td></tr>
+            <tr><td>Sanksi disiplin profesi</td><td>4 (Pasal 28)</td><td>P7b hlm. 12</td></tr>
+            <tr><td>Rekomendasi MDP</td><td>14 hari kerja; bila lewat, dianggap merekomendasikan penyidikan</td><td>P7b Pasal 29</td></tr>
+          </tbody>
+        </table>
+
+      </section>
+
+      <!-- ================= JEBAKAN ================= -->
+      <section class="panel" id="panel-jebakan">
+        <h2>Jebakan UTS</h2>
+        <p class="sub">Hal-hal yang kelihatan sepele tapi paling sering menjebak — termasuk beberapa inkonsistensi di slide sendiri. Baca ini terakhir sebelum ujian.</p>
+<div class="trap">
+          <h4>1. Pencabutan PP 51/2009 bukan contoh lex posterior</h4>
+          <p>PP 28/2024 mencabut PP 51/2009 secara eksplisit (berlaku 26 Juli 2024, P2 hlm. 4, 14) — norma lama itu sudah tidak berlaku sama sekali. Lex posterior baru bekerja bila dua norma setingkat yang sama-sama berlaku bertentangan. Jangan samakan keduanya: memakai PP 51/2009 sebagai landasan setelah dicabut berarti memakai peraturan yang sudah mati, bukan sekadar kalah oleh norma yang lebih baru (P2 hlm. 12).</p>
+        </div>
+        <div class="trap">
+          <h4>2. Slide P3: judul Pasal 199, isi Pasal 197</h4>
+          <p>Judul slide 8 menulis &ldquo;Tenaga Kesehatan (Pasal 199)&rdquo;, tetapi badan slide mengutip &ldquo;Tenaga Kesehatan sebagaimana dimaksud dalam Pasal 197 huruf b dikelompokkan ke dalam: …&rdquo; (a–l). Satu slide memakai dua nomor pasal untuk materi yang sama; slide 9 juga memakai judul &ldquo;(Pasal 199)&rdquo; untuk hierarki tenaga kefarmasian. Yang benar menurut isi slide: pengelompokan a–l dikutip dari Pasal 197 huruf b — judul &ldquo;Pasal 199&rdquo; meragukan dan wajib dicek ke teks UU 17/2023 sebelum dijadikan kunci jawaban (P3 slide 8–9, PDF hlm. 4–5).</p>
+        </div>
+        <div class="trap">
+          <h4>3. Pelimpahan terpencil: daftar penerimanya di Pasal 286 ayat (3), bukan 287</h4>
+          <p>Slide 11 mengatribusikan klausul darurat/terpencil ke Pasal 287: &ldquo;Jika Pemda menetapkan ketiadaan Apoteker, kewenangan penyerahan obat dilimpahkan kepada Dokter, Perawat, Bidan, atau Tenaga Vokasi Farmasi.&rdquo; Yang terverifikasi dari teks UU 17/2023: daftar penerima pelimpahan itu ada di <strong>Pasal 286 ayat (3)</strong>, sedangkan <strong>Pasal 287 ayat (1)</strong> mengatur penetapan ketiadaan Apoteker oleh Pemda dan <strong>ayat (2)</strong> kewajiban pelatihan bagi penerima pelimpahan. Jangan jadikan &ldquo;Pasal 287&rdquo; sebagai satu-satunya rujukan untuk ketentuan ini (P3 slide 11, PDF hlm. 6).</p>
+        </div>
+        <div class="trap">
+          <h4>4. &ldquo;Kerahasiaan Mutlak&rdquo; yang ternyata berpengecualian</h4>
+          <p>Slide 7 menulis hak pasien atas &ldquo;Kerahasiaan Mutlak atas data dan informasi kesehatan pribadinya&rdquo;, tetapi di kolom yang sama mencantumkan 4 kondisi pengecualian — gawat darurat, KLB/wabah, permintaan aparat penegak hukum, pendidikan/penelitian — dan menyatakan &ldquo;hak mandiri gugur&rdquo;. Kata &ldquo;mutlak&rdquo; di sini bermakna prinsip, bukan tanpa pengecualian: jawaban ujian yang benar tetap mengakui pengecualian KLB dan kawan-kawan (P3 slide 7, PDF hlm. 4, Pasal 4).</p>
+        </div>
+        <div class="trap">
+          <h4>5. STR seumur hidup vs kewajiban SKP — dan angka 50 SKP yang keliru</h4>
+          <p>Teks cetak slide 10 menekankan STR berlaku seumur hidup dan &ldquo;memangkas birokrasi berulang&rdquo;, tetapi anotasi tulisan tangan di slide yang sama menulis &ldquo;SKP harus dikumpulkan oleh apoteker selama 5 tahun (sebanyak 50 SKP; caranya: ikut webinar, pengmas)&rdquo;. Jangan simpulkan &ldquo;seumur hidup = tidak ada kewajiban berkala lagi&rdquo; — kewajiban pengembangan profesi (SKP) tetap berjalan per 5 tahun karena terkait <strong>perpanjangan SIP</strong>, bukan STR. Dan angka yang benar adalah <strong>100 SKP per 5 tahun</strong> (KMK HK.01.07/MENKES/1561/2024) — anotasi &ldquo;50 SKP&rdquo; sudah kedaluwarsa dan jangan dipakai sebagai kunci jawaban (P3 slide 10, PDF hlm. 5).</p>
+        </div>
+        <div class="trap">
+          <h4>6. SIP: 1 tempat per SIP vs maksimal 3 lokasi — keduanya benar</h4>
+          <p>P4 slide 8 (Pasal 682): SIP &ldquo;Mengikat pada 1 (satu) tempat praktik per SIP.&rdquo; P5 hlm. 6: SIP &ldquo;Maksimal di 3 (tiga) lokasi fasilitas kesehatan.&rdquo; Keduanya bisa benar sekaligus: satu SIP berlaku untuk satu tempat praktik, dan seorang apoteker boleh memegang SIP di maksimal 3 lokasi. Jangan menjawab salah satunya sebagai &ldquo;yang benar&rdquo; dan satunya &ldquo;salah&rdquo; — slide tidak menjelaskan rekonsiliasi ini, jadi hafalkan keduanya beserta logikanya.</p>
+        </div>
+        <div class="trap">
+          <h4>7. Slide P6 hlm. 40 (Etika vs Hukum) KOSONG</h4>
+          <p>Slide berjudul &ldquo;PERSAMAAN DAN PERBEDAAN ANTARA ETIKA DAN HUKUM&rdquo; hanya memuat judul dan sebuah kotak/bingkai kosong — tidak ada satu pun isi perbandingan (dicek sebagai gambar render). Mahasiswa yang hanya membaca judul akan mengira materinya ada. Bahan pembeda sanksi etik vs sanksi hukum harus disusun sendiri dari potongan lain: Kant tentang legalitas vs moralitas (hlm. 29–31), kaidah hukum bersanksi tegas dan konkret (hlm. 39), dan sanksi kode etik hanya moral, Tuhan YME, dan organisasi (hlm. 44).</p>
+        </div>
+        <div class="trap">
+          <h4>8. Dua kata Yunani ditulis sama: &ldquo;ethos&rdquo; dan &ldquo;ethos&rdquo;</h4>
+          <p>P6 hlm. 2 menyatakan ada dua kata Yunani &ldquo;yang hampir sama bunyinya, namun berbeda artinya&rdquo;, tetapi keduanya ditulis &ldquo;ethos&rdquo; tanpa pembeda ejaan/aksen — padahal pembedanya justru inti soal: yang satu berarti kebiasaan/adat, yang satu berarti perasaan batin/kecenderungan batin pendorong perilaku. Hlm. 4 lalu merangkum keduanya menjadi satu arti (&ldquo;karakter, watak kesusilaan atau adat&rdquo;). Hafalkan dua artinya, jangan terpaku pada ejaan yang tertulis.</p>
+        </div>
+        <div class="trap">
+          <h4>9. Sanksi etik: P1 bilang &ldquo;pencabutan izin profesi&rdquo;, P2 bilang &ldquo;sanksi etik dan organisasi&rdquo;</h4>
+          <p>P1 hlm. 16 menulis sanksi etik = &ldquo;Peringatan atau pencabutan izin profesi&rdquo;, sedangkan P2 hlm. 16 menulis sanksi Kode Etik = &ldquo;Sanksi etik dan organisasi&rdquo;. Dugaan (belum terverifikasi dari sumber primer): pencabutan izin praktik (STR/SIP) adalah sanksi administratif oleh pemerintah/regulator, bukan sanksi organisasi profesi — sehingga rumusan P1 tampak mencampur sanksi etik dengan sanksi administratif. Cek ke naskah Kode Etik Apoteker Indonesia dan UU 17/2023 sebelum menjadikan rumusan P1 sebagai kunci jawaban.</p>
+        </div>
+        <div class="trap">
+          <h4>10. Pasal 9 ayat (4) PMK 3/2025 merujuk pasal yang tidak ada</h4>
+          <p>Pasal 9 ayat (4) PMK 3/2025 merujuk &ldquo;Pasal 7 ayat (1)&rdquo; dan &ldquo;Pasal 7 ayat (2)&rdquo; — padahal Pasal 7 tidak memiliki ayat bernomor (satu paragraf dengan huruf a–e saja; terverifikasi visual hlm. 5–6). Ini kesalahan rujukan dalam naskah asli, bukan artefak OCR. Dugaan: yang dimaksud kemungkinan ketentuan Pasal 7 (syarat pengaduan) dan Pasal 8 (dokumen/formulir pengaduan) — tetapi jangan jadikan dugaan ini sebagai isi pasal; kutip apa adanya bila membuat soal, atau hindari soal yang bergantung pada rujukan ayat tersebut.</p>
+        </div>
+        <div class="trap">
+          <h4>11. Pasal 30 ayat (3) PMK 3/2025 merujuk Pasal 28 ayat (4) yang tidak ada</h4>
+          <p>Pasal 30 ayat (3) merujuk permohonan rekomendasi &ldquo;sebagaimana dimaksud dalam Pasal 28 ayat (4)&rdquo; — padahal Pasal 28 hanya memiliki ayat (1) dan (2) (terverifikasi visual hlm. 13). Yang dimaksud hampir pasti <strong>Pasal 29 ayat (4)</strong> (permohonan rekomendasi perkara perdata oleh Tenaga Medis/Tenaga Kesehatan atau kuasanya): isi ayat (3) Pasal 30 — dokumen yang diunggah (standar pelayanan, standar profesi, SPO, surat penugasan klinis, rekam medis) — persis cocok dengan konteks Pasal 29 ayat (4), bukan Pasal 28. Tandai sebagai kesalahan rujukan dalam naskah asli.</p>
+        </div>
+        <div class="trap">
+          <h4>12. &ldquo;14 hari kerja&rdquo; ada dua — dan 60 hari itu KALENDER</h4>
+          <p>Angka &ldquo;14 hari kerja&rdquo; muncul dua kali dengan arti berbeda di PMK 3/2025: <strong>Pasal 26 ayat (2)</strong> = 14 hari kerja untuk keputusan Peninjauan Kembali sejak permohonan diterima; <strong>Pasal 29 ayat (7)</strong> = 14 hari kerja untuk pemberian Rekomendasi MDP sejak permohonan diterima. Jangan tertukar. Dan perhatikan satuannya: batas pemeriksaan dan putusan MDP adalah <strong>60 hari KALENDER</strong> (Pasal 15 ayat (1)) — bukan hari kerja — berbeda dengan 10 hari kerja (batas mengajukan PK, Pasal 23), 5 hari kerja (tanggapan teradu, Pasal 10), dan 2 hari kerja (tanggapan akhir, Pasal 20).</p>
+        </div>
+        <div class="trap">
+          <h4>13. &ldquo;Hukuman fisik&rdquo; bukan sanksi hukum</h4>
+          <p>P1 hlm. 16 menulis sanksi hukum berupa &ldquo;Denda, hukuman fisik, atau penjara&rdquo;. Hukum positif Indonesia tidak mengenal &ldquo;hukuman fisik&rdquo; sebagai jenis sanksi — sanksi hukum adalah administratif, perdata, dan pidana (P2 hlm. 16). Frasa itu kemungkinan kekeliruan penulisan slide; jangan jadikan &ldquo;hukuman fisik&rdquo; sebagai contoh sanksi hukum saat ujian.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>Ruang Belajar Etika dan Regulasi Farmasi · Sumatif 1 · Farmasi UNJANI Semester Ganjil 2025/2026<br />Dibuat dengan <span class="heart">♥</span> untuk menemani belajar — semoga ujiannya lancar.</p>
+      </footer>
+    </div>
+
+    <script>
+      /* ================= DATA SOAL (dari file latihan, apa adanya) ================= */
+      const SOAL = [{"n": 1, "p": 1, "level": "C4", "src": "P1 hlm. 16–17", "q": "Andi, mahasiswa farmasi tingkat akhir yang sedang praktik kerja di sebuah apotek, didatangi pelanggan yang terlihat sakit dan mendesak agar diberikan antibiotik tanpa resep dokter. Andi bersimpati pada pelanggan tersebut dan terbiasa membantu orang yang membutuhkan bantuan segera, tetapi ia tahu bahwa secara etis ia harus mematuhi aturan yang berlaku: dilarang menjual antibiotik tanpa resep. Analisis yang paling tepat atas konflik yang dihadapi Andi adalah …", "options": [{"k": "A", "t": "Andi boleh menyerahkan antibiotik karena simpati moralnya terhadap pelanggan yang sakit sudah cukup menjadi pembenar tindakan tersebut"}, {"k": "B", "t": "Andi harus menolak menyerahkan antibiotik tanpa resep, karena kewajiban etik profesi untuk mematuhi aturan yang berlaku mengalahkan simpati moral pribadi dan kebiasaan sosial membantu orang yang membutuhkan"}, {"k": "C", "t": "Andi boleh menyerahkan antibiotik karena norma sosial — kebiasaan membantu orang yang membutuhkan bantuan segera — lebih mengikat daripada aturan profesi"}, {"k": "D", "t": "Keputusan diserahkan sepenuhnya pada perasaan Andi, karena moral bersifat subjektif sehingga tidak ada standar yang dapat menilai benar-salahnya tindakan Andi"}, {"k": "E", "t": "Andi boleh menyerahkan antibiotik dalam jumlah kecil, karena penyerahan dalam jumlah kecil tidak melanggar larangan etik penjualan antibiotik tanpa resep"}], "ans": "B", "expl": "Kasus Andi (P1 hlm. 17) memetakan konflik ini per aspek: moral = simpati pada pelanggan yang terlihat sangat membutuhkan antibiotik; norma = kebiasaan membantu orang yang membutuhkan bantuan segera; etik = secara etis ia harus mematuhi aturan yang berlaku, \"Dilarang menjual antibiotik tanpa resep\". Tabel P1 hlm. 16 menegaskan pembedanya: moral bersumber pada keyakinan individu, bersifat subjektif, dan sanksinya hanya perasaan bersalah atau malu; sedangkan etik bersumber pada kode etik profesi, bersifat spesifik terkait profesi, dan sanksinya berupa peringatan atau pencabutan izin profesi. Karena itu simpati pribadi (moral) dan kebiasaan membantu (norma) tidak dapat mengalahkan kewajiban etik profesi. Pilihan A salah karena menjadikan simpati moral sebagai pembenar, padahal moral tidak mengikat secara profesi. Pilihan C salah karena norma sosial bersifat kolektif dan tidak mengikat seperti etik profesi. Pilihan D salah karena dalam konteks praktik profesi, tindakan Andi justru dinilai oleh standar etik profesi, bukan semata perasaan pribadi. Pilihan E salah karena larangan dalam kasus ini tidak mengenal pengecualian jumlah kecil. Catatan: slide tidak menyebut pasal spesifik yang melarang penyerahan antibiotik tanpa resep, sehingga soal ini menguji pemilahan moral/norma/etik menurut tabel P1 hlm. 16–17, bukan nomor pasal. ---"}, {"n": 2, "p": 1, "level": "C4", "src": "P1 hlm. 16; P2 hlm. 16; P6 hlm. 44", "q": "Seorang apoteker membocorkan data medis pasien kepada pihak luar tanpa alasan yang sah. Ditinjau dari perbedaan moral, norma, etik, dan hukum, pernyataan yang paling tepat mengenai sumber kewajiban menjaga kerahasiaan pasien dan otoritas yang menjatuhkan sanksi atas pelanggaran tersebut adalah …", "options": [{"k": "A", "t": "Kewajiban menjaga kerahasiaan bersumber pada norma sosial, dan pelanggarannya dikenai sanksi sosial berupa dikucilkan atau tidak diterima oleh masyarakat"}, {"k": "B", "t": "Kewajiban menjaga kerahasiaan bersumber pada keyakinan moral pribadi apoteker, dan pelanggarannya hanya dikenai sanksi berupa perasaan bersalah atau malu"}, {"k": "C", "t": "Kewajiban menjaga kerahasiaan bersumber pada hukum formal, sehingga satu-satunya sanksi yang berlaku adalah denda atau penjara yang dijatuhkan oleh negara"}, {"k": "D", "t": "Kewajiban menjaga kerahasiaan bersumber pada Kode Etik Apoteker Indonesia (IAI), dan pelanggaran etiknya dikenai sanksi etik dan organisasi yang dijatuhkan oleh organisasi profesi"}, {"k": "E", "t": "Kewajiban menjaga kerahasiaan bersumber pada SOP internal apotek tempat apoteker bekerja, dan pelanggarannya dikenai sanksi oleh pimpinan apotek semata"}], "ans": "D", "expl": "Tabel P1 hlm. 16 memberi contoh etik secara eksplisit: \"Seorang apoteker wajib menjaga kerahasiaan pasien berdasarkan kode etik profesi\" — sumber kewajiban etik adalah kode etik profesi atau organisasi profesi, berbeda dari moral (keyakinan individu/budaya), norma (tradisi/konsensus sosial), dan hukum (peraturan pemerintah/undang-undang). P2 hlm. 16 menegaskan posisi Kode Etik Apoteker: pembentuknya organisasi profesi (IAI), daya ikatnya mengikat anggota profesi, dan sanksinya berupa sanksi etik dan organisasi — bukan peraturan perundang-undangan. Karena itu sumber kewajiban dan otoritas penjatuh sanksi profesionalnya adalah Kode Etik IAI dan organisasi profesi. Pilihan A salah karena sanksi dikucilkan adalah sanksi norma sosial, bukan sanksi etik profesi. Pilihan B salah karena rasa bersalah/malu adalah sanksi moral, dan kewajiban kerahasiaan pasien dalam praktik profesi tidak bersumber pada keyakinan pribadi semata. Pilihan C keliru memindahkan soal ke ranah hukum: denda atau penjara adalah sanksi hukum yang dijatuhkan negara, bukan sanksi etik/organisasi atas pelanggaran kode etik. Pilihan E salah karena SOP internal apotek bukan sumber kewajiban etik profesi dan pimpinan apotek bukan otoritas penjatuh sanksi etik profesi. ---"}, {"n": 3, "p": 1, "level": "C4", "src": "P5 hlm. 2", "q": "Praktik kefarmasian diatur oleh negara sebagai *Regulated Profession*: apoteker tidak bebas berpraktik tanpa standar kompetensi dan legalitas, karena pekerjaan kefarmasian menyangkut kompleksitas medis dan risiko bagi pasien. Objektif utama pembentukan regulasi pemerintah atas praktik kefarmasian tersebut adalah …", "options": [{"k": "A", "t": "Patient Safety & Patient Outcomes — keselamatan pasien dan luaran pasien, sebagai keseimbangan kritis antara otonomi profesi dan hak keselamatan nyawa manusia"}, {"k": "B", "t": "Melindungi kepentingan ekonomi dan pendapatan apoteker dari persaingan praktik kefarmasian"}, {"k": "C", "t": "Mempermudah birokrasi perizinan agar apoteker dapat berpraktik tanpa hambatan administratif apa pun"}, {"k": "D", "t": "Membatasi jumlah apoteker yang berpraktik agar pasokan tenaga kefarmasian tetap terkendali"}, {"k": "E", "t": "Menyeragamkan harga obat di seluruh fasilitas pelayanan kefarmasian"}], "ans": "A", "expl": "P5 hlm. 2 merumuskan secara eksplisit: \"Objektif Utama Regulasi: Patient Safety & Patient Outcomes. Keseimbangan kritis antara otonomi profesi dan hak keselamatan nyawa manusia.\" Regulasi hadir karena praktik kefarmasian berada pada timbangan antara \"Kompleksitas Medis & Risiko\" dan \"Standar Kompetensi & Legalitas\" — negara mengatur bukan untuk melindungi profesi itu sendiri, melainkan untuk melindungi pasien dari risiko praktik yang kompleks. Pilihan B salah karena objektif regulasi bukan kepentingan ekonomi apoteker. Pilihan C salah karena kemudahan birokrasi bukan tujuan utama regulasi; standar kompetensi dan legalitas justru membatasi siapa yang boleh berpraktik. Pilihan D salah karena regulasi tidak bertujuan membatasi jumlah apoteker. Pilihan E salah karena penyeragaman harga obat bukan objektif utama pengaturan profesi kefarmasian. ---"}, {"n": 4, "p": 1, "level": "C4", "src": "P1 hlm. 15–16", "q": "Seorang mahasiswa menyatakan: \"Hukum adalah akar dari etika, etika melahirkan moral, dan norma sosial berdiri di atas hukum.\" Pernyataan yang paling tepat untuk menilai rantai hubungan moral, etika profesi, norma sosial, dan hukum formal menurut materi pengantar adalah …", "options": [{"k": "A", "t": "Pernyataan tersebut benar: hukum merupakan akar dari seluruh norma, sehingga etika dan moral tunduk pada hukum"}, {"k": "B", "t": "Pernyataan tersebut benar sebagian: moral memang lahir dari hukum, tetapi norma sosial berdiri sendiri dan tidak berhubungan dengan etika"}, {"k": "C", "t": "Pernyataan tersebut terbalik: moral adalah akar dari etika, etika memengaruhi terbentuknya norma sosial, dan norma sosial dapat diadopsi menjadi hukum yang bersifat mengikat"}, {"k": "D", "t": "Pernyataan tersebut benar: norma sosial berkedudukan lebih tinggi daripada hukum formal karena hukum hanya mencatat kebiasaan masyarakat"}, {"k": "E", "t": "Pernyataan tersebut benar: etika profesi dan hukum formal adalah hal yang identik, karena keduanya sama-sama mengikat dan memiliki sanksi formal"}], "ans": "C", "expl": "P1 hlm. 15 merumuskan rantai hubungan secara verbatim: \"Moral adalah akar dari etika\", \"Etika memengaruhi terbentuknya norma sosial\", \"Norma bisa diadopsi menjadi hukum yang bersifat mengikat\" — rantai **moral → etika → norma sosial → hukum**, diulang pada kesimpulan P1 hlm. 23. Tabel P1 hlm. 16 memperkuat pembedaan fungsionalnya: moral bersumber pada keyakinan individu/budaya dan bersifat subjektif; etik bersumber pada kode etik profesi dan spesifik terkait profesi; norma bersumber pada tradisi/konsensus sosial dan bersifat kolektif; hukum ditetapkan negara, bersifat objektif, wajib, dan memiliki sanksi formal. Pilihan A salah karena membalik rantai: hukum adalah ujung rantai, bukan akarnya. Pilihan B salah karena moral adalah akar, bukan lahir dari hukum. Pilihan D salah karena hukum formal justru mengikat secara umum dan berkedudukan sebagai norma yang ditetapkan negara, bukan sekadar catatan kebiasaan. Pilihan E salah karena etik dan hukum berbeda sumber, sifat, dan sanksinya menurut tabel P1 hlm. 16. ---"}, {"n": 5, "p": 2, "level": "C4", "src": "P2 hlm. 4, 12, 14", "q": "Sebuah apotek menyusun SOP perizinan dengan merujuk PP No. 51 Tahun 2009 tentang Pekerjaan Kefarmasian. Saat audit, petugas menunjukkan bahwa PP tersebut telah dicabut oleh PP No. 28 Tahun 2024 yang berlaku sejak 26 Juli 2024. Berdasarkan asas *lex posterior derogat legi priori*, akibat hukum dari penggunaan SOP tersebut adalah …", "options": [{"k": "A", "t": "SOP tetap sah sebagai dasar hukum, karena disusun sebelum PP No. 51 Tahun 2009 dicabut"}, {"k": "B", "t": "PP No. 51 Tahun 2009 tetap berlaku berdampingan dengan PP No. 28 Tahun 2024, sehingga apotek boleh memilih dasar hukum yang lebih menguntungkan"}, {"k": "C", "t": "SOP tetap dapat dipakai selama belum ada SOP baru, karena pencabutan peraturan tidak berlaku surut terhadap dokumen internal apotek"}, {"k": "D", "t": "Asas *lex posterior* tidak dapat diterapkan, karena PP No. 51 Tahun 2009 dan PP No. 28 Tahun 2024 berada pada tingkatan hierarki yang berbeda"}, {"k": "E", "t": "SOP yang merujuk peraturan yang dicabut tidak dapat dijadikan dasar hukum; yang berlaku adalah PP No. 28 Tahun 2024, karena peraturan yang lebih baru mengesampingkan peraturan yang lama"}], "ans": "E", "expl": "Kasus pemantik P2 hlm. 4 dan P2 hlm. 14 menyatakan PP No. 51 Tahun 2009 dicabut oleh PP No. 28 Tahun 2024 yang berlaku sejak 26 Juli 2024, dan pohon keputusan P2 hlm. 12 merumuskan *lex posterior* sebagai \"norma yang lebih baru dipakai\". Karena landasannya sudah dicabut, SOP apotek tersebut kehilangan dasar hukumnya dan tidak dapat dijadikan dasar hukum; dasar yang berlaku kini adalah PP No. 28 Tahun 2024. P2 hlm. 15 menegaskan langkah yang benar: cek status peraturan (berlaku, diubah, atau dicabut) sebelum dipakai, termasuk membaca ketentuan peralihan dan penutup. Pilihan A salah karena pencabutan menghilangkan keberlakuan peraturan sebagai dasar hukum, kapan pun SOP itu disusun. Pilihan B salah karena peraturan yang dicabut tidak lagi berlaku berdampingan dengan pencabutnya. Pilihan C salah karena ketiadaan SOP baru tidak menghidupkan kembali peraturan yang dicabut. Pilihan D salah karena kedua PP tersebut setingkat (sama-sama Peraturan Pemerintah), sehingga persoalannya memang soal keberlakuan norma yang lebih baru. Nuansa yang perlu dicatat dengan jujur: secara ketat, pencabutan eksplisit berbeda dari *lex posterior* — *lex posterior* bekerja saat dua norma setingkat yang sama-sama berlaku bertentangan, sedangkan norma yang dicabut sudah tidak berlaku sama sekali. Namun asas yang diuji blueprint pada soal ini adalah berlakunya norma yang lebih baru, dan jawaban E itulah yang mengikuti kasus pemantik slide. ---"}, {"n": 6, "p": 2, "level": "C4", "src": "P2 hlm. 12, 18", "q": "Sebuah Permenkes tentang standar pelayanan kefarmasian menambah syarat izin apotek yang tidak ada dalam PP No. 28 Tahun 2024, dan PP tersebut juga tidak mendelegasikan penambahan syarat itu kepada menteri. Apoteker mempertanyakan syarat tambahan tersebut. Penyelesaian pertentangan norma vertikal ini berdasarkan asas *lex superior derogat legi inferiori* adalah …", "options": [{"k": "A", "t": "Syarat tambahan dalam Permenkes dipakai, karena Permenkes lebih operasional dan lebih dekat dengan praktik sehari-hari daripada PP"}, {"k": "B", "t": "PP No. 28 Tahun 2024 dipakai dan syarat tambahan dalam Permenkes tidak mengikat, karena norma yang lebih tinggi mengesampingkan norma yang lebih rendah"}, {"k": "C", "t": "Syarat tambahan dalam Permenkes dipakai, karena peraturan yang lebih baru selalu menang atas peraturan yang lebih lama"}, {"k": "D", "t": "PP dan Permenkes dipakai bersama-sama, karena keduanya sama-sama mengatur standar pelayanan kefarmasian sehingga tidak ada pertentangan"}, {"k": "E", "t": "Syarat tambahan dalam Permenkes dipakai, karena Permenkes merupakan norma yang lebih khusus (*lex specialis*) daripada PP yang bersifat umum"}], "ans": "B", "expl": "Pohon keputusan P2 hlm. 12: \"Tingkatannya berbeda? Ya: *lex superior*. Norma yang lebih tinggi dipakai.\" Contoh kasus 4 langkah P2 hlm. 18 menerapkan persis pola ini pada Permenkes yang menambah syarat di luar PP: identifikasi (peraturan menteri, di luar hierarki Pasal 8), telusuri (PP tidak mendelegasikan syarat tersebut), uji (bertentangan dengan norma yang lebih tinggi: *lex superior*), tetapkan (PP dipakai; syarat tambahan tidak mengikat dan dapat diuji ke MA). PP berkedudukan lebih tinggi daripada Permenkes — Permenkes diakui dan mengikat berdasarkan Pasal 8 ayat (2), tetapi tidak berada dalam urutan Pasal 7 — sehingga syarat tambahannya tidak mengikat. Pilihan A salah dan merupakan miskonsepsi yang ditegaskan di P2 hlm. 19: \"Permenkes lebih operasional, jadi menang atas PP\" adalah pernyataan yang salah menurut slide. Pilihan C salah dan juga miskonsepsi P2 hlm. 19 (\"Peraturan baru selalu menang\"); *lex posterior* hanya berlaku antar norma setingkat, bukan antar tingkatan berbeda. Pilihan D salah karena ada pertentangan nyata: syarat tambahan tidak diperintahkan PP. Pilihan E salah karena uji vertikal didahulukan atas uji kekhususan — alur analisis P2 hlm. 17 menegaskan \"uji vertikal dahulu, lalu horizontal\". ---"}, {"n": 7, "p": 2, "level": "C4", "src": "P2 hlm. 9–10", "q": "Seorang apoteker mempertanyakan keabsahan Permenkes tentang standar pelayanan kefarmasian dan Peraturan BPOM tentang pengawasan obat dan makanan, dengan alasan keduanya tidak tercantum dalam urutan hierarki Pasal 7 ayat (1) UU No. 12 Tahun 2011. Penilaian yang paling tepat mengenai keabsahan dan kekuatan hukum mengikat kedua peraturan tersebut berdasarkan Pasal 8 ayat (2) UU No. 12 Tahun 2011 adalah …", "options": [{"k": "A", "t": "Keduanya tidak memiliki kekuatan hukum mengikat, karena peraturan yang tidak tercantum dalam urutan Pasal 7 ayat (1) bukan peraturan perundang-undangan"}, {"k": "B", "t": "Keduanya berkedudukan setara dengan Peraturan Pemerintah, karena sama-sama dibentuk oleh pemerintah pusat"}, {"k": "C", "t": "Keduanya hanya mengikat secara internal di lingkungan kementerian/lembaga pembentuknya dan tidak mengikat apoteker di lapangan"}, {"k": "D", "t": "Keduanya diakui dan memiliki kekuatan hukum mengikat, meskipun tidak berada dalam urutan Pasal 7, sepanjang diperintahkan oleh peraturan yang lebih tinggi atau dibentuk berdasarkan kewenangan"}, {"k": "E", "t": "Keduanya mengikat hanya apabila isinya telah disetujui oleh DPR bersama Presiden, sebagaimana pembentukan undang-undang"}], "ans": "D", "expl": "P2 hlm. 9 merumuskan Pasal 8 ayat (2) secara eksplisit: Peraturan Menteri (contoh: Permenkes standar pelayanan kefarmasian) dan peraturan lembaga/badan (contoh: Peraturan BPOM pengawasan obat dan makanan) \"Diakui dan memiliki kekuatan hukum mengikat, tetapi tidak berada dalam urutan Pasal 7.\" P2 hlm. 10 menjelaskan dua jalur keabsahannya — Jalur A: diperintahkan peraturan yang lebih tinggi; Jalur B: dibentuk berdasarkan kewenangan — dan cara mengeceknya adalah membaca konsiderans \"mengingat\" dan pasal pendelegasian. Pilihan A salah karena Pasal 8 ayat (2) justru mengakui keberlakuan peraturan di luar urutan Pasal 7. Pilihan B salah karena kedua peraturan tersebut tidak setara PP; PP berada dalam urutan Pasal 7, sedangkan Permenkes/Peraturan BPOM berada di luar urutan itu. Pilihan C salah karena daya ikatnya tidak terbatas internal — Permenkes standar pelayanan dan Peraturan BPOM pengawasan obat mengikat pelaku praktik kefarmasian. Pilihan E salah karena persetujuan DPR bersama Presiden adalah mekanisme pembentukan undang-undang, bukan syarat keabsahan peraturan menteri/lembaga berdasarkan Pasal 8 ayat (2). ---"}, {"n": 8, "p": 2, "level": "C4", "src": "P2 hlm. 13, 18", "q": "Sebuah Permenkes diduga bertentangan dengan UU No. 17 Tahun 2023 tentang Kesehatan. Lembaga yang berwenang melakukan pengujian terhadap Permenkes tersebut, dan tolok ukur pengujiannya, adalah …", "options": [{"k": "A", "t": "Mahkamah Agung, yang menguji peraturan di bawah undang-undang terhadap undang-undang"}, {"k": "B", "t": "Mahkamah Konstitusi, yang menguji Permenkes terhadap UUD NRI 1945"}, {"k": "C", "t": "Mahkamah Agung, yang menguji undang-undang terhadap UUD NRI 1945"}, {"k": "D", "t": "Dewan Perwakilan Rakyat, yang menguji Permenkes melalui fungsi pengawasan terhadap menteri"}, {"k": "E", "t": "Mahkamah Konstitusi, yang menguji peraturan di bawah undang-undang terhadap undang-undang"}], "ans": "A", "expl": "P2 hlm. 13 membedakan kewenangan pengujian (Pasal 9 UU No. 12 Tahun 2011) secara tegas: Mahkamah Konstitusi menguji UU terhadap UUD NRI 1945, sedangkan Mahkamah Agung menguji peraturan di bawah UU terhadap UU. Contohnya: \"Permenkes yang bertentangan dengan PP atau UU dapat diuji di Mahkamah Agung\", diperkuat contoh kasus P2 hlm. 18 (\"syarat tambahan tidak mengikat dan dapat diuji ke MA\"). Karena Permenkes adalah peraturan di bawah UU dan diduga bertentangan dengan UU, pengujian menjadi kewenangan Mahkamah Agung dengan tolok ukur undang-undang. Pilihan B dan E salah karena Mahkamah Konstitusi hanya menguji UU terhadap UUD, bukan peraturan di bawah UU. Pilihan C salah karena menguji UU terhadap UUD adalah kewenangan MK, bukan MA. Pilihan D salah karena fungsi pengawasan DPR bukan mekanisme pengujian peraturan perundang-undangan menurut Pasal 9. ---"}, {"n": 9, "p": 3, "level": "C3", "src": "P3 hlm. 4", "q": "Di tengah Kejadian Luar Biasa (KLB) wabah penyakit menular, dinas kesehatan meminta apotek dan fasilitas pelayanan kesehatan membuka data medis pasien untuk keperluan penanggulangan wabah, tanpa persetujuan mandiri dari masing-masing pasien. Berdasarkan Pasal 4 UU No. 17 Tahun 2023 tentang pengecualian kerahasiaan data medis, tindakan pembukaan data tersebut adalah …", "options": [{"k": "A", "t": "Tidak sah, karena kerahasiaan data medis pasien bersifat mutlak dan tidak mengenal pengecualian apa pun"}, {"k": "B", "t": "Tidak sah, karena pengecualian kerahasiaan hanya berlaku dalam keadaan gawat darurat yang mengancam nyawa pasien secara individual"}, {"k": "C", "t": "Sah, karena penanggulangan KLB atau wabah merupakan salah satu kondisi pengecualian yang membuat kerahasiaan data dapat dibuka dan hak mandiri pasien gugur"}, {"k": "D", "t": "Tidak sah, karena pembukaan data tanpa persetujuan pasien hanya dibenarkan untuk kepentingan pendidikan atau penelitian dengan data agregat"}, {"k": "E", "t": "Sah hanya apabila setiap pasien telah memberikan persetujuan mandiri secara tertulis sebelum datanya dibuka"}], "ans": "C", "expl": "P3 hlm. 4 (slide 7, Pasal 4) memang menulis hak pasien atas \"Kerahasiaan Mutlak atas data dan informasi kesehatan pribadinya\", tetapi pada kolom yang sama slide menegaskan pengecualiannya: \"Kerahasiaan data dapat dibuka dan hak mandiri gugur dalam kondisi: Keadaan Gawat Darurat (ancaman nyawa); Penanggulangan Kejadian Luar Biasa (KLB) atau Wabah; Pemenuhan permintaan aparat penegak hukum; Kepentingan pendidikan/penelitian (dengan data agregat/tanpa identitas).\" Penanggulangan KLB/wabah adalah salah satu dari empat kondisi pengecualian itu, sehingga pembukaan data untuk keperluan tersebut sah tanpa persetujuan mandiri pasien. Pilihan A salah karena terjebak pada kata \"Mutlak\": kata itu bermakna prinsip, bukan tanpa pengecualian — slide sendiri mencantumkan empat pengecualian. Pilihan B salah karena gawat darurat hanyalah satu dari empat kondisi, bukan satu-satunya. Pilihan D salah karena pendidikan/penelitian adalah kondisi pengecualian yang berbeda, bukan syarat bagi pengecualian KLB. Pilihan E salah karena justru dalam kondisi pengecualian inilah hak mandiri pasien dinyatakan gugur, sehingga persetujuan mandiri tidak lagi menjadi syarat. Catatan: slide tidak merinci nomor ayat Pasal 4 maupun prosedur/mekanisme pembukaan datanya. ---"}, {"n": 10, "p": 3, "level": "C2", "src": "P3 hlm. 3", "q": "Alat kesehatan dibedakan dari sediaan farmasi terutama karena karakteristik mekanisme kerjanya, yaitu …", "options": [{"k": "A", "t": "Mempengaruhi sistem fisiologi atau patologi tubuh pasien"}, {"k": "B", "t": "Bekerja tanpa aksi farmakologi utama"}, {"k": "C", "t": "Berasal dari sumber daya alam"}, {"k": "D", "t": "Berfungsi sebagai penambah nutrisi atau fungsi tubuh"}, {"k": "E", "t": "Merupakan sediaan luar untuk estetika atau perawatan"}], "ans": "B", "expl": "P3 hlm. 3 (slide 6, Pasal 1 & 142) membedakan Perbekalan Kesehatan menjadi Alat Kesehatan, PKRT, dan Sediaan Farmasi. Alat Kesehatan — instrumen, mesin, implan, reagen in vitro, perangkat lunak — dirumuskan dengan pembeda eksplisit: \"Tanpa aksi farmakologi utama.\" Sebaliknya, Obat & Bahan Obat sebagai bagian Sediaan Farmasi dirumuskan sebagai \"Mempengaruhi sistem fisiologi/patologi\". Pilihan A salah karena mempengaruhi sistem fisiologi/patologi adalah karakteristik obat, bukan alat kesehatan. Pilihan C salah karena \"berasal dari sumber daya alam\" adalah definisi Obat Bahan Alam. Pilihan D salah karena penambah nutrisi/fungsi tubuh adalah definisi Suplemen Kesehatan. Pilihan E salah karena sediaan luar untuk estetika/perawatan adalah definisi Kosmetik — ketiganya merupakan subkelompok Sediaan Farmasi, bukan Alat Kesehatan. ---"}, {"n": 11, "p": 3, "level": "C3", "src": "P3 hlm. 7", "q": "Suatu produk obat bahan alam telah melalui uji praklinik (in vivo/in vitro), bahan baku aktifnya telah distandardisasi secara ilmiah, dan diklaim untuk pengobatan tingkat menengah dengan keamanan teruji. Berdasarkan Pasal 321 UU No. 17 Tahun 2023, penggolongan produk tersebut adalah …", "options": [{"k": "A", "t": "Jamu, karena pembuktiannya empiris atau turun-temurun"}, {"k": "B", "t": "Suplemen Kesehatan, karena berfungsi menambah nutrisi tubuh"}, {"k": "C", "t": "Fitofarmaka, karena telah melalui uji klinik penuh pada manusia"}, {"k": "D", "t": "Obat Herbal Terstandar (OHT), karena pembuktiannya berupa uji praklinik dengan bahan baku aktif terstandardisasi"}, {"k": "E", "t": "Obat Kuasi, karena digunakan untuk pengobatan ringan atau gejala spesifik"}], "ans": "D", "expl": "P3 hlm. 7 (slide 13, Pasal 321) membedakan tiga tingkatan obat bahan alam: Jamu — pembuktian empiris/turun-temurun, klaim pemeliharaan kesehatan tradisional; Obat Herbal Terstandar (OHT) — pembuktian \"Uji Praklinik (In vivo / In vitro)\", bahan baku aktif telah distandardisasi secara ilmiah, klaim \"Pengobatan tingkat menengah dengan keamanan teruji\"; Fitofarmaka — pembuktian \"Uji Klinik penuh pada manusia\", standar setara obat modern, klaim pengobatan medis klinis bersertifikasi. Ciri-ciri pada soal — uji praklinik in vivo/in vitro, bahan baku aktif terstandardisasi, klaim pengobatan tingkat menengah — sama persis dengan rumusan OHT. Pilihan A salah karena Jamu pembuktiannya empiris/turun-temurun, tanpa uji praklinik dan standardisasi ilmiah. Pilihan B salah karena Suplemen Kesehatan adalah subkelompok Sediaan Farmasi yang berfungsi penambah nutrisi, bukan tingkatan obat bahan alam Pasal 321. Pilihan C salah karena Fitofarmaka mensyaratkan uji klinik penuh pada manusia, bukan sekadar uji praklinik. Pilihan E salah karena Obat Kuasi adalah sediaan untuk pengobatan ringan/gejala spesifik (P3 hlm. 3), bukan tingkatan obat bahan alam berdasarkan tingkat pembuktian. ---"}, {"n": 12, "p": 3, "level": "C4", "src": "P3 hlm. 6", "q": "Pemerintah daerah sebuah kabupaten terpencil menetapkan secara resmi ketiadaan Apoteker di wilayahnya, sehingga pelayanan kefarmasian bagi masyarakat setempat terancam terhenti. Berdasarkan ketentuan tentang tata laksana praktik dan eksepsi wilayah khusus dalam UU No. 17 Tahun 2023, pelimpahan legal kewenangan penyerahan obat yang dapat dilakukan dalam kondisi tersebut adalah …", "options": [{"k": "A", "t": "Kewenangan penyerahan obat, dalam batas tertentu, dilimpahkan secara legal kepada Dokter, Perawat, Bidan, atau Tenaga Vokasi Farmasi"}, {"k": "B", "t": "Kewenangan penyerahan obat dilimpahkan tanpa batas kepada seluruh tenaga kesehatan yang bertugas di wilayah tersebut, termasuk untuk obat narkotika dan psikotropika"}, {"k": "C", "t": "Kewenangan penyerahan obat hanya dilimpahkan kepada Perawat dan Bidan, sedangkan Dokter dan Tenaga Vokasi Farmasi tidak termasuk penerima pelimpahan"}, {"k": "D", "t": "Seluruh praktik kefarmasian — produksi, pengadaan, peracikan, dan penyerahan — beralih secara penuh kepada penerima pelimpahan tanpa batasan apa pun"}, {"k": "E", "t": "Tidak ada pelimpahan yang dibenarkan; pelayanan kefarmasian harus dihentikan sepenuhnya sampai Apoteker tersedia di wilayah tersebut"}], "ans": "A", "expl": "P3 hlm. 6 (slide 11) merumuskan klausul darurat/terpencil: \"Jika Pemda menetapkan ketiadaan Apoteker, kewenangan penyerahan obat (dalam batas tertentu) dilimpahkan secara legal kepada Dokter, Perawat, Bidan, atau Tenaga Vokasi Farmasi.\" Tiga unsur kuncinya terpenuhi dalam soal: pemicu berupa penetapan ketiadaan Apoteker oleh Pemda, penerima pelimpahan yang terdiri atas Dokter, Perawat, Bidan, dan Tenaga Vokasi Farmasi, serta batas pelimpahan (\"dalam batas tertentu\"). Slide yang sama menegaskan batas umumnya: \"Praktik Kefarmasian Mutlak (Produksi, pengadaan, peracikan, penyerahan)\" dan \"Praktik kefarmasian WAJIB dilakukan oleh Tenaga Kefarmasian berizin\" — yang dilimpahkan hanyalah penyerahan obat dalam batas tertentu, bukan seluruh praktik kefarmasian. Pilihan B salah karena pelimpahan dibatasi (\"dalam batas tertentu\"), bukan tanpa batas; slide juga menegaskan obat narkotika/psikotropika dilarang disalahgunakan (Pasal 139). Pilihan C salah karena Dokter dan Tenaga Vokasi Farmasi termasuk dalam daftar penerima pelimpahan menurut slide. Pilihan D salah karena produksi, pengadaan, dan peracikan tetap merupakan praktik kefarmasian yang wajib dilakukan Tenaga Kefarmasian berizin. Pilihan E salah karena justru untuk mencegah terhentinya pelayanan itulah klausul eksepsi wilayah khusus ini dirumuskan. Koreksi terhadap slide yang perlu dicatat dengan jujur: daftar penerima pelimpahan tersebut ada di Pasal 286 ayat (3) UU No. 17 Tahun 2023, sedangkan penetapan ketiadaan oleh Pemda beserta kewajiban pelatihan ada di Pasal 287 — slide P3 menyebut keseluruhannya sebagai \"Pasal 287\", sehingga \"Pasal 287\" tidak boleh dijadikan satu-satunya rujukan untuk ketentuan ini. ---"}, {"n": 13, "p": 3, "level": "C2", "src": "P3 hlm. 5", "q": "Tenaga kefarmasian yang memegang kewenangan penuh atas praktik kefarmasian dan pengelolaan Sediaan Farmasi adalah …", "options": [{"k": "A", "t": "Tenaga Vokasi Farmasi"}, {"k": "B", "t": "Tenaga Kesehatan Masyarakat"}, {"k": "C", "t": "Apoteker"}, {"k": "D", "t": "Dokter"}, {"k": "E", "t": "Apoteker Spesialis"}], "ans": "C", "expl": "P3 hlm. 5 (slide 9) merumuskan hierarki tenaga kefarmasian dalam tiga tingkat dan mendefinisikan tingkat tengahnya secara verbatim: Apoteker adalah \"Profesional lulusan pendidikan profesi apoteker yang memegang kewenangan penuh atas praktik kefarmasian dan pengelolaan Sediaan Farmasi.\" Pilihan A salah karena Tenaga Vokasi Farmasi (mis. lulusan D3 Farmasi) berada pada tingkat dasar hierarki dan \"membantu tugas-tugas teknis operasional kefarmasian di bawah supervisi\". Pilihan E salah karena Apoteker Spesialis berada di puncak hierarki sebagai tenaga kefarmasian \"dengan kompetensi keahlian klinis tingkat lanjut untuk penanganan kasus spesifik dan kompleks\" — bukan pemegang rumusan kewenangan penuh atas praktik kefarmasian dan pengelolaan Sediaan Farmasi menurut slide. Pilihan B dan D salah karena Tenaga Kesehatan Masyarakat adalah kelompok tenaga kesehatan lain dan Dokter adalah tenaga medis, bukan tenaga kefarmasian. Koreksi terhadap slide yang perlu dicatat dengan jujur: pengelompokan tenaga kefarmasian (tenaga vokasi farmasi, apoteker, apoteker spesialis) ada di Pasal 197 ayat (5) UU No. 17 Tahun 2023, BUKAN Pasal 199 seperti tertulis pada judul slide P3 — kunci jawaban \"Apoteker\" sendiri tidak berubah oleh koreksi ini. ---"}, {"n": 14, "p": 3, "level": "C2", "src": "P3 hlm. 3", "q": "Minyak kayu putih digunakan masyarakat untuk pengobatan ringan atau gejala spesifik, misalnya meredakan kembung dan pegal. Berdasarkan pengelompokan Perbekalan Kesehatan (Pasal 1 & 142 UU No. 17 Tahun 2023), klasifikasi sediaan tersebut adalah …", "options": [{"k": "A", "t": "Suplemen Kesehatan, karena berfungsi menambah nutrisi atau fungsi tubuh"}, {"k": "B", "t": "Kosmetik, karena merupakan sediaan luar untuk estetika atau perawatan"}, {"k": "C", "t": "Obat Bahan Alam, karena berasal dari sumber daya alam"}, {"k": "D", "t": "Perbekalan Kesehatan Rumah Tangga (PKRT), karena merupakan bahan pemeliharaan atau perawatan untuk rumah tangga"}, {"k": "E", "t": "Obat Kuasi, karena digunakan untuk pengobatan ringan atau gejala spesifik"}], "ans": "E", "expl": "P3 hlm. 3 (slide 6, Pasal 1 & 142) menempatkan Obat Kuasi sebagai salah satu dari lima subkelompok Sediaan Farmasi dengan definisi \"Pengobatan ringan/gejala spesifik\", dan anotasi pada slide yang sama memberi contohnya: minyak kayu putih. Ciri pada soal — pengobatan ringan/gejala spesifik — sama persis dengan definisi tersebut. Pilihan A salah karena Suplemen Kesehatan didefinisikan sebagai \"Penambah nutrisi/fungsi tubuh\", bukan pengobatan gejala. Pilihan B salah karena Kosmetik didefinisikan sebagai \"Sediaan luar untuk estetika/perawatan\". Pilihan C salah karena Obat Bahan Alam didefinisikan sebagai sediaan \"Berasal dari sumber daya alam\" dan memiliki tingkatan tersendiri (Jamu, OHT, Fitofarmaka) berdasarkan Pasal 321 — bukan berdasarkan ringan-beratnya pengobatan. Pilihan D salah karena PKRT adalah cabang Perbekalan Kesehatan yang terpisah dari Sediaan Farmasi, yaitu \"Bahan pemeliharaan/perawatan untuk rumah tangga/fasilitas umum\". ---"}, {"n": 15, "p": 3, "level": "C4", "src": "P3 hlm. 3", "q": "Sebelum transformasi sistem kesehatan, penyelenggaraan pelayanan kesehatan nasional masih didominasi pendekatan kuratif — sekadar pengobatan saja, tanpa preventif. Sebuah puskesmas kemudian merancang program yang mengutamakan penyuluhan gizi, imunisasi, skrining dini, dan rencana perawatan yang disusun bersama pasien sesuai kebutuhan individunya. Analisis yang paling tepat mengenai pergeseran fokus filosofis penyelenggaraan pelayanan kesehatan nasional menurut UU No. 17 Tahun 2023 adalah …", "options": [{"k": "A", "t": "Fokus bergeser dari promotif dan preventif menjadi kuratif semata, karena pengobatan pasien sakit adalah satu-satunya tujuan pelayanan kesehatan"}, {"k": "B", "t": "Fokus bergeser dari sekadar kuratif menjadi promotif, preventif, dan integrasi pelayanan berpusat pada Pasien (Patient-Centered Care)"}, {"k": "C", "t": "Fokus bergeser dari pelayanan berpusat pada pasien menjadi pelayanan berpusat pada penyedia layanan, demi efisiensi fasilitas kesehatan"}, {"k": "D", "t": "Fokus tidak bergeser: pelayanan kesehatan tetap didominasi pendekatan kuratif, dan perubahan yang terjadi hanyalah digitalisasi layanan"}, {"k": "E", "t": "Fokus bergeser dari promotif dan preventif menjadi pengobatan massal yang seragam tanpa memperhatikan profil individu pasien"}], "ans": "B", "expl": "P3 hlm. 3 (slide 5, Pilar 1 \"Kesehatan Holistik & Merata\") merumuskan pergeseran ini secara eksplisit: \"Fokus bergeser dari sekadar kuratif menjadi promotif, preventif, dan integrasi pelayanan berpusat pada Pasien (Patient-Centered Care).\" Konteksnya diperkuat slide 3 pada halaman yang sama: permasalahan yang mendorong transformasi antara lain \"Pelayanan Kesehatan yang masih didominasi pendekatan kuratif\", dengan anotasi \"Kuratif: Pengobatan saja, tdk ada preventif\" dan \"Sekedar Pengobatan\". Program puskesmas pada soal — penyuluhan (promotif), imunisasi dan skrining dini (preventif), rencana perawatan bersama pasien (berpusat pada pasien) — adalah wujud dari fokus yang baru tersebut. Pilihan A salah karena membalik arah pergeseran: kuratif adalah titik awal yang ditinggalkan, bukan tujuan. Pilihan C salah karena arahnya justru sebaliknya — dari pelayanan yang berpusat pada pengobatan menjadi pelayanan yang berpusat pada pasien. Pilihan D salah karena slide menyatakan pergeseran fokus filosofisnya secara eksplisit, bukan sekadar digitalisasi (digitalisasi adalah pilar ketiga yang terpisah). Pilihan E salah karena pengobatan massal yang seragam bertentangan dengan pelayanan berpusat pada pasien dan dengan arah kedokteran presisi yang justru memperhatikan profil individu. ---"}, {"n": 16, "p": 4, "level": "C1", "src": "P4 hlm. 1–2", "q": "Peraturan pemerintah yang menjadi peraturan pelaksanaan operasional Undang-Undang No. 17 Tahun 2023 tentang Kesehatan adalah …", "options": [{"k": "A", "t": "PP No. 51 Tahun 2009 tentang Pekerjaan Kefarmasian"}, {"k": "B", "t": "PP No. 28 Tahun 2024"}, {"k": "C", "t": "UU No. 36 Tahun 2009 tentang Kesehatan"}, {"k": "D", "t": "PMK No. 73 Tahun 2016 tentang Standar Pelayanan Kefarmasian di Apotek"}, {"k": "E", "t": "PP No. 72 Tahun 2016 tentang Rumah Sakit"}], "ans": "B", "expl": "PP No. 28 Tahun 2024 adalah peraturan pelaksanaan yang merinci teknis operasional UU No. 17 Tahun 2023 dari hulu ke hilir (P4 hlm. 1, slide 2), sekaligus \"Turunan UU Kesehatan\" yang mengintegrasikan Apoteker ke dalam sistem pelayanan kesehatan nasional (P4 hlm. 2, slide 4). Pilihan A salah karena PP No. 51 Tahun 2009 justru dicabut melalui Pasal 1170(j) PP No. 28 Tahun 2024. Pilihan C salah karena UU No. 36 Tahun 2009 adalah undang-undang kesehatan lama yang dilebur ke dalam UU No. 17 Tahun 2023. Pilihan D salah karena PMK No. 73 Tahun 2016 adalah peraturan menteri tentang standar pelayanan kefarmasian di apotek, bukan peraturan pelaksanaan UU No. 17 Tahun 2023. Pilihan E salah karena tidak ada PP No. 72 Tahun 2016 — angka 72/2016 adalah PMK tentang Rumah Sakit. ---"}, {"n": 17, "p": 4, "level": "C2", "src": "P4 hlm. 3", "q": "Pasal 428 PP No. 28 Tahun 2024 menetapkan 7 pilar episentrum praktik profesi kefarmasian. Pilar berikut yang **bukan** termasuk 7 pilar tersebut adalah …", "options": [{"k": "A", "t": "Produksi & R&D (Pengembangan Sediaan Farmasi)"}, {"k": "B", "t": "Pengendalian Mutu (Quality Control)"}, {"k": "C", "t": "Pemasaran & Penjualan (Promosi Obat)"}, {"k": "D", "t": "Pendistribusian (Rantai Pasok)"}, {"k": "E", "t": "Pelayanan Kefarmasian (Farmasi Klinis di Fasilitas & Pasien)"}], "ans": "C", "expl": "Ketujuh pilar praktik kefarmasian menurut Pasal 428 adalah Produksi & R&D, Pengendalian Mutu, Pengadaan, Penyimpanan, Pendistribusian, Pengelolaan, dan Pelayanan Kefarmasian (P4 hlm. 3, slide 5). Pemasaran & Penjualan (promosi obat) bukan salah satu pilar — promosi obat justru diatur secara terpisah dengan larangan mengiklankan obat keras, narkotika, dan psikotropika di media umum (Pasal 424). Pilihan A, B, D, dan E semuanya tercantum sebagai pilar dalam slide. ---"}, {"n": 18, "p": 3, "level": "C2", "src": "Di luar slide — suplemen", "q": "Fungsi Surat Tanda Registrasi (STR) bagi Tenaga Kesehatan menurut UU No. 17 Tahun 2023 adalah …", "options": [{"k": "A", "t": "Bukti tertulis yang diberikan kepada Tenaga Medis dan Tenaga Kesehatan yang telah diregistrasi, sebagai bukti pencatatan resmi"}, {"k": "B", "t": "Surat izin untuk membuka dan menjalankan praktik kefarmasian di suatu fasilitas kesehatan"}, {"k": "C", "t": "Sertifikat kompetensi yang menyatakan kelulusan uji kompetensi profesi"}, {"k": "D", "t": "Bukti pembayaran iuran keanggotaan organisasi profesi"}, {"k": "E", "t": "Surat penugasan dari Dinas Kesehatan untuk penempatan di daerah terpencil"}], "ans": "A", "expl": "Pasal 1 UU No. 17 Tahun 2023 merumuskan bahwa Registrasi adalah pencatatan resmi Tenaga Medis dan Tenaga Kesehatan yang telah memiliki sertifikat kompetensi dan/atau sertifikat profesi, sedangkan Surat Tanda Registrasi (STR) adalah bukti tertulis yang diberikan kepada Tenaga Medis dan Tenaga Kesehatan yang telah diregistrasi. STR diterbitkan oleh Konsil atas nama Menteri Kesehatan dan berlaku seumur hidup (Pasal 260). Pilihan B salah karena surat izin untuk menjalankan praktik adalah SIP (Surat Izin Praktik), bukan STR — STR hanya membuktikan registrasi, sedangkan kewenangan praktik diberikan oleh SIP. Pilihan C salah karena sertifikat kompetensi adalah syarat untuk memperoleh STR, bukan STR itu sendiri. Pilihan D dan E bukan fungsi STR menurut undang-undang. Definisi fungsi STR ini tidak tertulis eksplisit di slide P3 (slide 10 hanya membahas masa berlaku seumur hidup), sehingga soal ini dibuat sebagai suplemen dari teks UU No. 17 Tahun 2023. ---"}, {"n": 19, "p": 4, "level": "C1", "src": "P4 hlm. 4", "q": "Masa berlaku Surat Tanda Registrasi (STR) bagi Tenaga Kefarmasian Warga Negara Indonesia menurut Pasal 677 ayat (3) PP No. 28 Tahun 2024 adalah …", "options": [{"k": "A", "t": "5 tahun dan wajib diperpanjang secara berkala"}, {"k": "B", "t": "10 tahun dan wajib diperpanjang secara berkala"}, {"k": "C", "t": "Seumur hidup"}, {"k": "D", "t": "1 tahun dan wajib diperpanjang setiap tahun"}, {"k": "E", "t": "3 tahun dan wajib diperpanjang secara berkala"}], "ans": "C", "expl": "\"STR bagi Tenaga Kefarmasian WNI kini berlaku Seumur Hidup (Pasal 677 ayat 3)\" (P4 hlm. 4, slide 7). Hal ini merupakan perubahan dari sistem lama sebelum UU No. 17 Tahun 2023 yang membatasi masa berlaku STR 5 tahun dan mewajibkan perpanjangan berkala. Pilihan A menggambarkan sistem lama, bukan sistem baru. Pilihan B, D, dan E tidak dikenal dalam ketentuan STR. Pengecualian hanya berlaku untuk STR Sementara — Tenaga Kesehatan WNA, proses intensif/adaptasi, dan yang sedang menempuh pendidikan lanjutan — bukan untuk Tenaga Kefarmasian WNI. ---"}, {"n": 20, "p": 4, "level": "C2", "src": "P4 hlm. 8–9", "q": "Telefarmasi dalam pelayanan kefarmasian menurut Pasal 561 dan 563 PP No. 28 Tahun 2024 adalah …", "options": [{"k": "A", "t": "Penjualan obat secara daring tanpa melibatkan apoteker, dengan pengiriman langsung oleh kurir"}, {"k": "B", "t": "Sistem pengiriman sediaan farmasi antarfasilitas kesehatan tanpa pengkajian resep"}, {"k": "C", "t": "Konsultasi kesehatan melalui media sosial tanpa validasi resep dan tanpa pencatatan"}, {"k": "D", "t": "Pelayanan kefarmasian klinis jarak jauh yang terintegrasi aplikasi, meliputi pengkajian resep, dispensing, konseling, PTO, PIO, dan MESO"}, {"k": "E", "t": "Layanan pengganti apotek fisik yang membebaskan penyelenggara dari kewajiban STR dan SIP"}], "ans": "D", "expl": "Telefarmasi adalah \"pelayanan kefarmasian klinis jarak jauh terintegrasi aplikasi\" (P4 hlm. 9, slide 17, Pasal 561 & 563), dengan 6 komponen yang tetap wajib berjalan via sistem: pengkajian resep, dispensing, konseling, Pemantauan Terapi Obat (PTO), Pelayanan Informasi Obat (PIO), dan Monitoring Efek Samping Obat (MESO). Penyelenggara telefarmasi wajib memiliki STR dan SIP, aplikasinya wajib teregistrasi di Kementerian Kesehatan, dan standar etika serta mutu praktik daring sama ketatnya dengan praktik luring. Pilihan A dan C salah karena telefarmasi tetap mensyaratkan apoteker ber-STR dan ber-SIP serta validasi resep. Pilihan B salah karena pengkajian resep adalah komponen wajib telefarmasi. Pilihan E salah karena telefarmasi adalah perpanjangan fasilitas pelayanan, bukan pengganti standar mutu — penyelenggara tetap wajib STR dan SIP. ---"}, {"n": 21, "p": 4, "level": "C2", "src": "Di luar slide — suplemen", "q": "Emergency Use Authorization (EUA) atau Persetujuan Penggunaan Darurat adalah persetujuan penggunaan Obat selama kondisi kedaruratan kesehatan masyarakat, untuk Obat yang belum mendapatkan Izin Edar atau yang telah mendapat Izin Edar dengan indikasi baru. Persetujuan ini diterbitkan oleh …", "options": [{"k": "A", "t": "Kementerian Kesehatan"}, {"k": "B", "t": "Badan Pengawas Obat dan Makanan (BPOM)"}, {"k": "C", "t": "Konsil Tenaga Kesehatan Indonesia"}, {"k": "D", "t": "Dinas Kesehatan provinsi"}, {"k": "E", "t": "Ikatan Apoteker Indonesia (IAI)"}], "ans": "B", "expl": "EUA (Emergency Use Authorization) atau Persetujuan Penggunaan Darurat adalah persetujuan penggunaan Obat selama kondisi kedaruratan kesehatan masyarakat, untuk Obat yang belum mendapatkan Izin Edar atau yang telah mendapat Izin Edar dengan indikasi baru (definisi PerBPOM No. 1 Tahun 2023 Pasal 1 angka 7). EUA diterbitkan oleh BPOM dengan syarat bukti keamanan, khasiat, dan mutu yang memadai (data uji klinik fase 1 dan 2 lengkap serta analisis interim fase 3). PP No. 28 Tahun 2024 Pasal 942–944 mengatur tata kelola darurat/wabah termasuk penerapan EUA sebagai salah satu instrumen darurat. Pilihan A salah karena Kementerian Kesehatan adalah pembina dan pengatur kebijakan kesehatan, bukan penerbit persetujuan penggunaan darurat obat. Pilihan C salah karena Konsil menerbitkan STR, bukan EUA. Pilihan D dan E bukan lembaga yang berwenang menerbitkan persetujuan penggunaan obat. Slide P4 (hlm. 11, slide 22) hanya menyebut EUA sebagai salah satu dari empat instrumen darurat tanpa menjelaskan definisi, syarat, dan penerbitnya, sehingga soal ini dibuat sebagai suplemen. ---"}, {"n": 22, "p": 4, "level": "C4", "src": "Di luar slide — suplemen", "q": "Seorang apoteker menyusun rencana pemenuhan Satuan Kredit Profesi (SKP) selama 5 tahun masa berlaku SIP-nya, dengan total target 100 SKP yang dikelola melalui sistem SATUSEHAT SDMK. Berdasarkan Pedoman Pengelolaan Pemenuhan Kecukupan SKP, ranah pemenuhan yang memiliki proporsi wajib tertinggi dan harus diprioritaskan dalam rencana tersebut adalah …", "options": [{"k": "A", "t": "Ranah Pembelajaran, dengan proporsi wajib minimum 45%"}, {"k": "B", "t": "Ranah Pelayanan, dengan proporsi wajib minimum 35%"}, {"k": "C", "t": "Ranah Pengabdian, dengan proporsi wajib minimum 5%"}, {"k": "D", "t": "Ranah Penelitian, dengan proporsi wajib minimum 45%"}, {"k": "E", "t": "Ranah Pengabdian, dengan proporsi wajib minimum 35%"}], "ans": "A", "expl": "KMK HK.01.07/MENKES/1561/2024 tentang Pedoman Pengelolaan Pemenuhan Kecukupan SKP menetapkan total target 100 SKP dalam 5 tahun (periode SIP) dengan 3 ranah pemenuhan: Pembelajaran minimum 45%, Pelayanan minimum 35%, dan Pengabdian minimum 5%; sisa 15% bebas dipenuhi dari ranah mana saja. Kewajiban tahunan minimum adalah 20% dari persentase minimum ranah Pembelajaran. Dengan demikian ranah Pembelajaran (45%) adalah proporsi wajib tertinggi, di atas Pelayanan (35%) dan Pengabdian (5%). Pilihan B salah karena 35% adalah proporsi ranah Pelayanan, bukan yang tertinggi. Pilihan C dan E salah karena proporsi wajib ranah Pengabdian hanya 5%. Pilihan D salah karena tidak ada ranah \"Penelitian\" dalam pedoman tersebut — tiga ranahnya adalah Pembelajaran, Pelayanan, dan Pengabdian. Slide P4 (hlm. 4–5) hanya menyebut total SKP 100 dan tiga pilar SKP (Pelatihan/Peningkatan Kompetensi, Pelayanan, Pengabdian) serta alamat SATUSEHAT SDMK, tanpa rincian proporsi per ranah, sehingga soal ini dibuat sebagai suplemen. ---"}, {"n": 23, "p": 5, "level": "C4", "src": "P4 hlm. 4; P5 hlm. 6", "q": "Apoteker Rani memegang STR yang berlaku seumur hidup. Surat Izin Praktik (SIP)-nya telah habis masa berlakunya dua bulan lalu dan belum diperpanjang karena ia belum memenuhi kecukupan SKP. Ia tetap melayani pasien di apotek dengan alasan STR-nya masih berlaku seumur hidup. Pernyataan yang paling tepat mengenai situasi tersebut adalah …", "options": [{"k": "A", "t": "Apoteker Rani boleh tetap berpraktik karena STR seumur hidup otomatis memperpanjang SIP"}, {"k": "B", "t": "Apoteker Rani tidak boleh berpraktik karena SIP-nya telah habis, meskipun STR-nya masih berlaku seumur hidup"}, {"k": "C", "t": "Apoteker Rani boleh berpraktik selama ia tetap mengumpulkan SKP, tanpa perlu memperpanjang SIP"}, {"k": "D", "t": "STR seumur hidup menggantikan fungsi SIP sehingga apoteker tidak lagi memerlukan SIP untuk berpraktik"}, {"k": "E", "t": "SIP yang habis dapat digantikan oleh STR sementara yang diterbitkan Konsil atas nama Menteri Kesehatan"}], "ans": "B", "expl": "STR dan SIP adalah dua dokumen dengan fungsi berbeda. STR berlaku seumur hidup bagi Tenaga Kefarmasian WNI (Pasal 677 ayat 3 PP No. 28 Tahun 2024; Pasal 260 ayat 4 UU No. 17 Tahun 2023) dan merupakan bukti registrasi dan kualifikasi profesi (P5 hlm. 6). SIP berlaku 5 tahun (Pasal 682 PP No. 28 Tahun 2024), dievaluasi berkala, dan merupakan bukti kewenangan legal praktik (P5 hlm. 6); perpanjangannya membutuhkan kecukupan SKP (P4 hlm. 4, slide 8). Karena itu STR yang seumur hidup tidak menggantikan SIP — apoteker tidak boleh berpraktik bila SIP-nya habis, meskipun STR masih berlaku. Pilihan A dan D salah karena keduanya menyamakan fungsi STR dan SIP, padahal STR adalah bukti registrasi sedangkan SIP adalah tiket masuk praktik aktif. Pilihan C salah karena pengumpulan SKP adalah syarat perpanjangan SIP, bukan pengganti SIP itu sendiri. Pilihan E salah karena STR Sementara hanya berlaku untuk Tenaga Kesehatan WNA, proses intensif/adaptasi, dan yang sedang menempuh pendidikan lanjutan — bukan sebagai pengganti SIP yang habis. ---"}, {"n": 24, "p": 5, "level": "C4", "src": "P4 hlm. 4; P5 hlm. 6", "q": "Seorang apoteker bermaksud berpraktik di tiga fasilitas kesehatan yang berbeda. Ia memegang satu SIP dan berpendapat satu SIP tersebut sudah cukup untuk ketiga lokasi praktiknya. Pernyataan yang paling tepat berdasarkan ketentuan yang berlaku adalah …", "options": [{"k": "A", "t": "Satu SIP berlaku untuk semua tempat praktik tanpa batas jumlah lokasi"}, {"k": "B", "t": "Satu SIP hanya berlaku untuk satu tempat praktik, dan apoteker tidak boleh berpraktik di lebih dari satu lokasi"}, {"k": "C", "t": "Satu SIP berlaku untuk maksimal dua tempat praktik, sehingga ia memerlukan dua SIP"}, {"k": "D", "t": "Satu SIP berlaku untuk satu tempat praktik, dan SIP dapat diterbitkan untuk paling banyak 3 tempat praktik"}, {"k": "E", "t": "Satu SIP berlaku untuk satu tempat praktik, dan setiap apoteker hanya boleh memiliki satu SIP seumur hidup"}], "ans": "D", "expl": "Kedua ketentuan yang tampak bertentangan dalam slide sebenarnya saling melengkapi. P4 hlm. 4 (slide 8, Pasal 682 PP No. 28 Tahun 2024) menyatakan SIP \"mengikat pada 1 (satu) tempat praktik per SIP\" — artinya satu lembar SIP hanya berlaku untuk satu tempat praktik. P5 hlm. 6 menyatakan SIP \"maksimal di 3 (tiga) lokasi fasilitas kesehatan\" (Permenkes 13/2025 Pasal 149 ayat 3) — artinya seorang apoteker boleh memegang SIP di paling banyak tiga lokasi, dengan satu SIP untuk masing-masing lokasi. Jadi apoteker tersebut memerlukan tiga SIP (satu per lokasi), bukan satu SIP untuk ketiga lokasi. Pilihan A salah karena satu SIP tidak berlaku tanpa batas lokasi. Pilihan B salah karena apoteker boleh berpraktik di lebih dari satu lokasi, maksimal tiga. Pilihan C salah karena batasnya tiga lokasi, bukan dua. Pilihan E salah karena SIP berlaku 5 tahun dan dapat diperpanjang, bukan satu kali seumur hidup — yang seumur hidup adalah STR. ---"}, {"n": 25, "p": 5, "level": "C4", "src": "P5 hlm. 9–10", "q": "Seorang pelaku usaha hendak mendirikan apotek baru melalui sistem Online Single Submission berbasis risiko (OSS-RBA). Berdasarkan klasifikasi risiko usaha dan dokumen perizinan yang dipersyaratkan, pernyataan yang paling tepat adalah …", "options": [{"k": "A", "t": "Apotek termasuk Usaha Risiko Rendah sehingga cukup memiliki NIB tanpa Sertifikat Standar"}, {"k": "B", "t": "Apotek termasuk Usaha Risiko Menengah Tinggi sehingga cukup memiliki NIB dan Sertifikat Standar tanpa Izin Final"}, {"k": "C", "t": "Apotek termasuk Usaha Risiko Tinggi sehingga wajib memiliki NIB, Sertifikat Standar Terverifikasi, dan Izin Final"}, {"k": "D", "t": "Apotek termasuk Usaha Risiko Tinggi sehingga cukup memiliki Izin Final tanpa melalui OSS-RBA"}, {"k": "E", "t": "Apotek termasuk Usaha Risiko Menengah Rendah sehingga perizinannya cukup diterbitkan oleh pemerintah daerah tanpa verifikasi teknis"}], "ans": "C", "expl": "Apotek dan Klinik diklasifikasikan sebagai Usaha Risiko Tinggi (P5 hlm. 9), dengan syarat mutlak: NIB + Sertifikat Standar Terverifikasi + Izin Final. Alur OSS-RBA adalah: input data pelaku usaha → sistem OSS-RBA menerbitkan NIB (identitas KTP bisnis) → verifikasi teknis oleh Dinkes/Kemenkes (inspeksi bangunan, SDM, peralatan) → Sertifikat Standar dan Izin Operasional diterbitkan (P5 hlm. 10). Pilihan A dan E salah karena apotek bukan Risiko Rendah atau Menengah Rendah. Pilihan B salah karena klasifikasi apotek adalah Risiko Tinggi, bukan Menengah Tinggi, dan Izin Final tetap dipersyaratkan. Pilihan D salah karena Izin Final diperoleh melalui alur OSS-RBA yang diawali NIB dan verifikasi teknis, bukan diterbitkan begitu saja tanpa proses tersebut. ---"}, {"n": 26, "p": 5, "level": "C5", "src": "P5 hlm. 13, 18–19; P4 hlm. 8", "q": "Apotek X yang beroperasi 24 jam disidak Dinas Kesehatan. Ditemukan Apoteker Penanggung Jawab (APJ) sedang ibadah umrah selama 2 minggu tanpa apoteker pengganti. Apotek dijaga oleh Tenaga Vokasi (TTK) dan pelayanan obat resep dokter terus berjalan normal tanpa supervisi apoteker. Penilaian yang paling tepat atas pelanggaran dan sanksi administratif yang dapat dikenakan adalah …", "options": [{"k": "A", "t": "Bukan pelanggaran karena pelayanan obat resep boleh dilakukan TTK selama APJ sedang cuti"}, {"k": "B", "t": "Pelanggaran ringan yang cukup diselesaikan dengan teguran lisan tanpa sanksi administratif lebih lanjut"}, {"k": "C", "t": "Pelanggaran administratif biasa yang cukup dikenai denda administratif satu kali tanpa tahap sanksi lain"}, {"k": "D", "t": "Pelanggaran serius karena pelayanan resep berjalan tanpa supervisi apoteker, sehingga dikenai sanksi administratif berjenjang: teguran/peringatan tertulis, denda administratif, penghentian sementara kegiatan usaha, hingga pencabutan perizinan berusaha/SIP"}, {"k": "E", "t": "Pelanggaran yang langsung dikenai pencabutan perizinan berusaha tanpa melalui tahapan sanksi sebelumnya"}], "ans": "D", "expl": "Kasus ini adalah pelanggaran serius: screening resep dan dispensing mutlak harus disupervisi langsung oleh Apoteker (standar pelayanan klinis, PMK 73/2016), sedangkan pelayanan obat resep terus berjalan selama dua minggu tanpa supervisi apoteker — pelanggaran wewenang sekaligus risiko keselamatan pasien (P5 hlm. 18–19). Sanksi administratif PBBR bersifat berjenjang (P5 hlm. 13): Teguran/Peringatan Tertulis → Denda Administratif → Penghentian Sementara Kegiatan Usaha → Pencabutan Perizinan Berusaha/SIP; sejalan dengan Pasal 426 PP No. 28 Tahun 2024 (teguran, denda, penutupan akses, hingga pencabutan izin usaha). Karena pelanggarannya serius dan berlangsung terus-menerus selama dua minggu, sanksinya tidak berhenti di teguran — eskalasinya dapat mencapai penangguhan Sertifikat Standar, denda administratif, hingga penutupan sementara. Pilihan A salah karena TTK tidak berwenang melakukan screening resep dan dispensing tanpa supervisi apoteker. Pilihan B dan C salah karena keduanya meremehkan pelanggaran yang mengancam keselamatan pasien dan mengabaikan sifat berjenjang sanksi. Pilihan E salah karena sanksi administratif diterapkan secara bertahap sesuai spektrum kepatuhan, bukan langsung pencabutan tanpa tahapan sebelumnya. ---"}, {"n": 27, "p": 5, "level": "C4", "src": "P5 hlm. 16", "q": "Dalam matriks komparasi pilar manajerial sediaan farmasi antar fasilitas kesehatan, instrumen kendali mutu yang digunakan Rumah Sakit adalah …", "options": [{"k": "A", "t": "Sistem Formularium Rumah Sakit yang disusun oleh Komite Farmasi dan Terapi"}, {"k": "B", "t": "Evaluasi Mandiri"}, {"k": "C", "t": "Formularium Klinik"}, {"k": "D", "t": "Formularium Nasional"}, {"k": "E", "t": "Rencana Kebutuhan Obat (RKO)"}], "ans": "A", "expl": "Pada matriks komparasi pilar manajerial (P5 hlm. 16), kolom Kendali Mutu untuk Rumah Sakit adalah Sistem Formularium RS — disusun oleh Komite Farmasi dan Terapi sebagai instrumen kendali mutu rumah sakit. Pilihan B salah karena Evaluasi Mandiri adalah instrumen kendali mutu Apotek. Pilihan C salah karena Formularium Klinik adalah instrumen kendali mutu Klinik. Pilihan D salah karena Formularium Nasional adalah instrumen kendali mutu Puskesmas. Pilihan E salah karena Rencana Kebutuhan Obat (RKO) adalah aspek perencanaan Puskesmas, bukan instrumen kendali mutunya. ---"}, {"n": 28, "p": 5, "level": "C4", "src": "P5 hlm. 12; P4 hlm. 9", "q": "Sebuah Penyelenggara Sistem Elektronik Farmasi (PSEF) menjalankan platform penjualan obat daring yang terintegrasi dengan apotek. Platform tersebut tidak memvalidasi resep elektronik secara memadai, menyimpan data medis pasien tanpa pelindungan privasi yang jelas, dan tidak dapat menelusuri asal-usul obat yang dijualnya. Kewajiban yang dilanggar oleh PSEF tersebut adalah …", "options": [{"k": "A", "t": "Validasi peresepan elektronik, pelindungan privasi data pasien, dan keamanan rantai pasok obat"}, {"k": "B", "t": "Kewajiban membayar pajak penjualan daring dan melaporkan omzet bulanan"}, {"k": "C", "t": "Kewajiban menyediakan layanan antar obat gratis dan diskon harga obat"}, {"k": "D", "t": "Kewajiban mempekerjakan minimal dua apoteker ber-SIP di setiap gerai daring"}, {"k": "E", "t": "Kewajiban mengikuti program promosi obat bebas di media umum"}], "ans": "A", "expl": "Tiga isu kunci PSEF menurut slide adalah Validasi Peresepan Elektronik, Pelindungan Privasi Data Pasien, dan Keamanan Rantai Pasok Obat (P5 hlm. 12) — ketiganya dilanggar dalam kasus ini: resep elektronik tidak divalidasi, data medis pasien tidak dilindungi, dan asal-usul obat tidak dapat ditelusuri. Kewajiban ini diperkuat Pasal 418–419 PP No. 28 Tahun 2024 (P4 hlm. 9, slide 18): peredaran sediaan farmasi secara elektronik wajib terintegrasi dengan Sistem Informasi Kesehatan Nasional (SATUSEHAT), dan penyelenggara wajib menjamin mutu, menerapkan CPOB/CDOB elektronik, serta mematuhi standar pelayanan kefarmasian yang ketat. Pilihan B salah karena kewajiban pajak dan pelaporan omzet bukan isu kunci PSEF menurut slide. Pilihan C salah karena layanan antar gratis dan diskon bukan kewajiban regulasi PSEF. Pilihan D salah karena ketentuan jumlah apoteker ber-SIP bukan bagian dari tiga isu kunci PSEF. Pilihan E salah karena promosi obat di media umum hanya diperbolehkan untuk obat bebas/bebas terbatas dan bukan kewajiban PSEF. ---"}, {"n": 29, "p": 6, "level": "C4", "src": "P6 hlm. 2, 4–5", "q": "Seorang apoteker menolak menyerahkan obat keras tanpa resep, meskipun pelanggan mendesak dan menawarkan bayaran lebih. Penolakan itu lahir dari dorongan batinnya sendiri untuk bertindak benar, bukan karena ia takut pada sanksi. Konsep etika yang menjelaskan dorongan batin semacam itu, yang bersumber dari kata Yunani *ethos* dan menjadi refleksi \"self control\" kelompok profesi, adalah …", "options": [{"k": "A", "t": "*Ethos* sebagai kebiasaan atau adat yang diwariskan turun-temurun dalam suatu masyarakat"}, {"k": "B", "t": "*Ethos* sebagai perasaan batin atau kecenderungan batin yang mendorong manusia dalam perilakunya, yang menjadi dasar pengendalian diri (self control) kelompok profesi"}, {"k": "C", "t": "Kode etik sebagai kumpulan aturan tertulis yang dipaksakan dari luar oleh negara kepada anggota profesi"}, {"k": "D", "t": "Moralitas ekstrinsik, yaitu penilaian baik-buruk perbuatan yang semata-mata didasarkan pada peraturan hukum yang berlaku"}, {"k": "E", "t": "Legalitas, yaitu kesesuaian tindakan dengan hukum lahiriah tanpa memperhatikan dorongan batin pelakunya"}], "ans": "B", "expl": "Slide P6 hlm. 2 menyatakan etika berasal dari kata Yunani *ethos* yang berarti \"perasaan batin atau kecenderungan batin yang mendorong manusia dalam perilakunya\", dan hlm. 5 menegaskan etika adalah refleksi dari \"self control\" karena segala sesuatunya dibuat dan diterapkan dari dan untuk kepentingan kelompok sosial (profesi) itu sendiri. Pilihan A adalah arti *ethos* yang lain menurut slide yang sama (kebiasaan atau adat), bukan dorongan batin — keduanya perlu dibedakan. Pilihan C keliru karena kode etik dibuat dan diterapkan oleh dan untuk kelompok profesi itu sendiri, bukan dipaksakan dari luar oleh negara. Pilihan D dan E menggambarkan penilaian dari luar (hukum lahiriah), sedangkan yang ditanyakan adalah dorongan dari dalam batin. Jebakan slide: kedua kata Yunani itu ditulis sama persis \"ethos\" di hlm. 2, tanpa pembeda ejaan — padahal pembedanya (kebiasaan/adat vs perasaan batin pendorong perilaku) justru inti soal ini. ---"}, {"n": 30, "p": 6, "level": "C4", "src": "P6 hlm. 18–20", "q": "Seorang lulusan farmasi telah menyelesaikan pendidikan profesi apoteker, memiliki izin praktik dari instansi yang berwenang, tergabung dalam organisasi profesi, dan dalam praktiknya selalu mengutamakan kepentingan pasien di atas kepentingan pribadinya. Unsur-unsur yang membedakan pekerjaannya sebagai suatu profesi, berdasarkan P6, adalah …", "options": [{"k": "A", "t": "Pekerjaan dilakukan purna waktu dan menjadi sumber nafkah utama pelakunya"}, {"k": "B", "t": "Keahlian khusus yang didukung pendidikan dan pengalaman praktik, izin khusus dari instansi yang berwenang, serta pengabdian untuk kepentingan orang lain/masyarakat"}, {"k": "C", "t": "Pekerjaan yang dapat dilakukan siapa saja selama mau belajar secara otodidak dan memiliki modal usaha"}, {"k": "D", "t": "Kebebasan penuh menjalankan pekerjaan tanpa standar kualifikasi dan tanpa pengawasan organisasi profesi"}, {"k": "E", "t": "Keberhasilan pekerjaan yang semata-mata diukur dari keuntungan finansial yang diperoleh"}], "ans": "B", "expl": "Menurut P6, profesi adalah pekerjaan yang berkaitan dengan keahlian khusus dalam bidangnya, didominasi pendidikan dan keahlian serta pengalaman praktik purna waktu (hlm. 18); ciri profesional antara lain memiliki pendidikan khusus, mengutamakan kepentingan masyarakat, memiliki izin khusus dari instansi yang berwenang, dan terorganisir dalam induk organisasi (hlm. 19); Brandeis menambahkan syarat bahwa profesi diabdikan untuk kepentingan orang lain dan ditentukan adanya standar kualifikasi (hlm. 20). Pilihan A hanya menyebut ciri pekerjaan purna waktu, bukan pembeda profesi. Pilihan C, D, dan E justru bertentangan dengan slide: profesi menuntut pendidikan dan standar kualifikasi, pengawasan organisasi, dan keberhasilan yang bukan didasarkan pada keuntungan finansial (hlm. 20). Catatan: kata \"apoteker\" tidak pernah muncul di P6 — slide membahas \"profesi\" secara umum, sehingga penerapan unsur-unsur ini pada apoteker dalam soal ini adalah contoh penerapan, bukan kutipan slide. ---"}, {"n": 31, "p": 6, "level": "C5", "src": "P6 hlm. 16–17", "q": "Seorang apoteker di apotek ditawari penyedia sediaan farmasi berupa hadiah perjalanan wisata bila ia bersedia memprioritaskan produk perusahaan tersebut kepada pasien, meskipun ada sediaan lain yang lebih sesuai dan lebih murah untuk pasien. Sikap yang paling tepat menurut prinsip profesi luhur (*officium nobile*) adalah …", "options": [{"k": "A", "t": "Menerima tawaran itu, karena hadiah dari penyedia adalah hal biasa dalam dunia usaha dan tidak memengaruhi keputusan profesional"}, {"k": "B", "t": "Menerima tawaran itu tetapi tetap memilih sediaan berdasarkan kebutuhan pasien, karena yang penting hasil akhirnya"}, {"k": "C", "t": "Menolak gratifikasi itu dan tetap memilih sediaan berdasarkan kebutuhan dan keselamatan pasien, karena profesi luhur mendahulukan kepentingan orang yang dibantu dan motivasi utamanya bukan nafkah"}, {"k": "D", "t": "Menerima tawaran itu lalu membagikan hadiahnya kepada rekan sejawat, agar manfaatnya merata"}, {"k": "E", "t": "Menunda keputusan sampai ada petunjuk dari atasan, tanpa menolak maupun menerima tawaran tersebut"}], "ans": "C", "expl": "Menurut Frans Magnis Suseno (P6 hlm. 16–17), dalam profesi luhur (*officium nobile*) motivasi utamanya bukan untuk memperoleh nafkah, dan dua prinsip yang penting adalah mendahulukan kepentingan orang yang dibantu serta mengabdi pada tuntutan luhur profesi; pelakunya dituntut moralitas yang tinggi, antara lain berani berbuat sesuai tuntutan profesi, sadar akan kewajibannya, dan memiliki idealisme yang tinggi. Menolak gratifikasi yang dapat membelokkan pilihan sediaan dari kebutuhan pasien adalah penerapan langsung prinsip itu. Pilihan A dan B keliru karena menerima imbalan dari penyedia menciptakan konflik kepentingan yang menggeser motivasi dari kepentingan pasien ke keuntungan pribadi. Pilihan D tetap menerima gratifikasi sehingga tidak menyelesaikan masalah etiknya. Pilihan E menghindar dari keputusan, padahal prinsip profesi luhur menuntut keberanian berbuat sesuai tuntutan profesi. Catatan: kata \"gratifikasi\" dan \"penyedia sediaan farmasi\" tidak muncul di P6 — skenario soal ini adalah penerapan prinsip *officium nobile* dari hlm. 16–17 pada kasus kefarmasian. ---"}, {"n": 32, "p": 6, "level": "C4", "src": "Di luar slide — suplemen", "q": "Seorang apoteker gencar mempromosikan suatu obat kepada pasien dengan klaim khasiat yang dilebih-lebihkan dan tanpa menjelaskan risiko serta alternatifnya, semata-mata karena apoteker tersebut mendapat bonus penjualan dari produsen obat itu. Tindakan tersebut dinilai dari prinsip etika profesi sebagai …", "options": [{"k": "A", "t": "Tindakan yang dibenarkan, karena mempromosikan obat adalah bagian dari strategi pemasaran yang wajar"}, {"k": "B", "t": "Pelanggaran terhadap kewajiban memberikan informasi yang jujur dan akurat, karena promosi yang tidak objektif demi keuntungan finansial bertentangan dengan prinsip profesi"}, {"k": "C", "t": "Tindakan yang netral secara etik, karena pasien tetap bebas memilih membeli atau tidak"}, {"k": "D", "t": "Pelanggaran hanya bila pasien benar-benar dirugikan secara fisik; bila tidak ada kerugian, promosi itu bukan masalah etik"}, {"k": "E", "t": "Tindakan yang dibenarkan selama klaim khasiatnya tidak bertentangan dengan iklan resmi produsen"}], "ans": "B", "expl": "Mengiklankan atau memberi informasi yang tidak memenuhi ketentuan umum \"sah, patut, jujur, akurat, dan dapat dipercaya\" adalah pelanggaran disiplin (KMK No. HK.01.07/MENKES/775/2025, Lampiran no. 17 huruf c, hlm. 8), dan penipuan atau tidak memberikan penjelasan yang jujur, etis, dan memadai juga merupakan pelanggaran disiplin (no. 8, hlm. 5). Hal ini sejalan dengan prinsip di P6 hlm. 20 (Brandeis): keberhasilan suatu profesi \"bukan didasarkan pada keuntungan finansial\". Promosi yang tidak objektif demi bonus penjualan melanggar kewajiban informasi yang jujur dan akurat serta menempatkan keuntungan finansial di atas kepentingan pasien. Pilihan A dan E keliru karena strategi pemasaran maupun kesesuaian dengan iklan produsen tidak membenarkan informasi yang tidak objektif. Pilihan C keliru karena kebebasan pasien memilih tidak menghapus kewajiban apoteker memberi informasi yang jujur. Pilihan D keliru karena pelanggarannya terletak pada ketidakjujuran dan motif finansialnya, bukan hanya pada ada-tidaknya kerugian fisik. Skenario soal ini adalah penerapan dari prinsip-prinsip slide tersebut pada kasus promosi obat. ---"}, {"n": 33, "p": 6, "level": "C4", "src": "P6 hlm. 29–31, 39, 44", "q": "Seorang apoteker melanggar kode etik profesinya dan dijatuhi sanksi oleh organisasi profesi; pada kasus lain, seorang apoteker melanggar peraturan perundang-undangan kefarmasian dan dijatuhi sanksi oleh negara. Perbedaan mendasar antara sanksi pelanggaran kode etik dan sanksi hukum positif terletak pada …", "options": [{"k": "A", "t": "Sanksi kode etik dijatuhkan oleh negara dengan paksaan, sedangkan sanksi hukum hanya berupa teguran moral dari organisasi profesi"}, {"k": "B", "t": "Sanksi pelanggaran kode etik bersifat moral dan dijatuhkan oleh organisasi profesi (sanksi moral, sanksi terhadap Tuhan YME, sanksi organisasi), sedangkan sanksi hukum bersifat tegas dan konkret serta memaksa dan berasal dari negara"}, {"k": "C", "t": "Sanksi kode etik selalu lebih berat daripada sanksi hukum karena menyangkut nama baik seluruh profesi"}, {"k": "D", "t": "Tidak ada perbedaan mendasar, karena kode etik dan hukum positif memiliki sumber, sifat, dan sanksi yang sama"}, {"k": "E", "t": "Sanksi kode etik hanya berlaku bagi apoteker yang berstatus pegawai negeri, sedangkan sanksi hukum berlaku bagi seluruh warga negara"}], "ans": "B", "expl": "Sanksi pelanggaran kode etik menurut P6 hlm. 44 hanya ada tiga: sanksi moral, sanksi terhadap Tuhan YME, dan sanksi yang dijatuhkan dari organisasi yang bersangkutan — tidak ada sanksi negara dalam daftar itu. Sebaliknya, kaidah hukum mempunyai sanksi yang tegas dan konkret, dan justru dengan sanksi tegas itulah kepentingan yang diatur kaidah etika dapat berlaku secara efektif (hlm. 39, mengutip Komalawati, 1989:68). Landasan filosofisnya ditegaskan Kant (hlm. 29–30): legalitas adalah kesesuaian tindakan dengan hukum lahiriah dan pada dirinya sendiri belum bernilai moral, sedangkan moralitas adalah kesesuaian dengan hukum batiniah atau kewajiban. Pilihan A membalik keduanya. Pilihan C keliru karena tidak ada dasar bahwa sanksi etik selalu lebih berat. Pilihan D mengabaikan perbedaan sumber dan sifat sanksi yang justru ditegaskan slide. Pilihan E mengarang pembatasan yang tidak ada di slide. Catatan: slide yang secara eksplisit berjudul \"PERSAMAAN DAN PERBEDAAN ANTARA ETIKA DAN HUKUM\" (P6 hlm. 40) KOSONG — hanya judul dan kotak kosong tanpa isi — sehingga perbandingan dalam soal ini disusun dari potongan-potongan slide hlm. 29–31, 39, dan 44 tersebut. ---"}, {"n": 34, "p": 6, "level": "C4", "src": "P6 hlm. 34, 36–37", "q": "Kemajuan IPTEK kefarmasian berkembang sangat cepat, misalnya teknologi baru dalam penemuan dan produksi obat yang membuka kemungkinan-kemungkinan yang sebelumnya tidak terpikirkan, termasuk yang berisiko bagi kemanusiaan. Dalam situasi demikian, fungsi etika yang paling relevan adalah …", "options": [{"k": "A", "t": "Etika sebagai penghambat kemajuan IPTEK agar teknologi baru tidak berkembang terlalu cepat"}, {"k": "B", "t": "Etika sebagai pengendali dan penyeimbang, agar IPTEK diberdayakan dengan pertimbangan moral demi perlindungan kemanusiaan"}, {"k": "C", "t": "Etika sebagai pendorong semata, yaitu mempercepat adopsi setiap teknologi baru tanpa mempertanyakan dampaknya"}, {"k": "D", "t": "Etika sebagai pengganti hukum, sehingga aturan perundang-undangan tidak lagi diperlukan dalam pengembangan IPTEK"}, {"k": "E", "t": "Etika sebagai norma yang hanya berlaku bagi ilmuwan penemu teknologi, bukan bagi apoteker yang menggunakannya"}], "ans": "B", "expl": "P6 hlm. 34 merumuskan lima peranan etika dalam perkembangan IPTEK, dua di antaranya adalah etika sebagai pengendali dan etika sebagai penyeimbang (selain landasan berpikir dan berkarya, pendorong, dan norma-norma). Hlm. 36–37 menegaskan perkembangan IPTEK harus diberdayakan dengan pertimbangan moral dan menyangkut kepentingan yang sangat luas, serta bahwa setinggi apa pun perkembangan IPTEK, etika tetap menjadi pertimbangan dan landasan moral; contoh masalah etis baru yang disebut slide adalah di bidang biomedis, seperti manipulasi genetis dengan gen manusia dan fertilisasi in vitro. Pilihan A keliru karena etika mengendalikan dan menyeimbangkan, bukan menghambat kemajuan. Pilihan C hanya mengambil satu peranan (pendorong) dan menghilangkan fungsi pengendalian. Pilihan D keliru karena etika justru membutuhkan hukum agar berlaku efektif (hlm. 39). Pilihan E keliru karena etika berlaku bagi seluruh pelaku yang terlibat dalam pengembangan dan pemanfaatan IPTEK, bukan hanya penemunya. ---"}, {"n": 35, "p": 7, "level": "C4", "src": "P7a hlm. 3; P7b Pasal 4 huruf a–c", "q": "Seorang tenaga kesehatan menangani pasien dengan kondisi yang jelas berada di luar batas kompetensinya, baik dalam penegakan diagnosis maupun penatalaksanaan, dan ia tidak merujuk atau mengonsultasikan pasien tersebut kepada tenaga medis atau tenaga kesehatan lain yang kompeten, padahal kondisi pasien memungkinkan untuk dirujuk dan tenaga kesehatan lain dapat dijangkau. Kasus ini termasuk pelanggaran disiplin profesi berupa …", "options": [{"k": "A", "t": "Hanya pelanggaran no. 3, yaitu merujuk pasien kepada tenaga medis dan tenaga kesehatan yang tidak kompeten"}, {"k": "B", "t": "Pelanggaran no. 1 (melakukan praktik tidak kompeten) dan pelanggaran no. 2 (tidak merujuk pasien kepada tenaga medis atau tenaga kesehatan yang kompeten)"}, {"k": "C", "t": "Hanya pelanggaran no. 6, yaitu penyalahgunaan kewenangan profesi, karena ia memberikan pelayanan yang seharusnya tidak dilakukan"}, {"k": "D", "t": "Bukan pelanggaran disiplin, karena tenaga kesehatan tersebut tetap berusaha menolong pasien sebaik-baiknya"}, {"k": "E", "t": "Hanya pelanggaran no. 4, yaitu mengabaikan tanggung jawab profesi, karena ia tidak melakukan pemantauan pasca tindakan"}], "ans": "B", "expl": "Menurut Lampiran KMK 775/2025 no. 1 (hlm. 3), melakukan praktik tidak kompeten mencakup praktik atau pelayanan kepada pasien di luar batas-batas kompetensinya, baik dalam penegakan diagnosis maupun penatalaksanaan pasien; dan no. 2 (hlm. 3) menyatakan tenaga kesehatan yang tidak merujuk atau tidak mengonsultasikan pasien yang kondisinya di luar kompetensinya — karena keterbatasan pengetahuan, keterampilan, ataupun peralatan — melakukan pelanggaran tidak merujuk pasien. Kedua jenis pelanggaran ini ditegaskan pula dalam PMK 3/2025 Pasal 4 huruf a dan b. Pilihan A keliru karena pelanggaran no. 3 adalah merujuk kepada yang tidak kompeten, sedangkan dalam kasus ini pasien justru tidak dirujuk sama sekali. Pilihan C kurang tepat karena inti kasusnya adalah praktik di luar kompetensi dan kelalaian merujuk, bukan semata penyalahgunaan kewenangan. Pilihan D keliru karena niat menolong tidak menghapus pelanggaran disiplin atas praktik di luar kompetensi. Pilihan E tidak tepat karena yang dilanggar bukan kewajiban pemantauan pasca tindakan. Perlu dicatat, upaya perujukan dapat tidak dilakukan dalam tiga pengecualian (P7a no. 2 huruf b): kondisi pasien tidak memungkinkan untuk dirujuk; tenaga medis dan tenaga kesehatan lain sulit dijangkau atau sulit didatangkan; dan/atau atas kehendak pasien/keluarga pasien — tidak satu pun pengecualian itu terpenuhi dalam kasus ini. ---"}, {"n": 36, "p": 7, "level": "C4", "src": "P7b Pasal 1 angka 1, Pasal 3, Pasal 21", "q": "Dalam struktur penegakan disiplin profesi tenaga medis dan tenaga kesehatan, Majelis Disiplin Profesi (MDP) memiliki kedudukan dan wewenang sebagai berikut, yaitu …", "options": [{"k": "A", "t": "MDP dibentuk untuk mendukung tugas dan fungsi Konsil Kesehatan Indonesia, bersifat otonom dan independen, serta mengambil putusan penegakan disiplin secara musyawarah dalam rapat pleno MDP"}, {"k": "B", "t": "MDP adalah unit pelaksana di bawah dinas kesehatan provinsi yang setiap putusannya harus disetujui terlebih dahulu oleh Menteri Kesehatan"}, {"k": "C", "t": "MDP hanya berwenang menerima pengaduan dan meneruskannya ke pengadilan, tanpa berwenang memeriksa dan memutus dugaan pelanggaran disiplin"}, {"k": "D", "t": "MDP dibentuk oleh organisasi profesi dan putusannya bersifat anjuran yang tidak mengikat bagi tenaga medis dan tenaga kesehatan"}, {"k": "E", "t": "MDP berwenang menjatuhkan sanksi pidana penjara kepada tenaga kesehatan yang terbukti melanggar disiplin profesi"}], "ans": "A", "expl": "PMK 3/2025 Pasal 1 angka 1 mendefinisikan Majelis Disiplin Profesi sebagai majelis yang dibentuk dalam rangka penegakan disiplin profesi untuk mendukung tugas dan fungsi Konsil Kesehatan Indonesia; Pasal 3 menegaskan MDP dalam menjalankan tugas dan fungsi bersifat otonom dan independen serta diberikan perlindungan hukum sepanjang dilakukan dalam batas kewenangan dan sesuai ketentuan peraturan perundang-undangan; Pasal 21 menegaskan pengambilan putusan penegakan disiplin profesi dilakukan secara musyawarah dalam rapat pleno MDP. Putusan MDP juga dilaporkan kepada Ketua Konsil Kesehatan Indonesia dan Menteri paling sedikit satu kali dalam 3 (tiga) bulan (Pasal 22 ayat (6)), dan MDP berwenang menetapkan Tim Pemeriksa serta memberikan rekomendasi (Pasal 9–12, Pasal 29–31). Pilihan B keliru karena MDP bersifat otonom dan independen, bukan unit pelaksana dinas kesehatan yang putusannya perlu persetujuan Menteri. Pilihan C keliru karena MDP justru memeriksa dan memutus dugaan pelanggaran disiplin melalui Tim Pemeriksa. Pilihan D keliru karena MDP dibentuk dalam rangka penegakan disiplin untuk mendukung Konsil Kesehatan Indonesia dan putusannya berlaku final dan mengikat bila tidak ada Peninjauan Kembali (Pasal 22 ayat (7)), bukan sekadar anjuran. Pilihan E keliru karena sanksi disiplin profesi (Pasal 28) hanya berupa peringatan tertulis, kewajiban mengikuti pendidikan atau pelatihan, penonaktifan surat tanda registrasi sementara waktu, dan/atau rekomendasi pencabutan surat izin praktik — bukan sanksi pidana. Catatan: soal ini tidak menanyakan komposisi atau anggota MDP, karena susunan MDP tidak diatur di PMK 3/2025 (diatur PMK 12/2024). ---"}, {"n": 37, "p": 7, "level": "C4", "src": "Di luar slide — suplemen", "q": "Seorang apoteker secara rutin mengikuti pengembangan keprofesian berkelanjutan (P2KB), mengumpulkan Satuan Kredit Profesi (SKP), dan memperbarui pengetahuannya tentang obat dan standar pelayanan terbaru. Perilaku tersebut merupakan bentuk implementasi etika terhadap …", "options": [{"k": "A", "t": "Diri sendiri, yaitu mempertahankan dan meningkatkan kompetensi berkelanjutan sebagai kewajiban manusia terhadap dirinya sendiri"}, {"k": "B", "t": "Pasien semata, dan tidak ada kaitannya dengan etika terhadap diri sendiri"}, {"k": "C", "t": "Organisasi profesi semata, karena SKP hanya diperlukan untuk keperluan administrasi keanggotaan"}, {"k": "D", "t": "Pemberi kerja, karena peningkatan kompetensi hanya bermanfaat untuk kenaikan jabatan"}, {"k": "E", "t": "Masyarakat, dan bukan merupakan kewajiban etik apoteker terhadap dirinya sendiri"}], "ans": "A", "expl": "Dalam pembagian etika (P6 hlm. 9), etika individual adalah kewajiban manusia terhadap diri sendiri, dan seorang profesional dituntut memahami kaidah dan standar moral profesi serta memiliki pengendalian diri (P6 hlm. 19–20). Mempertahankan dan meningkatkan kompetensi secara berkelanjutan — misalnya dengan mengikuti P2KB dan mengumpulkan SKP — adalah wujud nyata etika terhadap diri sendiri: apoteker menjaga agar dirinya tetap kompeten dan layak menjalankan profesinya. Sistem pengembangan keprofesian berkelanjutan (P2KB/SKP) mewajibkan total 100 SKP per 5 tahun (KMK HK.01.07/MENKES/1561/2024). Pilihan B keliru karena meskipun pasien ikut diuntungkan, yang ditanyakan adalah terhadap siapa kewajiban etik itu diarahkan — peningkatan kompetensi adalah kewajiban terhadap diri sendiri. Pilihan C dan D mereduksi P2KB menjadi urusan administratif atau kenaikan jabatan, padahal maknanya adalah pemeliharaan kompetensi profesional. Pilihan E keliru karena pengabdian kepada masyarakat adalah dimensi lain dari etika profesi, bukan pengganti kewajiban terhadap diri sendiri. Skenario soal ini adalah penerapan dari prinsip-prinsip slide tersebut, karena pembahasan CPD/P2KB tidak ada di P7. ---"}, {"n": 38, "p": 7, "level": "C4", "src": "Di luar slide — suplemen", "q": "Seorang apoteker senior mendapati sejawatnya yang masih baru kesulitan menafsirkan resep dengan rejimen yang kompleks. Apoteker senior itu kemudian membimbing sejawatnya dengan sabar, membantunya memahami resep tersebut, dan memberikan bantuan keprofesian secara santun tanpa merendahkannya di hadapan pasien. Perilaku tersebut merupakan penerapan prinsip etika terhadap sejawat berupa …", "options": [{"k": "A", "t": "Hubungan saling membina dan pemberian bantuan keprofesian secara santun antar sejawat"}, {"k": "B", "t": "Campur tangan yang tidak pada tempatnya, karena kesulitan sejawat adalah urusan pribadinya"}, {"k": "C", "t": "Tindakan yang hanya dibenarkan bila sejawat tersebut secara resmi meminta bantuan tertulis"}, {"k": "D", "t": "Pelanggaran etika, karena apoteker senior telah ikut campur dalam pekerjaan sejawatnya"}, {"k": "E", "t": "Sikap yang tidak perlu, karena setiap apoteker wajib menyelesaikan pekerjaannya sendiri tanpa bantuan"}], "ans": "A", "expl": "Dalam skema pembagian etika (P6 hlm. 10 dan 14), etika sosial mencakup \"Etika Sesama\", dan etika profesi merupakan produk dari etika sosial — sehingga hubungan antar anggota profesi diatur oleh nilai-nilai etika sosial itu, antara lain saling membina dan memberi bantuan keprofesian secara santun, bukan menjatuhkan atau menjelekkan sejawat. Membimbing sejawat yang kesulitan dengan sabar dan santun adalah penerapan langsung prinsip tersebut. Pilihan B, D, dan E keliru karena menganggap bantuan antar sejawat sebagai campur tangan atau pelanggaran, padahal saling membina justru dianjurkan oleh etika profesi. Pilihan C keliru karena bantuan keprofesian yang santun tidak mensyaratkan permintaan tertulis resmi dari sejawat. Skenario soal ini adalah penerapan dari prinsip-prinsip slide tersebut, karena hubungan antar sejawat tidak dibahas di P7. ---"}, {"n": 39, "p": 7, "level": "C5", "src": "Di luar slide — suplemen", "q": "Seorang apoteker di rumah sakit menerima resep kombinasi dua obat yang menurut telaahnya berinteraksi secara mayor dan berisiko membahayakan pasien. Tindakan yang paling tepat dan paling kolaboratif adalah …", "options": [{"k": "A", "t": "Menghubungi dokter penulis resep secara kolaboratif, menyampaikan temuan interaksi mayor beserta usulan alternatif, dan mendokumentasikan komunikasi tersebut"}, {"k": "B", "t": "Diam-diam mengubah salah satu obat dalam resep dengan obat lain yang dianggap lebih aman, tanpa memberi tahu dokter"}, {"k": "C", "t": "Menyerahkan obat sesuai resep begitu saja, karena tanggung jawab atas resep sepenuhnya ada pada dokter penulis resep"}, {"k": "D", "t": "Menolak resep tanpa penjelasan apa pun dan meminta pasien kembali lagi di lain waktu"}, {"k": "E", "t": "Menghubungi dokter hanya untuk memberitahu adanya masalah, tanpa menyampaikan usulan alternatif maupun mendokumentasikan komunikasi itu"}], "ans": "A", "expl": "Kasus di P1 hlm. 20 menyajikan situasi yang sepadan: apoteker menerima resep dengan dosis yang tampaknya terlalu tinggi dan ditanya apa yang harus dilakukannya. Tindakan yang benar adalah mengonfirmasi dan mengomunikasikan temuan itu kepada dokter penulis resep — bukan diam-diam mengubah resep dan bukan pula menyerahkan obat begitu saja. Hal ini sejalan dengan kewajiban merujuk atau mengonsultasikan kepada tenaga kesehatan lain bila suatu masalah berada di luar kompetensi atau kewenangan sendiri (P7a no. 2). Komunikasi yang efektif dan kolaboratif berarti menghubungi dokter, menyampaikan temuan interaksi mayor beserta usulan alternatif yang rasional, dan mendokumentasikan komunikasi tersebut sebagai bagian dari pertanggungjawaban profesional. Pilihan B keliru karena mengubah resep secara diam-diam melampaui kewenangan apoteker dan menghilangkan kesempatan dokter menilai ulang. Pilihan C keliru karena apoteker ikut bertanggung jawab atas keselamatan pasien, bukan sekadar pelaksana resep. Pilihan D keliru karena menolak tanpa penjelasan tidak menyelesaikan masalah pasien dan tidak kolaboratif. Pilihan E kurang lengkap karena komunikasi tanpa usulan alternatif dan tanpa dokumentasi belum memenuhi standar komunikasi interprofesional yang efektif. Catatan: P1 hlm. 20 menyajikan kasus ini sebagai pertanyaan diskusi tanpa kunci jawaban di slide, sehingga kunci soal ini dirumuskan sebagai penerapan prinsip komunikasi dan konsultasi dari P1 hlm. 20 dan P7a no. 2 tersebut. ---"}, {"n": 40, "p": 7, "level": "C5", "src": "Di luar slide — suplemen", "q": "Seorang apoteker penanggung jawab di industri farmasi menemukan bahwa satu bets obat yang akan dirilis memiliki hasil uji mutu yang menyimpang dan berpotensi membahayakan pasien. Manajemen perusahaan mendesak agar bets tersebut tetap dirilis demi memenuhi target penjualan kuartal ini. Keputusan profesional yang paling berintegritas adalah …", "options": [{"k": "A", "t": "Merilis bets tersebut dengan catatan internal bahwa mutunya menyimpang, agar target penjualan tetap tercapai"}, {"k": "B", "t": "Menolak merilis dan menghentikan peredaran bets yang bermasalah, dengan mengutamakan keselamatan publik di atas profitabilitas perusahaan"}, {"k": "C", "t": "Merilis bets tersebut sambil menunggu hasil uji ulang, karena belum ada bukti pasti bahwa obat itu berbahaya bagi pasien"}, {"k": "D", "t": "Menyerahkan keputusan sepenuhnya kepada manajemen, karena tanggung jawab mutu adalah urusan perusahaan bukan apoteker"}, {"k": "E", "t": "Merilis bets tersebut hanya untuk wilayah yang jauh dari pengawasan, agar risikonya lebih kecil"}], "ans": "B", "expl": "Dalam profesi luhur (*officium nobile*), apoteker mendahulukan kepentingan orang yang dibantu dan mengabdi pada tuntutan luhur profesi, dengan motivasi utama yang bukan nafkah (P6 hlm. 17), dan menurut Brandeis keberhasilan suatu profesi bukan didasarkan pada keuntungan finansial (P6 hlm. 20). Sejalan dengan itu, melakukan pemeriksaan atau pengobatan serta meresepkan atau memberikan obat demi keuntungan finansial dinyatakan sebagai pelanggaran disiplin (P7a no. 12 huruf c dan no. 13 huruf b, hlm. 6). Menolak merilis bets yang mutunya menyimpang — meskipun merugikan profit perusahaan — adalah penerapan prinsip tersebut: keselamatan publik didahulukan di atas profitabilitas. Pilihan A dan C keliru karena merilis obat yang diketahui mutunya menyimpang membahayakan pasien, betapa pun alasannya. Pilihan D keliru karena apoteker penanggung jawab justru memikul tanggung jawab profesional atas mutu dan keselamatan produk, tidak dapat dialihkan begitu saja kepada manajemen. Pilihan E keliru karena membahayakan pasien di wilayah mana pun tetap melanggar prinsip yang sama. Skenario soal ini adalah penerapan dari prinsip-prinsip slide tersebut pada dilema apoteker industri, karena konflik keselamatan publik versus profit perusahaan tidak dibahas di P7. ---"}];
+
+      const SUPLEMEN = {18:1,21:1,22:1,32:1,37:1,38:1,39:1,40:1};
+      const PERTEMUAN_LABEL = {1:"P1",2:"P2",3:"P3",4:"P4",5:"P5",6:"P6",7:"P7"};
+
+      /* ================= TAB ================= */
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      tabBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          tabBtns.forEach(function (b) { b.setAttribute("aria-selected", "false"); });
+          btn.setAttribute("aria-selected", "true");
+          document.querySelectorAll(".panel").forEach(function (p) { p.classList.remove("active"); });
+          document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+
+      /* ================= UTIL ================= */
+      function esc(s) {
+        return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      function fmt(s) {
+        let t = esc(s);
+        t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        t = t.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+        return t;
+      }
+
+      /* ================= LATIHAN ================= */
+      const state = {
+        fp: "all",        // filter pertemuan
+        fl: "all",        // filter level
+        idx: 0,           // posisi dalam daftar tersaring
+        answers: {}       // {nomorSoal: "A".."E"} — tersimpan selama sesi
+      };
+
+      const fpWrap = document.getElementById("filter-p");
+      const flWrap = document.getElementById("filter-l");
+      function buildFilters() {
+        const pOpts = [["all", "Semua"], ["1","P1"],["2","P2"],["3","P3"],["4","P4"],["5","P5"],["6","P6"],["7","P7"]];
+        const lOpts = [["all", "Semua"], ["C1","C1"],["C2","C2"],["C3","C3"],["C4","C4"],["C5","C5"]];
+        fpWrap.innerHTML = pOpts.map(function (o) {
+          return '<button class="fchip" data-fp="' + o[0] + '" aria-pressed="' + (state.fp === o[0]) + '">' + o[1] + "</button>";
+        }).join("");
+        flWrap.innerHTML = lOpts.map(function (o) {
+          return '<button class="fchip" data-fl="' + o[0] + '" aria-pressed="' + (state.fl === o[0]) + '">' + o[1] + "</button>";
+        }).join("");
+        fpWrap.querySelectorAll("button").forEach(function (b) {
+          b.addEventListener("click", function () {
+            state.fp = b.dataset.fp; state.idx = 0; buildFilters(); renderQuiz();
+          });
+        });
+        flWrap.querySelectorAll("button").forEach(function (b) {
+          b.addEventListener("click", function () {
+            state.fl = b.dataset.fl; state.idx = 0; buildFilters(); renderQuiz();
+          });
+        });
+      }
+
+      function filtered() {
+        return SOAL.filter(function (q) {
+          return (state.fp === "all" || q.p === Number(state.fp)) &&
+                 (state.fl === "all" || q.level === state.fl);
+        });
+      }
+
+      const quizArea = document.getElementById("quiz-area");
+      const numGrid = document.getElementById("numgrid");
+
+      function renderQuiz() {
+        const list = filtered();
+        const totalAnswered = SOAL.filter(function (q) { return state.answers[q.n]; }).length;
+        document.getElementById("quiz-count").textContent =
+          list.length ? ("Soal " + (state.idx + 1) + " dari " + list.length + " pada saringan ini") : "Tidak ada soal pada saringan ini";
+        document.getElementById("quiz-progress-label").textContent =
+          "Terjawab " + totalAnswered + " dari " + SOAL.length + " soal";
+        document.getElementById("progress-bar").style.width =
+          (SOAL.length ? (totalAnswered / SOAL.length) * 100 : 0) + "%";
+
+        if (!list.length) {
+          quizArea.innerHTML = '<div class="empty-note">Tidak ada soal dengan kombinasi saringan ini. Coba longgarkan saringannya ya.</div>';
+          numGrid.innerHTML = "";
+          return;
+        }
+        if (state.idx >= list.length) state.idx = list.length - 1;
+        const q = list[state.idx];
+        const badges =
+          '<span class="badge">Soal ' + q.n + "</span>" +
+          '<span class="badge p">' + PERTEMUAN_LABEL[q.p] + "</span>" +
+          '<span class="badge lvl">Level ' + q.level + "</span>" +
+          (SUPLEMEN[q.n] ? '<span class="badge sup">Di luar slide — suplemen</span>' : "");
+        const opts = q.options.map(function (o) {
+          const sel = state.answers[q.n] === o.k;
+          return '<button class="opt" data-k="' + o.k + '" aria-pressed="' + sel + '">' +
+            '<span class="letter">' + o.k + "</span><span>" + fmt(o.t) + "</span></button>";
+        }).join("");
+        quizArea.innerHTML =
+          '<div class="qcard"><div class="qbadges">' + badges + "</div>" +
+          '<p class="qtext">' + fmt(q.q) + '</p><div class="opts">' + opts + "</div>" +
+          '<div class="qnav">' +
+          '<button class="btn" id="q-prev"' + (state.idx === 0 ? " disabled" : "") + ">← Sebelumnya</button>" +
+          '<button class="btn grow" id="q-next"' + (state.idx === list.length - 1 ? " disabled" : "") + ">Berikutnya →</button>" +
+          "</div></div>";
+        quizArea.querySelectorAll(".opt").forEach(function (b) {
+          b.addEventListener("click", function () {
+            state.answers[q.n] = b.dataset.k;
+            renderQuiz();
+          });
+        });
+        const prev = document.getElementById("q-prev");
+        const next = document.getElementById("q-next");
+        if (prev) prev.addEventListener("click", function () { if (state.idx > 0) { state.idx--; renderQuiz(); } });
+        if (next) next.addEventListener("click", function () { if (state.idx < list.length - 1) { state.idx++; renderQuiz(); } });
+
+        numGrid.innerHTML = list.map(function (item, i) {
+          const cls = (state.answers[item.n] ? "done" : "") + (i === state.idx ? " now" : "");
+          return '<button data-i="' + i + '" class="' + cls.trim() + '" aria-label="Ke soal ' + item.n + '">' + item.n + "</button>";
+        }).join("");
+        numGrid.querySelectorAll("button").forEach(function (b) {
+          b.addEventListener("click", function () { state.idx = Number(b.dataset.i); renderQuiz(); });
+        });
+      }
+
+      /* ================= HASIL ================= */
+      const quizView = document.getElementById("quiz-view");
+      const resultView = document.getElementById("result-view");
+
+      function showResults() {
+        const list = filtered().length ? filtered() : SOAL;
+        let benar = 0;
+        const perLevel = {}, perP = {};
+        list.forEach(function (q) {
+          const ok = state.answers[q.n] === q.ans;
+          if (ok) benar++;
+          perLevel[q.level] = perLevel[q.level] || [0, 0];
+          perLevel[q.level][1]++; if (ok) perLevel[q.level][0]++;
+          perP[q.p] = perP[q.p] || [0, 0];
+          perP[q.p][1]++; if (ok) perP[q.p][0]++;
+        });
+        const pct = list.length ? Math.round((benar / list.length) * 100) : 0;
+        document.getElementById("score-big").textContent = pct + "%";
+        document.getElementById("score-line").textContent =
+          "Benar " + benar + " dari " + list.length + " soal pada saringan saat ini.";
+        document.getElementById("score-love").textContent =
+          pct >= 80 ? "Kerja bagus — tinggal poles jebakan-jebakannya, kamu siap. ♥" :
+          pct >= 60 ? "Sudah lebih dari separuh jalan. Cek telaahnya pelan-pelan, ya. ♥" :
+                      "Tidak apa-apa, namanya juga latihan. Telaah di bawah ini teman terbaikmu sekarang. ♥";
+        document.getElementById("bd-level").innerHTML =
+          Object.keys(perLevel).sort().map(function (k) {
+            return '<div class="bd-row"><span>Level ' + k + '</span><b>' + perLevel[k][0] + " / " + perLevel[k][1] + "</b></div>";
+          }).join("");
+        document.getElementById("bd-pertemuan").innerHTML =
+          Object.keys(perP).sort().map(function (k) {
+            return '<div class="bd-row"><span>Pertemuan ' + PERTEMUAN_LABEL[k] + '</span><b>' + perP[k][0] + " / " + perP[k][1] + "</b></div>";
+          }).join("");
+        document.getElementById("review-list").innerHTML = list.map(function (q) {
+          const mine = state.answers[q.n];
+          const ok = mine === q.ans;
+          const cls = !mine ? "skip" : ok ? "ok" : "no";
+          const status = !mine ? "Belum dijawab" : ok ? "✓ Benar" : "✗ Kurang tepat";
+          const correctText = q.options.filter(function (o) { return o.k === q.ans; })[0];
+          const mineText = mine ? q.options.filter(function (o) { return o.k === mine; })[0] : null;
+          return '<div class="review-item ' + cls + '">' +
+            '<div class="qbadges"><span class="badge">Soal ' + q.n + '</span>' +
+            '<span class="badge p">' + PERTEMUAN_LABEL[q.p] + '</span>' +
+            '<span class="badge lvl">Level ' + q.level + "</span>" +
+            (SUPLEMEN[q.n] ? '<span class="badge sup">Di luar slide — suplemen</span>' : "") +
+            '<span class="status">' + status + "</span></div>" +
+            '<p class="rq">' + fmt(q.q) + "</p>" +
+            (mineText ? '<p class="ans">Jawabanmu: <b>' + mine + ".</b> " + fmt(mineText.t) + "</p>" : '<p class="ans">Jawabanmu: —</p>') +
+            '<p class="ans">Kunci: <b class="k">' + q.ans + ".</b> " + fmt(correctText.t) + "</p>" +
+            '<div class="expl"><b>Pembahasan:</b> ' + fmt(q.expl) + "</div>" +
+            '<p class="src">Sumber: ' + esc(q.src) + "</p></div>";
+        }).join("");
+        quizView.hidden = true;
+        resultView.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      document.getElementById("btn-finish").addEventListener("click", showResults);
+      document.getElementById("btn-back").addEventListener("click", function () {
+        resultView.hidden = true; quizView.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      document.getElementById("btn-reset").addEventListener("click", function () {
+        const list = filtered().length ? filtered() : SOAL;
+        list.forEach(function (q) { delete state.answers[q.n]; });
+        state.idx = 0;
+        resultView.hidden = true; quizView.hidden = false;
+        renderQuiz();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      buildFilters();
+      renderQuiz();
+
+      /* ================= KARTU KILAT ================= */
+      const KARTU = [
+        ["Rantai hubungan moral, etika, norma, dan hukum?", "Moral → etika → norma sosial → hukum (moral adalah akar dari etika)"],
+        ["Urutan hierarki Pasal 7 ayat (1) UU 12/2011?", "UUD NRI 1945 → TAP MPR → UU/Perppu → PP → Perpres → Perda Provinsi → Perda Kab/Kota"],
+        ["Pasal 8 ayat (2) UU 12/2011 mengatur apa?", "Permenkes dan Peraturan BPOM diakui dan memiliki kekuatan hukum mengikat, tetapi tidak berada dalam urutan Pasal 7"],
+        ["Lex superior derogat legi inferiori — kapan dipakai?", "Bila tingkatannya berbeda: norma yang lebih tinggi dipakai"],
+        ["Lex specialis derogat legi generali — kapan dipakai?", "Bila setara: norma yang lebih khusus dipakai"],
+        ["Lex posterior derogat legi priori — kapan dipakai?", "Bila sama khusus: norma yang lebih baru dipakai"],
+        ["MK vs MA dalam pengujian peraturan (Pasal 9)?", "MK menguji UU terhadap UUD; MA menguji peraturan di bawah UU terhadap UU"],
+        ["PP 51/2009 tentang Pekerjaan Kefarmasian — statusnya?", "Dicabut oleh PP 28/2024, berlaku 26 Juli 2024 (Pasal 1170 huruf j)"],
+        ["4 pengecualian pembukaan kerahasiaan data pasien (Pasal 4 UU 17/2023)?", "Gawat darurat; KLB/wabah; permintaan aparat penegak hukum; pendidikan/penelitian (data agregat, tanpa identitas)"],
+        ["Obat Herbal Terstandar (OHT) diuji dengan apa?", "Uji praklinik (in vivo/in vitro); bahan baku aktif terstandardisasi — di antara Jamu (empiris) dan Fitofarmaka (uji klinik)"],
+        ["7 pilar praktik kefarmasian (Pasal 428 PP 28/2024)?", "Produksi dan R&D; Pengendalian Mutu; Pengadaan; Penyimpanan; Pendistribusian; Pengelolaan; Pelayanan Kefarmasian"],
+        ["Masa berlaku STR bagi Tenaga Kefarmasian WNI?", "Seumur hidup — Pasal 260 ayat (4) UU 17/2023; Pasal 677 ayat (3) PP 28/2024"],
+        ["Masa berlaku SIP dan batas lokasinya?", "Berlaku 5 tahun (Pasal 682); 1 tempat praktik per SIP; maksimal 3 lokasi faskes"],
+        ["Total SKP untuk perpanjangan SIP? Proporsi per ranah?", "Total 100 SKP per 5 tahun (Pasal 683; KMK 1561/2024) — ranah Pembelajaran min 45%, Pelayanan min 35%, Pengabdian min 5%; slide P4 menyebut pilar 'Pelatihan' tanpa proporsi"],
+        ["6 komponen pelayanan telefarmasi (Pasal 561)?", "Pengkajian Resep; Dispensing; Konseling; PTO; PIO; MESO"],
+        ["EUA (Emergency Use Authorization) menurut PP 28/2024?", "Persetujuan Penggunaan Darurat — satu dari 4 instrumen darurat Pasal 942–944; mekanisme dan pemegang kewenangannya tidak dirinci di slide"],
+        ["Klasifikasi risiko apotek dan syarat mutlaknya (PBBR)?", "Apotek adalah Usaha Risiko Tinggi; syarat mutlak: NIB + Sertifikat Standar Terverifikasi + Izin Final"],
+        ["3 isu kunci PSEF?", "Validasi Peresepan Elektronik; Pelindungan Privasi Data Pasien; Keamanan Rantai Pasok Obat"],
+        ["Dua arti kata Yunani ethos?", "Ethos = kebiasaan/adat; ethos = perasaan batin/kecenderungan batin yang mendorong perilaku"],
+        ["Officium nobile — motivasi utama dan 2 prinsipnya?", "Motivasi utama bukan nafkah; mendahulukan kepentingan orang yang dibantu; mengabdi pada tuntutan luhur profesi (Magnis Suseno)"],
+        ["5 syarat pekerjaan disebut profesi menurut Brandeis?", "Intellectual character; diabdikan untuk kepentingan orang lain; keberhasilan bukan dari keuntungan finansial; ada organisasi profesi dan kode etik; ada standard kualifikasi"],
+        ["Legalitas vs moralitas menurut Kant?", "Legalitas = kesesuaian tindakan dengan hukum lahiriah (belum bernilai moral); moralitas = ketaatan pada kewajiban batiniah, demi kewajiban itu sendiri"],
+        ["5 peranan etika dalam perkembangan IPTEK?", "Landasan berpikir dan berkarya; pengendali; pendorong; penyeimbang; norma-norma"],
+        ["3 sanksi pelanggaran kode etik (P6 hlm. 44)?", "Sanksi Moral; Sanksi terhadap Tuhan YME; Sanksi dari organisasi yang bersangkutan"],
+        ["Berapa jenis pelanggaran disiplin profesi (KMK 775/2025)?", "17 jenis — dari praktik tidak kompeten sampai mengiklankan diri dan perang tarif"],
+        ["Kedudukan MDP menurut Pasal 3 PMK 3/2025?", "Otonom dan independen; diberi perlindungan hukum sepanjang dalam batas kewenangan dan sesuai peraturan"],
+        ["Batas waktu pemeriksaan dan putusan MDP?", "Paling lama 60 hari kalender sejak Tim Pemeriksa melakukan pemeriksaan (Pasal 15)"],
+        ["Batas mengajukan Peninjauan Kembali (PK)?", "Paling lama 10 hari kerja setelah putusan dibacakan; hanya 1 kali; upaya terakhir"],
+        ["4 sanksi disiplin profesi (Pasal 28 PMK 3/2025)?", "Peringatan tertulis; kewajiban pendidikan/pelatihan; penonaktifan STR sementara; rekomendasi pencabutan SIP"],
+        ["Obat Keras — penanda dan syarat resepnya (Pasal 320)?", "Huruf K merah dalam lingkaran; resep WAJIB, kecuali Obat Wajib Apotek (OWA)"]
+      ];
+      let kartuOrder = KARTU.map(function (_, i) { return i; });
+      let kartuPos = 0;
+      let flipped = false;
+      const flashEl = document.getElementById("flash");
+      function renderKartu() {
+        const k = KARTU[kartuOrder[kartuPos]];
+        document.getElementById("flash-front-text").textContent = k[0];
+        document.getElementById("flash-back-text").textContent = k[1];
+        document.getElementById("flash-ctr").textContent = "Kartu " + (kartuPos + 1) + " / " + kartuOrder.length;
+        flipped = false;
+        flashEl.classList.remove("flipped");
+      }
+      flashEl.addEventListener("click", function () {
+        flipped = !flipped;
+        flashEl.classList.toggle("flipped", flipped);
+      });
+      document.getElementById("flash-prev").addEventListener("click", function () {
+        kartuPos = (kartuPos - 1 + kartuOrder.length) % kartuOrder.length; renderKartu();
+      });
+      document.getElementById("flash-next").addEventListener("click", function () {
+        kartuPos = (kartuPos + 1) % kartuOrder.length; renderKartu();
+      });
+      document.getElementById("flash-shuffle").addEventListener("click", function () {
+        for (let i = kartuOrder.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const t = kartuOrder[i]; kartuOrder[i] = kartuOrder[j]; kartuOrder[j] = t;
+        }
+        kartuPos = 0; renderKartu();
+      });
+      renderKartu();
+    </script>
+  </body>
+</html>
